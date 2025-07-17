@@ -1,4 +1,4 @@
-#define ENCHANT_DURATION 15 MINUTES
+#define ENCHANT_DURATION 1 MINUTES
 #define ENCHANT_DURATION_GOLD 200 MINUTES
 
 /obj/effect/proc_holder/spell/invoked/enchant_weapon
@@ -57,7 +57,7 @@
 		if(sacrifice)
 			qdel(sacrifice)
 			to_chat(user, "I consumes the [sacrifice] to enchant [I] permanently.")
-		I.AddComponent(/datum/component/enchanted_weapon, enchant_duration, TRUE, /datum/skill/magic/arcane, user, enchant_type)
+		I.AddComponent(/datum/component/enchanted_weapon, enchant_duration, TRUE, /datum/skill/magic/arcane, enchant_type)
 		user.visible_message("[user] enchants the [I], enveloping it in a magical glow.")
 		return TRUE
 	else
