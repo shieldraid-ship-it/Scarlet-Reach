@@ -1,4 +1,4 @@
-#define ENCHANT_DURATION 1 MINUTES
+#define ENCHANT_DURATION 15 MINUTES
 #define ENCHANT_DURATION_GOLD 200 MINUTES
 
 /obj/effect/proc_holder/spell/invoked/enchant_weapon
