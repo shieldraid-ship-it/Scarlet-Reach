@@ -441,6 +441,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						if(do_after(user, 50))
 							icon_state = "zizo_active"							
 							rituosbone(target)
+							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 							spawn(120)
 								icon_state = "zizo_chalky"
 
