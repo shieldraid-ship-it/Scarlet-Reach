@@ -374,7 +374,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Progress"
 	desc = "A Holy Rune of ZIZO"
 	icon_state = "zizo_chalky"
-	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal")
+	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Path of Rituos")
 
 /obj/structure/ritualcircle/zizo/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/inhumen/zizo)
@@ -423,6 +423,26 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
 							spawn(120)
 								icon_state = "zizo_chalky"
+		if("Path of Rituos")
+			var/onrune = view(1, loc)
+			var/list/folksonrune = list()
+			for(var/mob/living/carbon/human/persononrune in onrune)
+				if(HAS_TRAIT(persononrune, TRAIT_CABAL))
+					folksonrune += persononrune
+			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			if(!target)
+				return
+			if(do_after(user, 50))
+				user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+				if(do_after(user, 50))
+					user.say("ZIZO! ZIZO! HEED MY CALL!!")
+					if(do_after(user, 50))
+						user.say("ZIZO! ZIZO! STRIP MY BONE OF ANY FLESH!!")
+						if(do_after(user, 50))
+							icon_state = "zizo_active"							
+							rituosbone(target)
+							spawn(120)
+								icon_state = "zizo_chalky"
 
 /obj/structure/ritualcircle/zizo/proc/zizoarmaments(src)
 	var/onrune = view(0, loc)
@@ -464,6 +484,64 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	backr = /obj/item/rogueweapon/sword/long/zizo
 	neck = /obj/item/clothing/neck/roguetown/bevor
+
+/obj/structure/ritualcircle/zizo/proc/rituosbone(src)
+	var/onrune = view(0, loc)
+	var/list/possible_targets = list()
+	for(var/mob/living/carbon/human/persononrune in onrune)
+		possible_targets += persononrune
+	var/mob/living/carbon/human/target
+	if(possible_targets.len)
+		target = pick(possible_targets)
+	else
+		to_chat(usr, "No valid targets are standing on the rune! You must stand directly on the rune to receive Zizo's blessing.")
+		return
+	if (!HAS_TRAIT(target, TRAIT_CABAL))
+		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF THE CABAL!"))
+		return
+	if (target.mob_biotypes & MOB_UNDEAD)
+		loc.visible_message(span_cult("YOU HAVE NO MORE LYFE TO GIVE, FOR YOUR HEART DOES NOT BEAT!"))
+		return
+	if (target.mind?.has_antag_datum(/datum/antagonist/vampire/lesser))
+		loc.visible_message(span_cult("YOU HAVE NO MORE LYFE TO GIVE, FOR YOUR HEART DOES NOT BEAT, CHILDE OF KAIN!"))
+		return
+	if (target.mind?.has_antag_datum(/datum/antagonist/werewolf/lesser))
+		loc.visible_message(span_cult("YOU ARE CURSED BY DENDOR, UNDESERVING OF UNLYFE!"))
+		return
+	target.Stun(60)
+	target.Knockdown(60)
+	to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+	target.emote("Agony")
+	playsound(loc, 'sound/misc/astratascream.ogg', 50)
+	loc.visible_message(span_cult("The pallor of the grave descends across [target]'s skin in a wave of arcyne energy... Then, their flesh is flayed, revealing a ghastly bone, blood splattering all around them."))
+	spawn(20)
+		playsound(loc, 'sound/combat/dismemberment/dismem (6).ogg', 50)
+		playsound(target, 'sound/health/slowbeat.ogg', 50)
+		target.mind?.RemoveSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation) // gotta remove presiistitititginanon if you had one to avoid getting double
+		ADD_TRAIT(target, TRAIT_NOHUNGER, "[type]")
+		ADD_TRAIT(target, TRAIT_NOBREATH, "[type]")
+		ADD_TRAIT(target, TRAIT_ARCYNE_T3, "[type]")
+		ADD_TRAIT(target, TRAIT_NOPAIN, "[type]")
+		ADD_TRAIT(target, TRAIT_TOXIMMUNE, "[type]")
+		ADD_TRAIT(target, TRAIT_STEELHEARTED, "[type]")
+		ADD_TRAIT(target, TRAIT_INFINITE_STAMINA, "[type]")
+		ADD_TRAIT(target, TRAIT_BLOODLOSS_IMMUNE, "[type]")
+		target.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE) // mages get better spellcasting skill, still no access to the greater fireball sloppp, should they??
+		target.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation) // gotta remove if you already have it fuck?
+		target.mind?.adjust_spellpoints(18)
+		target.mob_biotypes |= MOB_UNDEAD
+		spawn(40)
+			to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful."))
+		var/list/body_parts = target.bodyparts.Copy()
+		for(var/obj/item/bodypart/part in body_parts)
+			part.skeletonize(FALSE)
+		target.update_body_parts()
+		var/list/eyes_replaced = target.internal_organs.Copy()
+		var/obj/item/organ/eyes/eyes = target.getorganslot(eyes_replaced) // #define ORGAN_SLOT_PENIS "penis" ORGAN_SLOT_TESTICLES "testicles" ORGAN_SLOT_BREASTS "breasts" ORGAN_SLOT_VAGINA "vagina" do I wanna bother
+		eyes = new /obj/item/organ/eyes/night_vision/zombie
+		eyes.Insert(target)
+		target.update_body_parts()
+		target.ritual_skeletonization = TRUE
 
 
 
