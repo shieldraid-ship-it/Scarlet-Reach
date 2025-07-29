@@ -521,7 +521,6 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.mind?.RemoveSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation) // gotta remove presiistitititginanon if you had one to avoid getting double
 		ADD_TRAIT(target, TRAIT_NOHUNGER, "[type]")
 		ADD_TRAIT(target, TRAIT_NOBREATH, "[type]")
-		ADD_TRAIT(target, TRAIT_ARCYNE_T3, "[type]")
 		ADD_TRAIT(target, TRAIT_NOPAIN, "[type]")
 		ADD_TRAIT(target, TRAIT_TOXIMMUNE, "[type]")
 		ADD_TRAIT(target, TRAIT_STEELHEARTED, "[type]")
@@ -529,8 +528,17 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		ADD_TRAIT(target, TRAIT_BLOODLOSS_IMMUNE, "[type]")
 		ADD_TRAIT(target, TRAIT_LIMBATTACHMENT, "[type]")
 		ADD_TRAIT(target, TRAIT_EASYDISMEMBER, "[type]")
+		if (!HAS_TRAIT(target, TRAIT_ARCYNE_T3) && !HAS_TRAIT(target, TRAIT_ARCYNE_T4) || HAS_TRAIT(target, TRAIT_ARCYNE_T2))
+			REMOVE_TRAIT(target, TRAIT_ARCYNE_T2, "[type]")
+			ADD_TRAIT(target, TRAIT_ARCYNE_T3, "[type]")
 		target.dna.species.species_traits |= NOBLOOD
-		target.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE) // mages get better spellcasting skill, still no access to the greater fireball sloppp, should they??
+		target.change_stat("speed", -1)
+		target.change_stat("constitution", -2)
+		var/arcyne_level = target.get_skill_level(/datum/skill/magic/arcane) // mages get better spellcasting skill, still no access to the greater fireball sloppp, should they??
+		if (arcyne_level >= 3)
+			target.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+		else
+			target.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 		target.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation) // gotta remove if you already have it fuck?
 		target.mind?.adjust_spellpoints(18)
 		target.mob_biotypes |= MOB_UNDEAD
