@@ -241,7 +241,7 @@
 			new_bounty_noface.banner += "The capture of a criminal of [new_bounty_noface.target_race] ancestry. This bounty been authorised by [new_bounty_noface.employer] for '[new_bounty_noface.reason]'. Their description is as follows: they are of a [new_bounty_noface.target_height] height, of a [new_bounty_noface.target_body_type] they have [new_bounty_noface.target_body_prefix] physique and they speak with [new_bounty_noface.target_voice_prefix] voice.<BR>"
 			new_bounty_noface.banner += "The employer, [new_bounty_noface.employer], offers [new_bounty_noface.amount] mammons for the deed, they are to be brought in dead or alive.<BR>"
 		if(3)
-			new_bounty_noface.banner += "[new_bounty_noface.employer] hath offered to pay [new_bounty_noface.amount] mammons for the capture of a criminal of [new_bounty_noface.target_race] ancestry. They've been described to be of a [new_bounty_noface.target_height] stature with [new_bounty_noface.target_body_prefix] physique with a [new_bounty_noface.target_body_type]. Their voice is [new_bounty_noface.target_voice].<BR>"
+			new_bounty_noface.banner += "[new_bounty_noface.employer] hath offered to pay [new_bounty_noface.amount] mammons for the capture of a criminal of [new_bounty_noface.target_race] ancestry. They've been described to be of a [new_bounty_noface.target_height] stature with [new_bounty_noface.target_body_prefix] physique with a [new_bounty_noface.target_body_type] build. Their voice is [new_bounty_noface.target_voice].<BR>"
 			new_bounty_noface.banner += "By reason of the following: '[new_bounty_noface.reason]'.<BR>"
 	new_bounty_noface.banner += "--------------<BR>"
 
@@ -416,7 +416,7 @@
 	var/reward_amount = 0
 
 	for(var/datum/bounty/b in GLOB.head_bounties)
-		if(b.target == M.real_name || b.target_race == M.dna.species) // oh goodness gracious 
+		if(b.target == M.real_name || b.target_hidden == M.real_name) // oh goodness gracious   || b.target_race == M.dna.species
 			correct_head = TRUE
 			reward_amount += b.amount
 			GLOB.head_bounties -= b
