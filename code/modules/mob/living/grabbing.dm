@@ -583,7 +583,10 @@
 				WEREWOLF CHEW.
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
-				caused_wound?.werewolf_infect_attempt()
+				if(user.mind)
+					var/datum/antagonist/werewolf/lesser/WW = user.mind.has_antag_datum(/datum/antagonist/werewolf/lesser)
+					if(WW.wretch_antag == 0 && !HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
+						caused_wound?.werewolf_infect_attempt()
 				if(prob(30))
 					user.werewolf_feed(C)
 

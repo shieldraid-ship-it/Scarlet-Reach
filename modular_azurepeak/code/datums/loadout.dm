@@ -205,6 +205,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Rapscallion's Shawl"
 	path = /obj/item/clothing/cloak/thief_cloak
 
+/datum/loadout_item/wicker_cloak
+	name = "Wicker Cloak"
+	path = /obj/item/clothing/cloak/wickercloak
+
 //SHOES
 /datum/loadout_item/darkboots
 	name = "Dark Boots"
@@ -461,14 +465,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Feather"
 	path = /obj/item/natural/feather
 
-/datum/loadout_item/collar
-	name = "Collar"
-	path = /obj/item/clothing/neck/roguetown/collar
-
-/datum/loadout_item/bell_collar
-	name = "Bell Collar"
-	path = /obj/item/clothing/neck/roguetown/collar/bell_collar
-
 /datum/loadout_item/cursed_collar
 	name = "Cursed Collar"
 	path = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
@@ -521,6 +517,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Naledian Psy-Bracelet"
 	path = /obj/item/clothing/neck/roguetown/psicross/naledi
 
+/datum/loadout_item/zcross_iron
+	name = "Zizo Cross"
+	path = /obj/item/clothing/neck/roguetown/zcross/iron
+
 /datum/loadout_item/chaperon
 	name = "Chaperon (Normal)"
 	path = /obj/item/clothing/head/roguetown/chaperon
@@ -552,10 +552,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/jestershoes
     name = "Jester's Shoes"
     path = /obj/item/clothing/shoes/roguetown/jester
-
-/datum/loadout_item/zcross_iron
-	name = "Zizo Cross"
-	path = /obj/item/clothing/neck/roguetown/zcross/iron
 
 //Donator Section
 //All these items are stored in the donator_fluff.dm in the azure modular folder for simplicity.
@@ -595,3 +591,27 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Donator Kit - Padded silky dress"
 	path = /obj/item/enchantingkit/zydras
 	ckeywhitelist = list("1ceres")
+
+/datum/loadout_item/leather_collar
+	name = "Leather Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/leather
+
+/datum/loadout_item/cowbell_collar
+	name = "Cowbell Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/cowbell
+
+/datum/loadout_item/catbell_collar
+	name = "Catbell Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/catbell
+
+/datum/loadout_item/rope_leash
+	name = "Rope Leash"
+	path = /obj/item/leash
+
+/datum/loadout_item/leather_leash
+	name = "Leather Leash"
+	path = /obj/item/leash/leather
+
+/datum/loadout_item/chain_leash
+	name = "Chain Leash"
+	path = /obj/item/leash/chain

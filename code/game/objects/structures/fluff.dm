@@ -965,7 +965,6 @@
 		/obj/item/kitchen/spoon/silver,
 		/obj/item/candle/candlestick/gold,
 		/obj/item/candle/candlestick/silver,
-		/obj/item/reagent_containers/lux,
 		/obj/item/rogueweapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys.... 
 		/obj/item/rogueweapon/sword/long/oathkeeper,
 		/obj/item/rogueweapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever

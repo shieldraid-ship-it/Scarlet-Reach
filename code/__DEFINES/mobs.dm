@@ -554,6 +554,17 @@
 #define DARKBROWN_FUR "3b2e27"
 #define BLACK_FUR	 "271f1a"
 
+//GOLEM MATERIALS
+#define GOLEM_BRASS "dfbd6c"
+#define GOLEM_IRON "525352"
+#define GOLEM_STEEL  "babbb9"
+#define GOLEM_BRONZE "e2a670"
+#define GOLEM_MARBLE "FFF2F2"
+#define GOLEM_COAL "1f1f1f"
+#define GOLEM_COBALT "323666"
+#define GOLEM_GRANITE "ff8f8f"
+#define GOLEM_JADE "517051"
+
 // Pixel shifting
 #define PIXEL_SHIFT_MAXIMUM 16
 #define PIXEL_SHIFT_PASSABLE_THRESHOLD 8

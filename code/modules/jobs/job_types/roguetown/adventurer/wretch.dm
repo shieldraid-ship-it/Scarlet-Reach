@@ -99,6 +99,7 @@
 			H.change_stat("fortune", 1)
 	
 	// Then proceed with normal bounty selection
+
 	var/bounty_face_noface = alert(H,"Is your face known?", , "Yes", "No" )
 	if(bounty_face_noface == "Yes")
 		var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of Scarlet Reach", "The Grenzelhoftian Holy See", "The Otavan Holy See")
@@ -142,4 +143,5 @@
 		if (!my_crime)
 			my_crime = "crimes against the Crown"
 		add_bounty_noface(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
+
 	to_chat(H, span_danger("You are an Antagonistic role. You are expected, by choosing to be a wretch, to sow chaos and division amongst the town while driving a story. Failure to use proper gravitas for this may get you punished for Low Role Play standards."))

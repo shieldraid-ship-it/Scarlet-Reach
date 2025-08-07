@@ -582,6 +582,11 @@
 	icon_state = "inqhat"
 	item_state = "inqhat"
 	sewrepair = TRUE
+	max_integrity = 200
+	equip_delay_self = 4 SECONDS
+	armor = ARMOR_HEAD_PSYDON
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	blocksound = SOFTHIT
 
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
