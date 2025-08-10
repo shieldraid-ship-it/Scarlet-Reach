@@ -1,7 +1,7 @@
 // Lich / Vampire shared list only
 /obj/effect/proc_holder/spell/invoked/projectile/bloodlightning
 	name = "Blood Bolt"
-	desc = "Emit a bolt of blood lightning that burns a target harshly, preventing them from attacking and slowing them down for a short time."
+	desc = "Emit a bolt of blood lightning that burns a target harshly, forcing them to drop items, preventing them from attacking, and slowing them down for a short time."
 	clothes_req = FALSE
 	overlay_state = "bloodlightning"
 	sound = 'sound/magic/vlightning.ogg'
