@@ -463,7 +463,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				if(do_after(user, 50))
 					user.say("ZIZO! ZIZO! HEED MY CALL!!")
 					if(do_after(user, 50))
-						user.say("ZIZO! ZIZO! STRIP MY BONE OF ANY FLESH!!")
+						user.say("ZIZO! ZIZO! STRIP OUR BONE OF ANY FLESH!!")
 						if(do_after(user, 50))
 							icon_state = "zizo_active"							
 							rituosbone(target)
