@@ -205,6 +205,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Rapscallion's Shawl"
 	path = /obj/item/clothing/cloak/thief_cloak
 
+/datum/loadout_item/wicker_cloak
+	name = "Wicker Cloak"
+	path = /obj/item/clothing/cloak/wickercloak
+
 //SHOES
 /datum/loadout_item/darkboots
 	name = "Dark Boots"
@@ -308,53 +312,57 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gen
 
-/datum/loadout_item/bardress
-	name = "Bar Dress"
+/datum/loadout_item/dress/bardress
+	name = "Dress, Barmaid"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress
 
-/datum/loadout_item/chemise
+/datum/loadout_item/dress/chemise
 	name = "Chemise"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
 
-/datum/loadout_item/sexydress
-	name = "Sexy Dress"
+/datum/loadout_item/dress/sexydress
+	name = "Dress, Sheer"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gen/sexy
 
-/datum/loadout_item/straplessdress
-	name = "Strapless Dress"
+/datum/loadout_item/dress/straplessdress
+	name = "Dress, Strapless"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless
 
-/datum/loadout_item/straplessdress/alt
-	name = "Strapless Dress, alt"
+/datum/loadout_item/dress/straplessdress/alt
+	name = "Dress, Strapless (Alt)"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt
 
+/datum/loadout_item/dress/silkydress
+	name = "Dress, Silky"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkydress
+
+/datum/loadout_item/dress/nobledress
+	name = "Dress, Noble"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/noble
+
+/datum/loadout_item/dress/velvetdress
+	name = "Dress, Velvet"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/velvet
+
+/datum/loadout_item/dress/winterdress_light
+	name = "Dress, Cold"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/winterdress_light
+
 /datum/loadout_item/gown
-	name = "Spring Gown"
+	name = "Gown, Spring"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gown
 
 /datum/loadout_item/gown/summer
-	name = "Summer Gown"
+	name = "Gown, Summer"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gown/summergown
 
 /datum/loadout_item/gown/fall
-	name = "Fall Gown"
+	name = "Gown, Fall"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown
 
 /datum/loadout_item/gown/winter
-	name = "Winter Gown"
+	name = "Gown, Winter"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gown/wintergown
-
-/datum/loadout_item/gown/silkydress
-	name = "Silky Dress"
-	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkydress
-
-/datum/loadout_item/nobledress
-	name = "Noble Dress"
-	path = /obj/item/clothing/suit/roguetown/shirt/dress/noble
-
-/datum/loadout_item/velvetdress
-	name = "Velvet Dress"
-	path = /obj/item/clothing/suit/roguetown/shirt/dress/velvet
 
 /datum/loadout_item/leathervest
 	name = "Leather Vest"
@@ -461,14 +469,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Feather"
 	path = /obj/item/natural/feather
 
-/datum/loadout_item/collar
-	name = "Collar"
-	path = /obj/item/clothing/neck/roguetown/collar
-
-/datum/loadout_item/bell_collar
-	name = "Bell Collar"
-	path = /obj/item/clothing/neck/roguetown/collar/bell_collar
-
 /datum/loadout_item/cursed_collar
 	name = "Cursed Collar"
 	path = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
@@ -521,6 +521,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Naledian Psy-Bracelet"
 	path = /obj/item/clothing/neck/roguetown/psicross/naledi
 
+/datum/loadout_item/zcross_iron
+	name = "Zizo Cross"
+	path = /obj/item/clothing/neck/roguetown/zcross/iron
+
 /datum/loadout_item/chaperon
 	name = "Chaperon (Normal)"
 	path = /obj/item/clothing/head/roguetown/chaperon
@@ -552,10 +556,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/jestershoes
     name = "Jester's Shoes"
     path = /obj/item/clothing/shoes/roguetown/jester
-
-/datum/loadout_item/zcross_iron
-	name = "Zizo Cross"
-	path = /obj/item/clothing/neck/roguetown/zcross/iron
 
 //Donator Section
 //All these items are stored in the donator_fluff.dm in the azure modular folder for simplicity.
@@ -595,3 +595,27 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Donator Kit - Padded silky dress"
 	path = /obj/item/enchantingkit/zydras
 	ckeywhitelist = list("1ceres")
+
+/datum/loadout_item/leather_collar
+	name = "Leather Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/leather
+
+/datum/loadout_item/cowbell_collar
+	name = "Cowbell Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/cowbell
+
+/datum/loadout_item/catbell_collar
+	name = "Catbell Collar"
+	path = /obj/item/clothing/neck/roguetown/collar/catbell
+
+/datum/loadout_item/rope_leash
+	name = "Rope Leash"
+	path = /obj/item/leash
+
+/datum/loadout_item/leather_leash
+	name = "Leather Leash"
+	path = /obj/item/leash/leather
+
+/datum/loadout_item/chain_leash
+	name = "Chain Leash"
+	path = /obj/item/leash/chain

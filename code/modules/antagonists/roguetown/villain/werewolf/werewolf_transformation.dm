@@ -84,7 +84,10 @@
 	else
 		ww_path = /mob/living/carbon/human/species/werewolf/female
 
+
+
 	var/mob/living/carbon/human/species/werewolf/W = new ww_path(loc)
+
 
 	W.set_patron(src.patron)
 	W.gender = gender
@@ -103,6 +106,8 @@
 	W.stored_language.copy_known_languages_from(src)
 	W.stored_skills = ensure_skills().known_skills.Copy()
 	W.stored_experience = ensure_skills().skill_experience.Copy()
+	W.cmode_music_override = cmode_music_override
+	W.cmode_music_override_name = cmode_music_override_name
 	mind.transfer_to(W)
 	skills?.known_skills = list()
 	skills?.skill_experience = list()
@@ -114,14 +119,20 @@
 	to_chat(W, span_userdanger("I transform into a horrible beast!"))
 	W.emote("rage")
 
+
 	W.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
 	W.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 	W.adjust_skillrank(/datum/skill/misc/climbing, 6, TRUE)
 	W.adjust_skillrank(/datum/skill/misc/swimming, 5, TRUE)
+	
+	W.STASTR = src.STASTR +5
+	W.STACON = src.STACON +5
+	W.STAEND = src.STAEND +5
+	W.STAINT = src.STAINT -3
+	W.STAPER = src.STAPER
+	W.STASPD = src.STASPD
+	W.STALUC = src.STALUC
 
-	W.STASTR = 20
-	W.STACON = 20
-	W.STAEND = 20
 
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/howl/call_of_the_moon)
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/claws)
