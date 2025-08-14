@@ -187,6 +187,11 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/ooc_notes
 	var/ooc_notes_display
 
+	// PATREON
+	// Vrell - I fucking hate how inconsistent the variable style is for this shit. underscores? all lowercase? camelcase? 
+	var/patreon_say_color = "ff7a05"
+	var/patreon_say_color_enabled = FALSE
+
 /datum/preferences/New(client/C)
 	parent = C
 	migrant  = new /datum/migrant_pref(src)

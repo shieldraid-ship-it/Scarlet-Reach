@@ -189,7 +189,7 @@
 	name = "emerald choker (+1 cog, +Gold, +1 Gemerald, Arcyne)"
 	req_bar = /obj/item/ingot/Gold
 	additional_items = list(/obj/item/roguegear, /obj/item/ingot/Gold, /obj/item/roguegem/green)
-	created_item = /obj/item/listenstone
+	created_item = /obj/item/scomstone/listenstone
 	skillcraft = /datum/skill/magic/arcane
 	craftdiff = 5
 	*/

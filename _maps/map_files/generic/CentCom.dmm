@@ -2308,10 +2308,10 @@
 	icon_state = "largetable";
 	dir = 1
 	},
-/obj/item/mattcoin,
-/obj/item/mattcoin,
-/obj/item/mattcoin,
-/obj/item/mattcoin,
+/obj/item/scomstone/mattcoin,
+/obj/item/scomstone/mattcoin,
+/obj/item/scomstone/mattcoin,
+/obj/item/scomstone/mattcoin,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/banditcamp)
 "vI" = (

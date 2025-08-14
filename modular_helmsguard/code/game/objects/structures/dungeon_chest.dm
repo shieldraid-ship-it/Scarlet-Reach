@@ -489,7 +489,7 @@
 		/obj/item/clothing/ring/diamond = 15,
 
 		/obj/item/riddleofsteel = 15,
-		/obj/item/listenstone = 15,
+		/obj/item/scomstone/listenstone = 15,
 				)
 
 	var/I = pickweight(loot)
@@ -589,7 +589,7 @@
 		/obj/item/clothing/ring/diamond = 15,
 
 		/obj/item/riddleofsteel = 15,
-		/obj/item/listenstone = 15,
+		/obj/item/scomstone/listenstone = 15,
 
 		/obj/item/book/granter/spell/blackstone/fireball = 15,
 		/obj/item/book/granter/spell/blackstone/greaterfireball = 15,

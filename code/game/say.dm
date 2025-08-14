@@ -53,21 +53,22 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(speaker.get_alt_name())
 		namepart = "[speaker.get_alt_name()]"
 	var/colorpart = "<span style='text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
+	var/patreonsaypart = "<span>" 
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		if(face_name)
 			namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 		if(H.voice_color)
 			colorpart = "<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
-		if(H.client && H.client.patreonlevel() >= GLOB.patreonsaylevel)
-			spans |= SPAN_PATREON_SAY
+		if(H.client && H.client.prefs.patreon_say_color_enabled && H.client.patreon_colored_say_allowed)
+			patreonsaypart = "<span style='color:#[H.client.prefs.patreon_say_color]'>"
 	if(speaker.voicecolor_override)
 		colorpart = "<span style='color:#[speaker.voicecolor_override];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
 	//End name span.
 	var/endspanpart = "</span></span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, "[patreonsaypart][raw_message]</span>", spans, message_mode)]</span></span>"
 
 	var/arrowpart = ""
 
