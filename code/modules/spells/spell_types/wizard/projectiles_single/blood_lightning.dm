@@ -31,7 +31,7 @@
 	impact_type = null
 	hitscan = TRUE
 	movement_type = UNSTOPPABLE
-	damage = 60
+	damage = 80
 	npc_damage_mult = 2
 	damage_type = BURN
 	nodamage = FALSE
