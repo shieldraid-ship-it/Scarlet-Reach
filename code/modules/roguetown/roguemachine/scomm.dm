@@ -21,13 +21,14 @@
 	var/garrisoncolor = DEFAULT_GARRISON_COLOR // NOTE: THIS IS THE SENDER'S COLOR, NOT THE RECEIVER'S
 	var/is_broken = FALSE
 	var/message_received_sound = 'sound/misc/scom.ogg'
+	var/message_received_volume = 100
 	var/target = SCOM_TARGET_COMMONS
 	var/mute_commons = FALSE
 	var/mute_garrison = FALSE
 
 	var/is_setup = FALSE
 
-/datum/scommodule/proc/setup(obj/set_parent_object, set_listening = TRUE, set_speaking = TRUE, set_can_call = FALSE, set_garrisoncolor = DEFAULT_GARRISON_COLOR, set_message_received_sound = 'sound/misc/scom.ogg', set_starting_target = SCOM_TARGET_COMMONS, set_receive_commons = TRUE, set_receive_garrison = FALSE, set_receive_matthios = FALSE, set_receive_inquisitor = FALSE)
+/datum/scommodule/proc/setup(obj/set_parent_object, set_listening = TRUE, set_speaking = TRUE, set_can_call = FALSE, set_garrisoncolor = DEFAULT_GARRISON_COLOR, set_message_received_sound = 'sound/misc/scom.ogg', set_message_received_volume = 100, set_starting_target = SCOM_TARGET_COMMONS, set_receive_commons = TRUE, set_receive_garrison = FALSE, set_receive_matthios = FALSE, set_receive_inquisitor = FALSE)
 	parent_object = set_parent_object
 
 	listening = set_listening
@@ -35,6 +36,7 @@
 	garrisoncolor = set_garrisoncolor 
 	message_received_sound = set_message_received_sound
 	target = set_starting_target
+	message_received_volume = set_message_received_volume
 
 	SSroguemachine.scomm_machines += src
 	if(set_receive_commons)
@@ -228,8 +230,8 @@
 				S.repeat_message(colored_message, src, usedcolor, message_language, tspans, target)
 
 /datum/scommodule/proc/repeat_message(message, datum/scommodule/A, tcolor, message_language = null, list/tspans = list(), target = SCOM_TARGET_COMMONS)
-	if(!is_setup)
-		throw EXCEPTION("YOU MUST CALL 'setup()' ON A SCOMMODULE BEFORE USING IT!!!")
+	if(!is_setup || !parent_object)
+		throw EXCEPTION("YOU MUST CALL 'setup()' ON A SCOMMODULE BEFORE USING IT!!! Object:[parent_object]")
 	if(A == src)
 		return
 	//Vrell - moved these checks to the repeat side to make the code look less ass and make it a bit more dynamic.
@@ -240,7 +242,7 @@
 	if(tcolor)
 		parent_object.voicecolor_override = tcolor
 	if(active_speaking && speaking && message)
-		playsound(parent_object, message_received_sound, 100, TRUE, -1)
+		playsound(parent_object, message_received_sound, message_received_volume, TRUE, -1)
 		parent_object.say(message, spans = tspans, language = message_language)
 	parent_object.voicecolor_override = null
 
@@ -366,7 +368,7 @@
 /obj/structure/roguemachine/scomm/Initialize()
 	. = ..()
 //	icon_state = "scomm[rand(1,2)]"
-	scom.setup(src, TRUE, TRUE, TRUE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE)
+	scom.setup(src, TRUE, TRUE, TRUE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE)
 	scom.mute_garrison = TRUE
 
 	START_PROCESSING(SSroguemachine, src)
@@ -388,6 +390,7 @@
 
 /obj/structure/roguemachine/scomm/Destroy()
 	scom.cleanup()
+	qdel(scom)
 	STOP_PROCESSING(SSroguemachine, src)
 	set_light(0)
 	return ..()
@@ -466,6 +469,7 @@
 
 /obj/item/scomstone/Destroy()
 	scom.cleanup()
+	qdel(scom)
 	return ..()
 
 /obj/item/scomstone/Initialize()
@@ -474,7 +478,7 @@
 	update_icon()
 
 /obj/item/scomstone/proc/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
@@ -497,7 +501,7 @@
 	sellprice = 20
 
 /obj/item/scomstone/bad/scominit()
-	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
+	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/bad/attack_right(mob/user)
 	return
@@ -524,7 +528,7 @@
 	grid_height = 32
 
 /obj/item/scomstone/listenstone/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/listenstone/MiddleClick(mob/user)
 	if(.)
@@ -561,7 +565,7 @@
 	grid_height = 32
 
 /obj/item/scomstone/mattcoin/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/foley/coins1.ogg', SCOM_TARGET_MATTHIOS, FALSE, FALSE, TRUE)
+	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/foley/coins1.ogg', 20, SCOM_TARGET_MATTHIOS, FALSE, FALSE, TRUE)
 
 /obj/item/scomstone/mattcoin/New(loc, ...)
 	. = ..()
@@ -609,12 +613,8 @@
 	grid_height = 32
 	hearrange = 0
 
-/obj/item/scomstone/speakerinq/Destroy()
-	scom.cleanup()
-	return ..()
-
 /obj/item/scomstone/speakerinq/scominit()
-	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, TRUE)
+	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 20, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, TRUE)
 
 /obj/item/scomstone/speakerinq/MiddleClick(mob/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -664,15 +664,19 @@
 
 /obj/structure/listeningdeviceactive/Initialize()
 	. = ..()
-	scom.setup(src, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, FALSE)
+	scom.setup(src, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, FALSE)
 
 /obj/structure/listeningdeviceactive/attack_right(mob/user)
 	to_chat(user, span_info("I begin dismounting the listen-stone..."))
 	if(!do_after(user, 30, src))
 		return
 	new /obj/item/listeningdevice(loc)
-	scom.cleanup()
 	qdel(src)
+
+/obj/structure/listeningdeviceactive/Destroy()
+	scom.cleanup()
+	qdel(scom)
+	return ..()
 
 /obj/structure/listeningdeviceactive/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
 	scom.scom_hear(speaker, message_language, raw_message, FALSE)
@@ -687,7 +691,7 @@
 	hearrange = 0
 
 /obj/item/scomstone/garrison/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/garrison/attack_self(mob/living/user)
 	if(.)
@@ -712,7 +716,7 @@
 	hearrange = 0
 
 /obj/item/scomstone/bad/garrison/scominit()
-	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
+	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
 
 // Curse this deriving from hat but the other scoms deriving from item.
 /obj/item/clothing/head/roguetown/crown/serpcrown
@@ -733,12 +737,16 @@
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/Initialize()
 	. = ..()
-	scom.setup(src, TRUE, TRUE, FALSE, GARRISON_CROWN_COLOR, 'sound/misc/scom.ogg', SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, FALSE, GARRISON_CROWN_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/proc/anti_stall()
 	src.visible_message(span_warning("The Crown of Scarlet Reach crumbles to dust, the ashes spiriting away in the direction of the Keep."))
-	scom.cleanup()
 	qdel(src) //Anti-stall
+
+/obj/item/clothing/head/roguetown/crown/serpcrown/Destroy()
+	scom.cleanup()
+	qdel(scom)
+	return ..()
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_right(mob/living/carbon/human/user)
 	user.changeNext_move(CLICK_CD_MELEE)
