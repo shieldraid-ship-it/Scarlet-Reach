@@ -120,8 +120,6 @@
 		can_parry = FALSE
 
 /obj/item/rogueweapon/obj_fix()
-	..()
-
 	force = initial(force)
 	force_wielded = initial(force_wielded)
 	update_force_dynamic()
@@ -131,7 +129,7 @@
 	wdefense_dynamic = wdefense
 	sharpness = initial(sharpness)
 	can_parry = initial(can_parry)
-	SEND_SIGNAL(src, COMSIG_ROGUEWEAPON_OBJFIX)
+	..()
 
 /obj/item/rogueweapon/rmb_self(mob/user)
 	if(length(alt_intents))
