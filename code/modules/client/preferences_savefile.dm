@@ -7,7 +7,7 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX	34
+#define SAVEFILE_VERSION_MAX	35
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -51,7 +51,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 31) // RAISE THIS TO SAVEFILE_VERSION_MAX (and make sure to add +1 to the version) EVERY TIME YOU ADD SERVER-CHANGING KEYBINDS LIKE CHANGING HOW SAY WORKS!!
 		force_reset_keybindings_direct(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(force_reset_keybindings)), 30)
-	if(current_version < 34)
+	if(current_version < 35)
 		patreon_say_color = "ff7a05"
 		patreon_say_color_enabled = FALSE
 
