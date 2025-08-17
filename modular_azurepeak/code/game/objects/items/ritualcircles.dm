@@ -450,13 +450,18 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							spawn(120)
 								icon_state = "zizo_chalky"
 		if("Path of Rituos")
-			var/onrune = view(1, loc)
-			var/list/folksonrune = list()
-			for(var/mob/living/carbon/human/persononrune in onrune)
-				if(HAS_TRAIT(persononrune, TRAIT_CABAL))
-					folksonrune += persononrune
-			var/target = input(user, "Choose a host") as null|anything in folksonrune
-			if(!target)
+			if(!Adjacent(user))
+				to_chat(user, "You must stand close to the rune to receive Zizo's blessing.")
+				return
+			var/list/valids_on_rune = list()
+			for(var/mob/living/carbon/human/peep in range(0, loc))
+				if(HAS_TRAIT(peep, TRAIT_CABAL))
+					valids_on_rune += peep
+			if(!valids_on_rune.len)
+				loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF THE CABAL!"))
+				return
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in valids_on_rune
+			if(!target || QDELETED(target) || target.loc != loc)
 				return
 			if(do_after(user, 50))
 				user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
@@ -525,16 +530,9 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	neck = /obj/item/clothing/neck/roguetown/bevor
 
 
-/obj/structure/ritualcircle/zizo/proc/rituosbone(src)
-	var/onrune = view(0, loc)
-	var/list/possible_targets = list()
-	for(var/mob/living/carbon/human/persononrune in onrune)
-		possible_targets += persononrune
-	var/mob/living/carbon/human/target
-	if(possible_targets.len)
-		target = pick(possible_targets)
-	else
-		to_chat(usr, "No valid targets are standing on the rune! You must stand directly on the rune to receive Zizo's blessing.")
+/obj/structure/ritualcircle/zizo/proc/rituosbone(mob/living/carbon/human/target)
+	if(!target || QDELETED(target) || target.loc != loc)
+		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
 		return
 	if (!HAS_TRAIT(target, TRAIT_CABAL))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF THE CABAL!"))
@@ -616,11 +614,8 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
-		return 
-	//var/yesorno = list("SUBMISSION", "DEATH")
-	//var/dialoguechoice = input(target, "SUBMISSION OR DEATH", src) as null|anything in yesorno
+		return
 	var/prompt = alert(target, "SUBMISSION OR DEATH",, "SUBMISSION", "DEATH")
-	//switch(dialoguechoice) // fuuck
 	if(prompt == "SUBMISSION")
 		to_chat(target, span_warning("Images of Her Work most grandoise flood your mind, as the heretical knowledge is seared right into your very body and soul."))
 		target.Stun(60)
@@ -632,7 +627,6 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		spawn(20)
 			playsound(target, 'sound/health/slowbeat.ogg', 60)
 			playsound(loc, 'sound/ambience/creepywind.ogg', 80)
-			//target.set_patron(new /datum/patron/inhumen/zizo) //lowkey wanna give convertees like 4-8 learning points for spells in addition to that, +2 arcyne skill levels
 			target.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 			target.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 			target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
@@ -787,11 +781,8 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(target.already_converted_once)
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
-		return 
-	//var/yesorno = list("DEAL", "NO DEAL")
-	//var/dialoguechoice = input(target, "GOOD DEAL!", src) as null|anything in yesorno
+		return
 	var/prompt = alert(target, "GOOD DEAL?",, "GOOD DEAL!", "NO DEAL!")
-	//switch(dialoguechoice) // fuuck
 	if(prompt == "GOOD DEAL!")
 		target.Stun(60)
 		target.Knockdown(60)
@@ -961,10 +952,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return 
-	//var/yesorno = list("KILL KILL KILL!!!", "I DEFY YOU!")
-	//var/dialoguechoice = input(target, "CALL TO CULLING", src) as null|anything in yesorno
 	var/prompt = alert(target, "CULL AND HUNT!",, "KILL KILL KILL!!", "I DEFY YOU!!")
-	//switch(dialoguechoice) // fuuck
 	if(prompt == "KILL KILL KILL!!")
 		target.Stun(60)
 		target.Knockdown(60)
@@ -974,10 +962,6 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		spawn(20)
 			playsound(target, 'sound/misc/heroin_rush.ogg', 100)
 			playsound(target, 'sound/health/fastbeat.ogg', 100)
-			//if(previous_level == null)
-				//var/nada = previous_level
-				//return success
-				//var/no_level = 0
 			target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 			target.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
 			spawn(40)
@@ -1071,9 +1055,6 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		loc.visible_message(span_cult("BLOODY NIMROD!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return 
-	//var/yesorno = list("LEASH", "LASH")
-	//var/dialoguechoice = input(target, "LEASH OR LASH", src) as null|anything in yesorno
-	//switch(dialoguechoice) // fuuck
 	var/prompt = alert(target, "LEASH OF SUBMISSION OR LASH OF DEFIANCE?",, "LEASH", "LASH")
 	if(prompt == "LEASH")
 		to_chat(target, span_warning("Hedonistic visions of excess and indulgence echo in your brain, as a drug-addled haze settles over your mind. Your body yearns for more.")) // helloooOOOOOOOO
