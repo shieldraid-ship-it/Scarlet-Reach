@@ -5,6 +5,9 @@
 #define SCOM_TARGET_GARRISON 1
 #define SCOM_TARGET_MATTHIOS 2
 #define SCOM_TARGET_INQUISITOR 3
+#define SCOM_TARGET_LOUDMOUTH 4
+#define SCOM_TARGET_JABBERLINE 5
+#define SCOM_TARGET_LOUDMOUTH_STRONG 6
 
 // Vrell - This shit needed modularized ages ago. I'm fixing that.
 /datum/scommodule
@@ -13,10 +16,12 @@
 	var/speaking = TRUE
 	var/active_listening = TRUE
 	var/active_speaking = TRUE
+
 	var/scom_number = null
+	var/scom_tag = null
+
 	var/datum/scommodule/calling = null
 	var/datum/scommodule/called_by = null
-	var/spawned_rat = FALSE
 	var/is_dynamic = FALSE
 	var/garrisoncolor = DEFAULT_GARRISON_COLOR // NOTE: THIS IS THE SENDER'S COLOR, NOT THE RECEIVER'S
 	var/is_broken = FALSE
@@ -25,10 +30,14 @@
 	var/target = SCOM_TARGET_COMMONS
 	var/mute_commons = FALSE
 	var/mute_garrison = FALSE
+	var/mute_loudmouth = FALSE
+	var/common_talk_allowed = TRUE
+
+	var/receive_commons = TRUE
 
 	var/is_setup = FALSE
 
-/datum/scommodule/proc/setup(obj/set_parent_object, set_listening = TRUE, set_speaking = TRUE, set_can_call = FALSE, set_garrisoncolor = DEFAULT_GARRISON_COLOR, set_message_received_sound = 'sound/misc/scom.ogg', set_message_received_volume = 100, set_starting_target = SCOM_TARGET_COMMONS, set_receive_commons = TRUE, set_receive_garrison = FALSE, set_receive_matthios = FALSE, set_receive_inquisitor = FALSE)
+/datum/scommodule/proc/setup(obj/set_parent_object, set_common_talk_allowed = TRUE, set_listening = TRUE, set_speaking = TRUE, set_can_call = FALSE, set_garrisoncolor = DEFAULT_GARRISON_COLOR, set_message_received_sound = 'sound/misc/scom.ogg', set_message_received_volume = 100, set_starting_target = SCOM_TARGET_COMMONS, set_receive_commons = TRUE, set_receive_garrison = FALSE, set_receive_matthios = FALSE, set_receive_inquisitor = FALSE, set_scom_tag = null)
 	parent_object = set_parent_object
 
 	listening = set_listening
@@ -37,6 +46,9 @@
 	message_received_sound = set_message_received_sound
 	target = set_starting_target
 	message_received_volume = set_message_received_volume
+	common_talk_allowed = set_common_talk_allowed
+	receive_commons = set_receive_commons
+	scom_tag = set_scom_tag
 
 	SSroguemachine.scomm_machines += src
 	if(set_receive_commons)
@@ -58,9 +70,16 @@
 /datum/scommodule/proc/mute(mob/living/user)
 	if(!is_setup)
 		throw EXCEPTION("YOU MUST CALL 'setup()' ON A SCOMMODULE BEFORE USING IT!!!")
-	active_listening  = !active_listening
-	active_speaking = !active_speaking
-	to_chat(user, span_info("I [active_listening ? "unmute" : "mute"] the [parent_object.name]."))
+	if(receive_commons && !mute_loudmouth)
+		to_chat(user, span_info("I quell the Loudmouth's prattling on the [parent_object.name]. It may be muted entirely still."))
+		mute_loudmouth = TRUE
+	else
+		active_listening  = !active_listening
+		active_speaking = !active_speaking
+		to_chat(user, span_info("I [active_listening ? "unmute" : "mute"] the [parent_object.name]."))
+		if(receive_commons && active_listening)
+			to_chat(user, span_info("I enable the Loudmouth's prattling once more."))
+			mute_loudmouth = FALSE
 
 /datum/scommodule/proc/start_jabberline(mob/living/user)
 	if(!is_setup)
@@ -162,7 +181,28 @@
 	if(!is_setup)
 		throw EXCEPTION("YOU MUST CALL 'setup()' ON A SCOMMODULE BEFORE USING IT!!!")
 	if(scom_number)
-		. += "Its designation is #[scom_number]."
+		. += "Its designation is #[scom_number][scom_tag ? ", labeled as [scom_tag]" : ""].\n"
+		//Shows the directory on all scoms that can do jabberlines.
+		. += "<a href='?src=[REF(src)];directory=1'>Directory</a>"
+
+/datum/scommodule/Topic(href, href_list)
+	..()
+
+	if(!usr)
+		return
+
+	if(href_list["directory"])
+		view_directory(usr)
+
+/datum/scommodule/proc/view_directory(mob/user)
+	var/dat
+	for(var/datum/scommodule/X in SSroguemachine.scomm_jabberlines)
+		if(X.scom_tag)
+			dat += "#[X.scom_number] [X.scom_tag]<br>"
+
+	var/datum/browser/popup = new(user, "scom_directory", "<center>RAT REGISTER</center>", 387, 420)
+	popup.set_content(dat)
+	popup.open(FALSE)
 
 /datum/scommodule/proc/break_scom()
 	if(!is_setup)
@@ -182,7 +222,7 @@
 	SSroguemachine.scomm_garrison -= src
 	SSroguemachine.scomm_matthios -= src
 
-/datum/scommodule/proc/scom_hear(atom/movable/speaker, message_language, raw_message, crown = FALSE)
+/datum/scommodule/proc/scom_hear(atom/movable/speaker, message_language, raw_message, crown = FALSE, list/tspans = list())
 	if(!is_setup)
 		throw EXCEPTION("YOU MUST CALL 'setup()' ON A SCOMMODULE BEFORE USING IT!!!")
 	if(!ishuman(speaker))
@@ -195,7 +235,6 @@
 	var/usedcolor = H.voice_color
 	if(H.voicecolor_override)
 		usedcolor = H.voicecolor_override
-	var/list/tspans = list() // Leaving in even though it's not used for patreons any more.
 	if(length(raw_message) > 100) //When these people talk too much, put that shit in slow motion, yeah
 		/*if(length(raw_message) > 200)
 			if(!spawned_rat)
@@ -209,9 +248,8 @@
 		colored_message = "<span style='color:#[H.client.prefs.patreon_say_color]'>[raw_message]</span>"
 	if(calling)
 		if(calling.calling == src)
-			calling.repeat_message(colored_message, src, usedcolor, message_language, tspans)
+			calling.repeat_message(colored_message, src, usedcolor, message_language, tspans, SCOM_TARGET_JABBERLINE)
 		return
-		colored_message = "<small>[colored_message]</small>" // I fucking hate the order of operations here but this is the best I can do.
 	switch(target)
 		if(SCOM_TARGET_GARRISON)
 			colored_message = "<span style='color:[garrisoncolor]'>[raw_message]</span>" //Prettying up for Garrison line
@@ -225,9 +263,13 @@
 		if(SCOM_TARGET_INQUISITOR)
 			for(var/datum/scommodule/S in SSroguemachine.scomm_inquisitor)
 				S.repeat_message(colored_message, src, usedcolor, message_language, tspans, target)
-		else
+		if(SCOM_TARGET_LOUDMOUTH)
 			for(var/datum/scommodule/S in SSroguemachine.scomm_commons)
 				S.repeat_message(colored_message, src, usedcolor, message_language, tspans, target)
+		else
+			if(common_talk_allowed)
+				for(var/datum/scommodule/S in SSroguemachine.scomm_commons)
+					S.repeat_message(colored_message, src, usedcolor, message_language, tspans, target)
 
 /datum/scommodule/proc/repeat_message(message, datum/scommodule/A, tcolor, message_language = null, list/tspans = list(), target = SCOM_TARGET_COMMONS)
 	if(!is_setup || !parent_object)
@@ -238,6 +280,10 @@
 	if(target == SCOM_TARGET_COMMONS && mute_commons)
 		return
 	if(target == SCOM_TARGET_GARRISON && mute_garrison)
+		return
+	if(target == SCOM_TARGET_LOUDMOUTH && mute_loudmouth)
+		return
+	if(calling && target != SCOM_TARGET_JABBERLINE) // MAKES IT SO JABBERLINES DON'T OUTPUT OTHER STUFF!!!!
 		return
 	if(tcolor)
 		parent_object.voicecolor_override = tcolor
@@ -258,6 +304,7 @@
 	flags_1 = HEAR_1
 	anchored = TRUE
 	verb_say = "squeaks"
+	var/scom_tag //Vrell - USED FOR SETTING TAG IN MAP CREATION!!!!
 
 	var/next_decree = 0
 	var/datum/scommodule/scom = new/datum/scommodule()
@@ -297,25 +344,6 @@
 			return
 		for(var/i in 1 to length(GLOB.laws_of_the_land))
 			. += span_small("[i]. [GLOB.laws_of_the_land[i]]")
-
-/obj/structure/roguemachine/scomm/Topic(href, href_list)
-	..()
-
-	if(!usr)
-		return
-
-	if(href_list["directory"])
-		view_directory(usr)
-
-/obj/structure/roguemachine/scomm/proc/view_directory(mob/user)
-	var/dat
-	for(var/obj/structure/roguemachine/scomm/X in SSroguemachine.scomm_machines)
-		if(X.scom_tag)
-			dat += "#[X.scom_number] [X.scom_tag]<br>"
-
-	var/datum/browser/popup = new(user, "scom_directory", "<center>RAT REGISTER</center>", 387, 420)
-	popup.set_content(dat)
-	popup.open(FALSE)
 
 /obj/structure/roguemachine/scomm/process()
 	if(world.time <= next_decree)
@@ -388,7 +416,7 @@
 /obj/structure/roguemachine/scomm/Initialize()
 	. = ..()
 //	icon_state = "scomm[rand(1,2)]"
-	scom.setup(src, TRUE, TRUE, TRUE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE)
+	scom.setup(src, FALSE, TRUE, TRUE, TRUE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE, scom_tag)
 	scom.mute_garrison = TRUE
 
 	START_PROCESSING(SSroguemachine, src)
@@ -498,7 +526,7 @@
 	update_icon()
 
 /obj/item/scomstone/proc/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
@@ -521,7 +549,7 @@
 	sellprice = 20
 
 /obj/item/scomstone/bad/scominit()
-	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
+	scom.setup(src, FALSE, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/bad/attack_right(mob/user)
 	return
@@ -548,7 +576,7 @@
 	grid_height = 32
 
 /obj/item/scomstone/listenstone/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_COMMONS, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/listenstone/MiddleClick(mob/user)
 	if(.)
@@ -585,7 +613,7 @@
 	grid_height = 32
 
 /obj/item/scomstone/mattcoin/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/foley/coins1.ogg', 20, SCOM_TARGET_MATTHIOS, FALSE, FALSE, TRUE)
+	scom.setup(src, TRUE, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/foley/coins1.ogg', 20, SCOM_TARGET_MATTHIOS, FALSE, FALSE, TRUE)
 
 /obj/item/scomstone/mattcoin/New(loc, ...)
 	. = ..()
@@ -634,7 +662,7 @@
 	hearrange = 0
 
 /obj/item/scomstone/speakerinq/scominit()
-	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 20, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, TRUE)
+	scom.setup(src, FALSE, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 20, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, TRUE)
 
 /obj/item/scomstone/speakerinq/MiddleClick(mob/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -684,7 +712,7 @@
 
 /obj/structure/listeningdeviceactive/Initialize()
 	. = ..()
-	scom.setup(src, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, FALSE)
 
 /obj/structure/listeningdeviceactive/attack_right(mob/user)
 	to_chat(user, span_info("I begin dismounting the listen-stone..."))
@@ -712,13 +740,20 @@
 	anchored = TRUE
 	flags_1 = HEAR_1
 	speech_span = SPAN_ORATOR
-	var/listening = FALSE
-	var/speech_color = null
-	var/loudmouth = FALSE
+	var/datum/scommodule/scom = new/datum/scommodule()
+
+/obj/structure/broadcast_horn/Initialize()
+	. = ..()
+	scominit()
+
+/obj/structure/broadcast_horn/proc/scominit()
+	scom.setup(src, TRUE, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_LOUDMOUTH_STRONG, FALSE, FALSE, FALSE, FALSE)
+	scom.active_listening = FALSE
+	scom.active_speaking = FALSE
 
 /obj/structure/broadcast_horn/examine(mob/user)
 	. = ..()
-	if(listening)
+	if(scom.active_listening)
 		. += "There's a faint skittering coming out of it."
 	else
 		. += "The rats within are quiet."
@@ -728,54 +763,40 @@
 
 /obj/structure/broadcast_horn/proc/toggle_horn()
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-	if(listening)
+	if(scom.active_listening)
 		visible_message(span_notice("[src]'s whine stills."))
-		listening = FALSE
+		scom.active_listening = FALSE
 	else
-		listening = TRUE
+		scom.active_listening = TRUE
 		visible_message(span_notice("[src] squeaks alive."))
 
 /obj/structure/broadcast_horn/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
-	if(!ishuman(speaker))
-		return
-	if(!listening)
-		return
-	var/turf/step_turf = get_step(get_turf(src), src.dir)
+	var/turf/step_turf = get_step(get_turf(src), src.dir) //Vrell - OH BOY DO I LOVE NOT FOLLOWING THE CONVENTIONS SET BY THE CODE THAT CAME BEFORE ME!!!! (not actually that bad but weh)
 	if(get_turf(speaker) != step_turf)
 		return
-	var/mob/living/carbon/human/H = speaker
-	var/usedcolor = H.voice_color
-	if(H.voicecolor_override)
-		usedcolor = H.voicecolor_override
 	var/list/tspans = list()
-	if(H.client.patreonlevel() >= GLOB.patreonsaylevel)
-		tspans |= SPAN_PATREON_SAY
-	if(!raw_message)
-		return
-	if(length(raw_message) > 100)
-		raw_message = "<small>[raw_message]</small>"
 	tspans |= speech_span
-	if(speech_color)
-		raw_message = "<span style='color: [speech_color]'>[raw_message]</span>"
-	for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
-		if(!S.calling && (!loudmouth || S.loudmouth_listening))
-			S.repeat_message(raw_message, src, usedcolor, message_language, tspans)
-	for(var/obj/item/scomstone/S in SSroguemachine.scomm_machines)
-		if(!loudmouth || S.loudmouth_listening)
-			S.repeat_message(raw_message, src, usedcolor, message_language, tspans)
-	for(var/obj/item/listenstone/S in SSroguemachine.scomm_machines)
-		if(!loudmouth || S.loudmouth_listening)
-			S.repeat_message(raw_message, src, usedcolor, message_language, tspans)
-	var/obj/item/clothing/head/roguetown/crown/serpcrown/crowne = SSroguemachine.crown
-	if(crowne && (!loudmouth || crowne.loudmouth_listening))
-		crowne.repeat_message(raw_message, src, usedcolor, message_language, tspans)
+	scom.scom_hear(speaker, message_language, raw_message, FALSE, tspans)
 
 /obj/structure/broadcast_horn/loudmouth
 	name = "\improper Golden Mouth"
 	desc = "The Loudmouth's own gleaming horn, its surface engraved with the ducal crest."
 	icon_state = "broadcaster"
-	speech_color = COLOR_ASSEMBLY_GOLD
-	loudmouth = TRUE
+	var/speech_color = COLOR_ASSEMBLY_GOLD
+
+/obj/structure/broadcast_horn/loudmouth/scominit()
+	scom.setup(src, TRUE, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_LOUDMOUTH, FALSE, FALSE, FALSE, FALSE)
+	scom.active_listening = FALSE
+	scom.active_speaking = FALSE
+
+/obj/structure/broadcast_horn/loudmouth/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	var/turf/step_turf = get_step(get_turf(src), src.dir) //Vrell - OH BOY DO I LOVE NOT FOLLOWING THE CONVENTIONS SET BY THE CODE THAT CAME BEFORE ME!!!! (not actually that bad but weh)
+	if(get_turf(speaker) != step_turf)
+		return
+	var/list/tspans = list()
+	tspans |= speech_span
+	raw_message = "<span style='color: [speech_color]'>[raw_message]</span>"
+	scom.scom_hear(speaker, message_language, raw_message, FALSE, tspans)
 
 /obj/structure/broadcast_horn/loudmouth/attack_hand(mob/living/user)
 	. = ..()
@@ -800,7 +821,7 @@
 	hearrange = 0
 
 /obj/item/scomstone/garrison/scominit()
-	scom.setup(src, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
 
 /obj/item/scomstone/garrison/attack_self(mob/living/user)
 	if(.)
@@ -825,7 +846,7 @@
 	hearrange = 0
 
 /obj/item/scomstone/bad/garrison/scominit()
-	scom.setup(src, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
+	scom.setup(src, FALSE, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/misc/garrisonscom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
 
 // Curse this deriving from hat but the other scoms deriving from item.
 /obj/item/clothing/head/roguetown/crown/serpcrown
@@ -846,7 +867,7 @@
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/Initialize()
 	. = ..()
-	scom.setup(src, TRUE, TRUE, FALSE, GARRISON_CROWN_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
+	scom.setup(src, TRUE, TRUE, TRUE, FALSE, GARRISON_CROWN_COLOR, 'sound/misc/scom.ogg', 100, SCOM_TARGET_COMMONS, TRUE, TRUE, FALSE, FALSE)
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/proc/anti_stall()
 	src.visible_message(span_warning("The Crown of Scarlet Reach crumbles to dust, the ashes spiriting away in the direction of the Keep."))
