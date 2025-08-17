@@ -449,10 +449,10 @@ datum/crafting_recipe/roguetown/sewing/Purdress
     craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/hgambeson/fencer
-	name = "fencing shirt (6 cloth, 2 cured leather)"
+	name = "fencing shirt (5 cloth, 2 fibers)"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
-	reqs = list(/obj/item/natural/cloth = 6,
-				/obj/item/natural/hide/cured = 2)
+	reqs = list(/obj/item/natural/cloth = 5,
+				/obj/item/natural/fibers = 2)
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/chaperon
@@ -725,6 +725,16 @@ datum/crafting_recipe/roguetown/sewing/Purdress
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 25
+
+/datum/crafting_recipe/roguetown/sewing/winterdress_light
+	name = "cold dress (2 fibers, 2 cloth, 1 silk)"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/winterdress_light)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 2,
+				/obj/item/natural/silk = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+	sellprice = 10
 
 /datum/crafting_recipe/roguetown/sewing/skirt
 	name = "skirt (2 fibers, 1 cloth)"

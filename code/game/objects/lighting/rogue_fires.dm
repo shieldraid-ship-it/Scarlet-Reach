@@ -40,7 +40,7 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-			H.visible_message("<span class='info'>[H] warms \his hand over the fire.</span>")
+			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
 
 			if(do_after(H, 15, target = src))
 				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
@@ -577,7 +577,7 @@
 		if(on)
 			var/mob/living/carbon/human/H = user
 			if(istype(H))
-				H.visible_message(span_info("[H] warms \his hand over the embers."))
+				H.visible_message(span_info("[H] warms [user.p_their()] hand over the embers."))
 				if(do_after(H, 50, target = src))
 					var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 					to_chat(H, span_warning("HOT!"))
@@ -762,10 +762,11 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-			H.visible_message("<span class='info'>[H] warms \his hand near the fire.</span>")
+			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand near the fire.</span>")
 
 			if(do_after(H, 100, target = src))
-				H.apply_status_effect(/datum/status_effect/buff/healing, 1)
+				if(!H.construct)
+					H.apply_status_effect(/datum/status_effect/buff/healing, 1)
 				H.add_stress(/datum/stressevent/campfire)
 				to_chat(H, "<span class='info'>The warmth of the fire comforts me, affording me a short rest.</span>")
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch

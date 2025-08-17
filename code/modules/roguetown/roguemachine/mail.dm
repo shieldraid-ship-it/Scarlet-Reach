@@ -12,6 +12,8 @@
 	var/obfuscated = FALSE
 
 /obj/structure/roguemachine/mail/attack_hand(mob/user)
+	if(ishuman(user) && GLOB.carebox.try_retrieve_carebox(user, src))
+		return TRUE
 	if(SSroguemachine.hermailermaster && ishuman(user))
 		var/obj/item/roguemachine/mastermail/M = SSroguemachine.hermailermaster
 		var/mob/living/carbon/human/H = user
@@ -132,7 +134,7 @@
 				playsound(loc, 'sound/magic/hallelujah.ogg', 100, FALSE, -1)
 				playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		return
-	if(istype(P, /obj/item/paper))
+	if(istype(P, /obj/item/paper) || istype(P, /obj/item/smallDelivery))
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
 			var/send2place = input(user, "Where to? (Person or #number)", "SCARLET REACH", null)
 			var/sentfrom = input(user, "Who is this from?", "SCARLET REACH", null)

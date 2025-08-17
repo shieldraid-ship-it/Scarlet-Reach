@@ -78,12 +78,24 @@
 	var/capped_post = enough_sleep_xp_to_advance(skill, 2)
 	var/datum/skill/skillref = GetSkillRef(skill)
 	if(!can_advance_pre && can_advance_post && !silent)
+		if(mind.current.construct)
+			to_chat(mind.current, span_nicegreen(pick(list(
+			"I'm getting a better grasp at [lowertext(skillref.name)].",
+			"With an engineer's help, I feel like I can get better at [lowertext(skillref.name)].",
+			"[skillref.name] starts making more sense to me.",
+			))))
+			return
 		to_chat(mind.current, span_nicegreen(pick(list(
 			"I'm getting a better grasp at [lowertext(skillref.name)]...",
 			"With some rest, I feel like I can get better at [lowertext(skillref.name)]...",
 			"[skillref.name] starts making more sense to me...",
 		))))
 	if(!capped_pre && capped_post && !silent)
+		if(mind.current.construct)
+			to_chat(mind.current, span_nicegreen(pick(list(
+			"My [lowertext(skillref.name)] cannot improve without a skill exhibitor.",
+			))))
+			return
 		to_chat(mind.current, span_nicegreen(pick(list(
 			"My [lowertext(skillref.name)] can no longer improve without some rest and meditation...",
 		))))
@@ -207,11 +219,11 @@
 	var/dream_text = skill.get_random_dream()
 	if(dream_text)
 		to_chat(mind.current, span_notice(dream_text))
-	
+
 	// Notify player if they're benefiting from Malum's blessing for craft skills or sewing
 	if(HAS_TRAIT(mind.current, TRAIT_FORGEBLESSED) && (istype(skill, /datum/skill/craft) || istype(skill, /datum/skill/misc/sewing)))
 		to_chat(mind.current, span_notice("Malum's blessing reduces the dream point cost of your crafting training."))
-	
+
 	sleep_adv_points -= get_skill_cost(skill_type)
 	adjust_sleep_xp(skill_type, -get_requried_sleep_xp_for_skill(skill_type, 1))
 	mind.current.adjust_skillrank(skill_type, 1, FALSE)
