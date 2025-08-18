@@ -9,7 +9,7 @@
 		"The bone snaps through the skin!",
 	)
 	sound_effect = "wetbreak"
-	whp = 40
+	whp = 80
 	woundpain = 100
 	mob_overlay = "frac"
 	can_sew = FALSE
@@ -216,7 +216,7 @@
 		"The spine cracks!",
 		"The spine is broken!",
 	)
-	whp = 100
+	whp = 150
 
 /datum/wound/fracture/neck/on_mob_gain(mob/living/affected)
 	. = ..()
@@ -271,7 +271,7 @@
 		"The pelvis is mauled!",
 		"The pelvic floor caves in!",
 	)
-	whp = 50
+	whp = 80
 	gain_emote = "groin"	//MY PIINTLE!!!!
 	mortal = FALSE
 	bleed_rate = 5
