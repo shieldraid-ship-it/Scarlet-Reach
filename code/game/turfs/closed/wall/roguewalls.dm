@@ -233,11 +233,38 @@
 /turf/closed/wall/mineral/rogue/roofwall/middle
 	icon_state = "roofTurf_M"
 
+/turf/closed/wall/mineral/rogue/roofwall/middle/dir1
+	dir = 1
+
+/turf/closed/wall/mineral/rogue/roofwall/middle/dir8
+	dir = 8
+
+/turf/closed/wall/mineral/rogue/roofwall/middle/dir4
+	dir = 4
+
 /turf/closed/wall/mineral/rogue/roofwall/outercorner
 	icon_state = "roofTurf_OC"
 
+/turf/closed/wall/mineral/rogue/roofwall/outercorner/dir1
+	dir = 1
+
+/turf/closed/wall/mineral/rogue/roofwall/outercorner/dir8
+	dir = 8
+
+/turf/closed/wall/mineral/rogue/roofwall/outercorner/dir4
+	dir = 4
+
 /turf/closed/wall/mineral/rogue/roofwall/innercorner
 	icon_state = "roofTurf_IC"
+
+/turf/closed/wall/mineral/rogue/roofwall/innercorner/dir1
+	dir = 1
+
+/turf/closed/wall/mineral/rogue/roofwall/innercorner/dir8
+	dir = 8
+
+/turf/closed/wall/mineral/rogue/roofwall/innercorner/dir4
+	dir = 4
 
 /turf/closed/wall/mineral/rogue/decowood
 	name = "decorated wooden wall"
