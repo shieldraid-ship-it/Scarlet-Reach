@@ -4,13 +4,14 @@
 	desc = "Those who openly worship Psydon in defiance of the Holy See are seen as heretics, but most are regarded as harmless relics of a bygone age. Tolerated but scorned, they endure quietly, holding to the hope that PSYDON YET LIVES. PSYDON YET ENDURES."
 	worshippers = "Fanatics and Nostalgists"
 	associated_faith = /datum/faith/old_god
-	mob_traits = list(TRAIT_PSYDONITE)
+	mob_traits = list(TRAIT_PSYDONIAN_GRIT)
 	miracles = list(
 		/obj/effect/proc_holder/spell/targeted/touch/orison = CLERIC_ORI,
 		/obj/effect/proc_holder/spell/self/check_boot = CLERIC_T0,
 		/obj/effect/proc_holder/spell/invoked/psydonendure = CLERIC_T1,
 		/obj/effect/proc_holder/spell/self/psydonrespite = CLERIC_T2,
 	)
+	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
 	confess_lines = list(
 		"THERE IS ONLY ONE TRUE GOD!",
 		"PSYDON YET LYVES! PSYDON YET ENDURES!",
@@ -19,7 +20,7 @@
 
 
 /obj/effect/proc_holder/spell/self/check_boot
-	name = "Check Your Boot"
+	name = "BOOT-CHECK"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -104,6 +105,7 @@
 // no he's dead - ok maybe he does
 
 /datum/patron/old_god/can_pray(mob/living/follower)
+	. = ..()
 	. = TRUE
 	// Allows prayer near psycross.
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
