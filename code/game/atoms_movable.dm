@@ -432,9 +432,6 @@
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
 
-	var/turf/old_turf = get_turf(OldLoc)
-	var/turf/new_turf = get_turf(src)
-
 	if(HAS_SPATIAL_GRID_CONTENTS(src))
 		if(old_turf && new_turf && (old_turf.z != new_turf.z \
 			|| GET_SPATIAL_INDEX(old_turf.x) != GET_SPATIAL_INDEX(new_turf.x) \
