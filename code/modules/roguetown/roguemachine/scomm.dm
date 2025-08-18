@@ -9,7 +9,6 @@
 	blade_dulling = DULLING_BASH
 	max_integrity = 0
 	pixel_y = 32
-	flags_1 = HEAR_1
 	anchored = TRUE
 	verb_say = "squeaks"
 	var/next_decree = 0
@@ -23,6 +22,14 @@
 	var/obj/structure/roguemachine/scomm/called_by = null
 	var/spawned_rat = FALSE
 	var/garrisonline = FALSE
+
+/obj/structure/roguemachine/scomm/Initialize()
+	. = ..()
+	become_hearing_sensitive()
+
+/obj/structure/roguemachine/scomm/Destroy()
+	lose_hearing_sensitivity()
+	return ..()
 
 /obj/structure/roguemachine/scomm/OnCrafted(dirin, mob/user)
 	. = ..()
@@ -347,7 +354,6 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
-	flags_1 = HEAR_1
 	muteinmouth = TRUE
 	var/listening = TRUE
 	var/speaking = TRUE
@@ -401,10 +407,12 @@
 
 /obj/item/scomstone/Destroy()
 	SSroguemachine.scomm_machines -= src
+	lose_hearing_sensitivity()
 	return ..()
 
 /obj/item/scomstone/Initialize()
 	. = ..()
+	become_hearing_sensitive()
 	update_icon()
 	SSroguemachine.scomm_machines += src
 
@@ -459,8 +467,7 @@
 	obj_flags = null
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	experimental_inhand = FALSE
-	flags_1 = HEAR_1
+	experimental_inhand = FALSE	
 	muteinmouth = TRUE
 	var/listening = TRUE
 	var/speaking = TRUE
@@ -537,7 +544,6 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
-	flags_1 = HEAR_1
 	muteinmouth = TRUE
 	var/listening = TRUE
 	var/speaking = TRUE
@@ -545,8 +551,11 @@
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/mattcoin/New(loc, ...)
+/obj/item/mattcoin/Initialize()
 	. = ..()
+	become_hearing_sensitive()
+	update_icon()
+	SSroguemachine.scomm_machines += src
 	name = pick("rontz ring", "gold ring")
 
 /obj/item/mattcoin/pickup(mob/living/user)
@@ -591,13 +600,9 @@
 	update_icon()
 
 /obj/item/mattcoin/Destroy()
+	lose_hearing_sensitivity()
 	SSroguemachine.scomm_machines -= src
 	return ..()
-
-/obj/item/mattcoin/Initialize()
-	. = ..()
-	update_icon()
-	SSroguemachine.scomm_machines += src
 
 /obj/item/mattcoin/proc/repeat_message(message, atom/A, tcolor, message_language, list/tspans = list())
 	if(A == src)

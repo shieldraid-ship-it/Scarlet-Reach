@@ -239,7 +239,6 @@
 	force = 19
 	possible_item_intents = list(/datum/intent/sword/cut/short, /datum/intent/sword/thrust/short, /datum/intent/sword/peel)
 	icon_state = "psyswordshort"
-	sheathe_icon = "psyswordshort"
 	gripped_intents = null
 	minstr = 4
 	wdefense = 4
@@ -624,7 +623,6 @@
 	name = "old psydonian longsword"
 	desc = "A finely made longsword, plated in a worn-down veneer of grubby silver. It's long seen better daes. Yet alike PSYDON, it ENDURES."
 	icon_state = "opsysword"
-	sheathe_icon = "opsysword"
 	dropshrink = 1
 
 /obj/item/rogueweapon/sword/long/psysword
@@ -632,7 +630,6 @@
 	desc = "A finely made longsword, plated in a ceremonial veneer of ornate silver - made for felling men and monsters alike.\
 		\"Psydon will deliver those who were mindful of Him to their place of ultimate triumph. No evil will touch them, nor will they grieve.\""
 	icon_state = "psysword"
-	sheathe_icon = "psysword"
 
 /obj/item/rogueweapon/sword/long/psysword/ComponentInitialize()
 	. = ..()							//+3 force, +100 blade int, +50 int, +1 def, make silver
@@ -949,7 +946,6 @@
 	name = "Eucharist"
 	desc = "Etruscan shape falling prey to Otavan craftsmanship. Saint Malum's smiths created an uniquely thin blade, capable of swiftly skewering the unholy and the miscreants through gaps that most claim to have never existed in the first place. <b> Silver-dipped steel crowned upon a basket hilt that keeps righteous hands safe from harm."
 	icon_state = "psyrapier"
-	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
 	wdefense = 7

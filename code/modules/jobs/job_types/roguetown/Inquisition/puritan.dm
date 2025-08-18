@@ -103,7 +103,6 @@
 		/obj/item/grapplinghook = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
 
@@ -114,7 +113,6 @@
 	switch(weapon_choice)
 		if("Eucharist (Rapier)")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/relic(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Daybreak (Whip)")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
@@ -201,7 +199,6 @@
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/psygsword/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/gwstrap, SLOT_BACK_R, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 
