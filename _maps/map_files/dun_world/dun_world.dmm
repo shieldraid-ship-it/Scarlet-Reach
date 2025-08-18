@@ -117,6 +117,12 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods)
+"acj" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors/inq/office)
 "acD" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -42430,11 +42436,10 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "nns" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
+/turf/closed/wall/mineral/rogue/wooddark/end{
+	dir = 4
 	},
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town)
+/area/rogue/indoors/inq/office)
 "nnx" = (
 /obj/structure/closet/crate/chest/neu,
 /obj/item/rope/chain,
@@ -64033,13 +64038,11 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/under/cavewet/bogcaves/sunkencity)
 "tZY" = (
-/obj/structure/stairs{
-	dir = 1
-	},
+/mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame,
 /obj/structure/fluff/railing/border{
-	dir = 8
+	dir = 4
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town)
 "uae" = (
 /obj/structure/spider/stickyweb,
@@ -65432,11 +65435,14 @@
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath)
 "uvq" = (
-/obj/structure/fluff/railing/border{
-	dir = 6
+/obj/structure/stairs{
+	dir = 1
 	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors/inq/office)
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town)
 "uvs" = (
 /mob/living/carbon/human/species/human/northern/searaider/ambush,
 /turf/open/floor/rogue/naturalstone,
@@ -68270,10 +68276,10 @@
 /area/rogue/indoors/town/shop)
 "vnU" = (
 /obj/structure/fluff/railing/border{
-	dir = 1
+	dir = 9
 	},
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors/inq/office)
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town)
 "vnZ" = (
 /obj/item/grown/log/tree/small,
 /turf/open/floor/rogue/blocks,
@@ -69169,6 +69175,13 @@
 /obj/item/rogueweapon/shield/heater,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/fishmandungeon)
+"vDg" = (
+/obj/structure/fluff/psycross/psycrucifix/silver,
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/inq)
 "vDq" = (
 /obj/structure/mineral_door/wood/window{
 	locked = 1;
@@ -71956,12 +71969,11 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap)
 "wvf" = (
-/obj/structure/fluff/psycross/psycrucifix/silver,
 /obj/structure/fluff/railing/border{
-	dir = 6
+	dir = 4
 	},
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/inq)
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors/town)
 "wvg" = (
 /obj/machinery/light/rogue/wallfire/candle/r,
 /turf/open/floor/rogue/hexstone,
@@ -76730,9 +76742,10 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/cave/dukecourt)
 "xUz" = (
-/turf/closed/wall/mineral/rogue/wooddark/end{
-	dir = 4
+/obj/structure/fluff/railing/border{
+	dir = 6
 	},
+/turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/inq/office)
 "xUG" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -251581,11 +251594,11 @@ qyR
 qyR
 wyE
 uBc
-hzG
-hzG
+tZY
+wvf
 uBc
-hzG
-hzG
+tZY
+wvf
 uBc
 njB
 pWT
@@ -252505,7 +252518,7 @@ eKH
 ggq
 eKH
 cDX
-fWU
+lKO
 pqo
 cDX
 aFv
@@ -252959,7 +252972,7 @@ wWw
 uBc
 hTO
 xYJ
-fWU
+uAr
 aFv
 phl
 phl
@@ -254767,7 +254780,7 @@ ngb
 uBc
 xOu
 bdS
-fWU
+lKO
 pWT
 pWT
 njB
@@ -255217,7 +255230,7 @@ uBc
 uBc
 uBc
 cDX
-fWU
+lKO
 pqo
 cDX
 njB
@@ -354634,7 +354647,7 @@ ujm
 ujm
 qwK
 tYz
-wvf
+vDg
 aTh
 nxq
 nxq
@@ -369556,8 +369569,8 @@ gev
 kgT
 xWk
 kvk
-tZY
-nns
+uvq
+vnU
 cMj
 rZj
 xWk
@@ -470351,7 +470364,7 @@ lGw
 xOA
 xOA
 xOA
-vnU
+acj
 nmK
 fuN
 elU
@@ -470803,7 +470816,7 @@ lGw
 xOA
 xOA
 xOA
-vnU
+acj
 nmK
 lla
 ehn
@@ -471250,12 +471263,12 @@ cxA
 cxA
 txA
 svh
-uvq
+xUz
 orE
 orE
 iQJ
 xOA
-vnU
+acj
 nmK
 lla
 ehn
@@ -471707,7 +471720,7 @@ xOA
 xOA
 xOA
 xOA
-vnU
+acj
 nmK
 lla
 ehn
@@ -472159,7 +472172,7 @@ xOA
 xOA
 xOA
 xOA
-vnU
+acj
 nmK
 fuN
 elU
@@ -473063,7 +473076,7 @@ ahf
 ahf
 ahf
 uRj
-xUz
+nns
 orE
 kIl
 nmZ
