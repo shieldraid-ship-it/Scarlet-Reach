@@ -130,7 +130,7 @@
 				message_self = span_notice("I'm sewn back together by sacred medicine!")
 				// pestra always heals a little more toxin damage and restores a bit more blood
 				target.adjustToxLoss(-situational_bonus)
-				target.blood_volume += BLOOD_VOLUME_SURVIVE/2
+				target.blood_volume += BLOOD_VOLUME_SURVIVE/3
 			if(/datum/patron/divine/malum)
 				message_out = span_info("A tempering heat is discharged out of [target]!")
 				message_self = span_info("I feel the heat of a forge soothing my pains!")
@@ -496,7 +496,7 @@
 	update_icon()
 	return
 
-/*
+
 //Universal miracle T3 miracle.
 //Instantly heals all wounds & damage on a selected limb.
 //Long CD (so a Medical class would still outpace this if there's more than one patient to heal)
@@ -651,4 +651,4 @@
 				bloodbeam.End()
 				return TRUE
 		bloodbeam.End()
-		return TRUE*/
+		return TRUE
