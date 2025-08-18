@@ -43,7 +43,7 @@
 	results = list(/datum/reagent/medicine/minorhealthpot = 10)
 	required_reagents = list(/datum/reagent/medicine/healthpot = 5, /datum/reagent/water = 5)
 
-/datum/chemical_reaction/minorpot
+/datum/chemical_reaction/healthpot
 	name = "Health Potion"
 	id = /datum/reagent/medicine/healthpot
 	results = list(/datum/reagent/medicine/healthpot = 10)
@@ -91,7 +91,7 @@
 /datum/reagent/medicine/stronghealth
 	name = "Strong Health Potion"
 	description = "Quickly regenerates all types of damage."
-	color = "#820000be"
+	color = "#820000"
 	taste_description = "rich lifeblood"
 	metabolization_rate = REAGENTS_METABOLISM
 
@@ -114,6 +114,12 @@
 		M.adjustOrganLoss(organny.slot, -7)
 	..()
 	. = 1
+
+/datum/chemical_reaction/manapotdilution
+	name = "Diluted Strong Mana Potion"
+	id = /datum/reagent/medicine/manapot
+	results = list(/datum/reagent/medicine/manapot = 10)
+	required_reagents = list(/datum/reagent/medicine/strongmana = 5, /datum/reagent/water = 5)
 
 //Someone please remember to change this to actually do mana at some point?
 /datum/reagent/medicine/manapot
@@ -142,6 +148,12 @@
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
 		M.energy_add(120)
 	..()
+
+/datum/chemical_reaction/stampot
+	name = "Diluted Strong Stamina Potion"
+	id = /datum/reagent/medicine/stampot
+	results = list(/datum/reagent/medicine/stampot = 10)
+	required_reagents = list(/datum/reagent/medicine/strongstam = 5, /datum/reagent/water = 5)
 
 /datum/reagent/medicine/stampot
 	name = "Stamina Potion"
