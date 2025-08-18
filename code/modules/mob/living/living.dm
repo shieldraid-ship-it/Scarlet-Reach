@@ -420,7 +420,7 @@
 				log_combat(src, M, "tried grabbing", addition="passive grab")
 				stop_pulling()
 				return
-
+		
 		// Makes it so people who recently broke out of grabs cannot be grabbed again
 		if(TIMER_COOLDOWN_RUNNING(M, "broke_free") && M.stat == CONSCIOUS)
 			M.visible_message(span_warning("[M] slips from [src]'s grip."), \
@@ -482,6 +482,11 @@
 		src.put_in_hands(O)
 		O.update_hands(src)
 		update_grab_intents()
+
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(M.cmode && M.stat == CONSCIOUS)
+			M.resist_grab(freeresist = TRUE) //Automatically attempt to break a passive grab if defender's combat mode is on. Anti-grabspam measure.
 
 /mob/living/proc/send_pull_message(mob/living/target)
 	target.visible_message(span_warning("[src] grabs [target]."), \
@@ -1010,14 +1015,13 @@
 	if(!can_resist() || surrendering)
 		return
 
-	changeNext_move(CLICK_CD_RESIST)
-
 	if(atkswinging)
 		stop_attack(FALSE)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(pulledby)
+		changeNext_move(8)
 		var/mob/living/P
 		if(isliving(pulledby))
 			P = pulledby
@@ -1032,27 +1036,26 @@
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
+		changeNext_move(CLICK_CD_RESIST)
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
+		changeNext_move(CLICK_CD_RESIST)
 		var/obj/C = loc
 		C.container_resist(src)
 
 	else if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
+			changeNext_move(CLICK_CD_RESIST)
 		else if(has_status_effect(/datum/status_effect/leash_pet))
 			if(istype(src, /mob/living/carbon))
 				src:resist_leash()
+				changeNext_move(CLICK_CD_RESIST)
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
-
-	else if(mobility_flags & MOBILITY_MOVE)
-		if(on_fire)
-			resist_fire() //stop, drop, and roll
-		else if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
+			changeNext_move(CLICK_CD_RESIST)
 
 /mob/living/proc/submit(var/instant = FALSE)
 	set name = "Yield"
@@ -1127,7 +1130,7 @@
 /mob/proc/resist_grab(moving_resist)
 	return TRUE //returning 0 means we successfully broke free
 
-/mob/living/resist_grab(moving_resist)
+/mob/living/resist_grab(moving_resist, freeresist = FALSE)
 	. = TRUE
 
 	var/wrestling_diff = 0
@@ -1164,7 +1167,8 @@
 
 	if(moving_resist && client) //we resisted by trying to move
 		client.move_delay = world.time + 20
-	stamina_add(rand(5,15))
+	if(!freeresist)
+		stamina_add(rand(5,15))
 
 	if(!prob(resist_chance))
 		var/rchance = ""
