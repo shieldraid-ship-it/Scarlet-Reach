@@ -211,6 +211,7 @@
 #define BCLASS_BURN			"charring"
 #define BCLASS_PEEL			"peel"
 #define BCLASS_EFFECT		"effect"
+#define BCLASS_PUNISH		"punish"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
