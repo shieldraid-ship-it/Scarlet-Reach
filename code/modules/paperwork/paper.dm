@@ -458,6 +458,9 @@
 			return qdel(src)
 	if(!P.can_be_package_wrapped())
 		return ..()
+		
+	if(istype(src, /obj/item/paper/inqslip))
+		return
 
 	to_chat(user, span_info("I start to wrap [P] in [src]..."))
 	if(do_after(user, 30, 0, target = src))
@@ -607,4 +610,7 @@
 	return 1
 
 /obj/item/smallDelivery/can_be_package_wrapped()
+	return 0
+
+/obj/item/inqarticles/indexer/can_be_package_wrapped()
 	return 0

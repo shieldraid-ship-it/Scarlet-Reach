@@ -38,6 +38,7 @@
 	H.adjust_skillrank(/datum/skill/labor/fishing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/magic/holy, 4, TRUE)
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	beltr = /obj/item/flashlight/flare/torch/lantern/psycenser
