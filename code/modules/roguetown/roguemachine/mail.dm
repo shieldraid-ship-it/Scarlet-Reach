@@ -203,6 +203,8 @@
 			if(I.signee && I.signed)
 				var/no
 				var/accused
+				var/stopfarming
+				var/bonuses = 2
 				var/cursedblood
 				var/indexed
 				var/selfreport
@@ -216,21 +218,35 @@
 				if(I.paired)	
 					if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
 						selfreport = TRUE
-						indexed = TRUE
-					if(I.paired.subject && I.paired.full && GLOB.indexed && !selfreport)
+						indexed = TRUE	
+					if(I.paired.subject && I.paired.full && !selfreport)
+						if(I.paired.cursedblood)
+							if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD))
+								stopfarming = TRUE
 							else
-								GLOB.indexed += "[I.signee]"
+								ADD_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD, "mail")
+								cursedblood = TRUE
+								if(GLOB.cursedsamples.len)
+									GLOB.cursedsamples += ", [I.paired.subject.mind]"
+								else
+									GLOB.cursedsamples += "[I.paired.subject.mind]"			
+						if(GLOB.indexed)
 							if(HAS_TRAIT(I.paired.subject.mind, TRAIT_INDEXED))
+								indexed = TRUE
+							if(!indexed)
+								ADD_TRAIT(I.paired.subject.mind, TRAIT_INDEXED, "mail")
+								if(GLOB.indexed.len)
+									GLOB.indexed += ", [I.signee]"
+								else
+									GLOB.indexed += "[I.signee]"
 				if(GLOB.accused && !selfreport)
-					if(", [I.signee]" in GLOB.accused)
-						accused = TRUE
-					if("[I.signee]" in GLOB.accused)
+					if(HAS_TRAIT(I.signee.mind, TRAIT_ACCUSED))
 						accused = TRUE
 				if(GLOB.confessors && !selfreport)
-					if(", [I.signee]" in GLOB.confessors)
-						no = TRUE
+					if(HAS_TRAIT(I.signee.mind, TRAIT_CONFESSED))
 						no = TRUE
 					if(!no)
+						ADD_TRAIT(I.signee.mind, TRAIT_CONFESSED, "mail")
 						if(GLOB.confessors.len)
 							GLOB.confessors += ", [I.signee]"
 						else

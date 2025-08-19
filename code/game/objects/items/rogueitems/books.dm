@@ -228,7 +228,6 @@
 	if(in_range(user, src) || isobserver(user))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/m
-		if(sect == "sect1" || sect == "sect3")
 		if(sect)
 			var/list/verses = world.file2list("strings/psy[sect].txt")
 			m = pick(verses)
