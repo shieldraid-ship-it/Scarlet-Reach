@@ -51210,10 +51210,6 @@
 /area/rogue/indoors/shelter/woods)
 "pXp" = (
 /obj/structure/closet/crate/chest/neu_iron,
-/obj/item/paper/confession,
-/obj/item/paper/confession,
-/obj/item/paper/confession,
-/obj/item/paper/confession,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church/basement)
 "pXr" = (
@@ -55513,11 +55509,6 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
 "roa" = (
-/obj/item/paper/confession,
-/obj/item/paper/confession,
-/obj/item/paper/confession,
-/obj/item/paper/confession,
-/obj/item/paper/confession,
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church/basement)
@@ -483281,7 +483272,6 @@ eGx
 aBB
 bGf
 bGf
-bGf
 oci
 pQH
 pQH
@@ -483293,6 +483283,7 @@ pQH
 pQH
 pQH
 lxH
+bGf
 bGf
 bGf
 bGf
@@ -483732,7 +483723,6 @@ vvB
 vvB
 aBB
 bGf
-bGf
 oci
 peP
 cDX
@@ -483745,6 +483735,7 @@ cDX
 vOg
 cMj
 sMN
+bGf
 bGf
 bGf
 bGf
@@ -484184,7 +484175,6 @@ vvB
 aBB
 aBB
 bGf
-bGf
 fxl
 cDX
 sKa
@@ -484197,6 +484187,7 @@ lKo
 gOX
 cMj
 hjx
+bGf
 bGf
 bGf
 bGf
@@ -484636,7 +484627,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 guo
 pmc
@@ -484649,6 +484639,7 @@ cDX
 erg
 cMj
 sMN
+bGf
 bGf
 bGf
 bGf
@@ -485088,7 +485079,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 guo
 guo
 svl
@@ -485101,6 +485091,7 @@ dyM
 wzW
 rvH
 sMN
+bGf
 bGf
 bGf
 bGf
@@ -485540,7 +485531,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 guo
 rxb
@@ -485553,6 +485543,7 @@ bqA
 ehk
 ehk
 vaU
+bGf
 bGf
 bGf
 bGf
@@ -485992,7 +485983,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 gyu
 gyu
@@ -486003,6 +485993,7 @@ dPP
 qke
 hjx
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -486444,7 +486435,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 hRk
 fUN
@@ -486455,6 +486445,7 @@ nuL
 bHl
 sMN
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -486896,7 +486887,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 oPP
 cMj
 cMj
@@ -486907,6 +486897,7 @@ oEm
 cEb
 sMN
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -487348,7 +487339,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 vOg
 sZP
@@ -487359,6 +487349,7 @@ rBr
 pRK
 hkI
 lxH
+bGf
 bGf
 bGf
 bGf
@@ -487800,7 +487791,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 gyu
 gyu
@@ -487811,6 +487801,7 @@ cDX
 gyu
 gyu
 sMN
+bGf
 bGf
 bGf
 bGf
@@ -488252,7 +488243,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 oPP
 wlE
 xWk
@@ -488263,6 +488253,7 @@ lEI
 xJg
 kgT
 hjx
+bGf
 bGf
 bGf
 bGf
@@ -488704,7 +488695,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 fxl
 rUp
 bAY
@@ -488716,6 +488706,7 @@ rUp
 dID
 sMN
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -489156,7 +489147,6 @@ aBB
 aBB
 aBB
 aBB
-bGf
 fxl
 gyu
 gyu
@@ -489168,6 +489158,7 @@ gyu
 gyu
 sMN
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -489608,7 +489599,6 @@ aBB
 aBB
 aBB
 aBB
-bGf
 fxl
 cuE
 xWk
@@ -489620,6 +489610,7 @@ uFF
 qTq
 hjx
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -490060,7 +490051,6 @@ aBB
 aBB
 aBB
 aBB
-bGf
 oPP
 xWk
 xWk
@@ -490072,6 +490062,7 @@ gOX
 cMj
 sMN
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -490512,7 +490503,6 @@ aBB
 aBB
 aBB
 aBB
-bGf
 fxl
 rUp
 nqn
@@ -490524,6 +490514,7 @@ vOg
 lbf
 sMN
 wiy
+bGf
 bGf
 bGf
 bGf
@@ -490964,7 +490955,6 @@ aBB
 aBB
 aBB
 aBB
-bGf
 dkV
 tlB
 gyu
@@ -490975,6 +490965,7 @@ cDX
 gyu
 bqA
 vaU
+bGf
 bGf
 bGf
 bGf
@@ -491417,7 +491408,6 @@ aBB
 aBB
 aBB
 bGf
-bGf
 dkV
 ehk
 ehk
@@ -491426,6 +491416,7 @@ lbU
 ehk
 ehk
 vaU
+bGf
 bGf
 bGf
 bGf
