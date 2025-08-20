@@ -10,7 +10,7 @@
 	disallowed_races = list(
 		/datum/species/lamia,
 	)
-	allowed_patrons = ALL_DIVINE_PATRONS //psydon is dead confirmed
+	allowed_patrons = list(/datum/patron/old_god) //You MUST have a Psydonite character to start. Just so people don't get japed into Oops Suddenly Psydon!
 	tutorial = "You have been sent here as an envoy from the Sovereignty of Holy see of the Ten : a silver-tipped olive branch, unmatched in aptitude and unshakable in faith to the Ten. Though you might be ostracized due to your overzealous beliefs, neither the Church nor Crown can deny your value, whenever matters of inhumenity arise to threaten this fief."
 	whitelist_req = TRUE
 	cmode_music = 'sound/music/inquisitorcombat.ogg'
@@ -106,7 +106,6 @@
 		/obj/item/grapplinghook = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
 
@@ -117,14 +116,12 @@
 	switch(weapon_choice)
 		if("Eucharist (Rapier)")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/relic(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Daybreak (Whip)")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Stigmata (Halberd)")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 
 
@@ -191,7 +188,6 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal/psy, SLOT_BACK_R, TRUE)
 			var/annoyingbag = H.get_item_by_slot(SLOT_BACK_L)
 			qdel(annoyingbag)
-			H.equip_to_slot(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/storage/keyring/puritan, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
@@ -203,8 +199,6 @@
 		if("Apocrypha (Greatsword) and a Silver Dagger")
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/psygsword/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_R, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 
