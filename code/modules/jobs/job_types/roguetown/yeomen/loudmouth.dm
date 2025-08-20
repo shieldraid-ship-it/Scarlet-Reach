@@ -20,7 +20,7 @@
 /datum/outfit/job/roguetown/loudmouth/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(should_wear_femme_clothes(H))
-		pants = /obj/item/clothing/under/roguetown/tights/stockings/black
+		pants = /obj/item/clothing/under/roguetown/tights/sailor //Booty shorts because I needed to replace the stockings with something.
 	else
 		pants = /obj/item/clothing/under/roguetown/tights/black
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black

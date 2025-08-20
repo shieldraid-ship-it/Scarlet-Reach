@@ -69,6 +69,14 @@
 		/datum/customizer_choice/organ/penis/tentacle,
 		)
 
+/datum/customizer/organ/penis/lamia
+	customizer_choices = list(
+		/datum/customizer_choice/organ/penis/tapered,
+		/datum/customizer_choice/organ/penis/tapered_double,
+		/datum/customizer_choice/organ/penis/tapered_double_knot,
+		/datum/customizer_choice/organ/penis/tentacle,
+		)
+
 /datum/customizer/organ/penis/canine
 	customizer_choices = list(
 		/datum/customizer_choice/organ/penis/human_anthro,

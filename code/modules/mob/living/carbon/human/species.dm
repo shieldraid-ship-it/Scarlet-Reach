@@ -252,6 +252,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/get_skin_list()
 	return GLOB.skin_tones
 
+/datum/species/proc/get_skin_list_tooltip()
+	return GLOB.skin_tones
+
 /datum/species/proc/get_hairc_list()
 	return GLOB.haircolor
 
@@ -595,6 +598,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/is_inhumen = HAS_TRAIT(H, TRAIT_INHUMEN_ANATOMY)
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)
+//	var/is_lamia = !!H.get_lamian_tail()
 
 	switch(slot)
 		if(SLOT_HANDS)
@@ -681,7 +685,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(SLOT_SHOES)
 			if(H.shoes)
 				return FALSE
-			if(is_nudist || is_inhumen)
+			if(is_nudist || is_inhumen) // || is_lamia
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHOES) )
 				return FALSE
@@ -753,8 +757,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_CLOAK)
 			if(H.cloak)
-				return FALSE
-			if(is_nudist)
 				return FALSE
 			if( (I.slot_flags & ITEM_SLOT_BACK_R) )
 				if(H.backr)
@@ -1247,7 +1249,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			message_verb = "[pick(user.used_intent.attack_verb)]"
 		var/message_hit_area = ""
 		if(selzone)
-			message_hit_area = " in the [span_userdanger(parse_zone(selzone))]"
+			message_hit_area = " in the [span_userdanger(parse_zone(selzone, affecting))]"
 		var/attack_message = "[user] [message_verb] [target][message_hit_area]!"
 		var/attack_message_local = "[user] [message_verb] me[message_hit_area]!"
 		target.visible_message(span_danger("[attack_message][target.next_attack_msg.Join()]"),\
@@ -1423,9 +1425,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				if(affecting)
 					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, user.zone_selected, crit_message = TRUE)
-			target.visible_message(span_danger("[user] stomps [target]![target.next_attack_msg.Join()]"), \
-							span_danger("I'm stomped by [user]![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("I stomp on [target]![target.next_attack_msg.Join()]"))
+					if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+						target.visible_message(span_danger("[user] stomps [target]![target.next_attack_msg.Join()]"), \
+						span_danger("I'm stomped by [user]![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("I stomp on [target]![target.next_attack_msg.Join()]"))
+					else
+						target.visible_message(span_danger("[user] crushes [target] underneath them![target.next_attack_msg.Join()]"), \
+						span_danger("[user] crushes me underneath them![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("I crush [target] underneath myself![target.next_attack_msg.Join()]"))
 			target.next_attack_msg.Cut()
 			log_combat(user, target, "kicked")
 			user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
@@ -1458,7 +1465,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(stander)
 				shove_blocked = TRUE
 		else
-			target.Move(target_shove_turf, shove_dir)
+			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL)) // basically a 2-tile kick, straight up instant. Works with walls and tables for knockdowns
+				target.Move(target_shove_turf, shove_dir)
+				target_oldturf = target.loc
+				shove_dir = get_dir(user.loc, target_oldturf)
+				target_shove_turf = get_step(target.loc, shove_dir)
+				target.Move(target_shove_turf, shove_dir)
+			else
+				target.Move(target_shove_turf, shove_dir)
 			if(get_turf(target) == target_oldturf)
 				if(stander)
 					target_table = locate(/obj/structure/table) in target_shove_turf.contents
@@ -1466,9 +1480,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				if((stander && target.stamina >= target.max_stamina) || target.IsOffBalanced()) //if you are kicked while fatigued, you are knocked down no matter what
 					target.Knockdown(target.IsOffBalanced() ? SHOVE_KNOCKDOWN_SOLID : 100)
-					target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
-					span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-					to_chat(user, span_danger("I kick [target.name], knocking them down!"))
+					if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+						target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
+						span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("I kick [target.name], knocking them down!"))
+					else
+						target.visible_message(span_danger("[user.name] pulls [target.name] right down onto the ground!"),
+						span_danger("I'm pulled down by [user.name]'s tail!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, span_danger("I pull [target.name], right down onto the ground!"))
 					log_combat(user, target, "kicked", "knocking them down")
 
 		if(shove_blocked && !target.is_shove_knockdown_blocked() && !target.buckled)
@@ -1486,29 +1505,51 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							break
 			if((!target_table && !target_collateral_mob) || directional_blocked)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-				target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
-								span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-				to_chat(user, span_danger("I kick [target.name], knocking them down!"))
+				if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+					target.visible_message(span_danger("[user.name] kicks [target.name], knocking them down!"),
+									span_danger("I'm knocked down from a kick by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("I kick [target.name], knocking them down!"))
+				else
+					target.visible_message(span_danger("[user.name] tailslams [target.name], knocking them down!"),
+									span_danger("I'm knocked down from a tailslam by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("I slam [target.name] with my tail, knocking them down!"))
 				log_combat(user, target, "kicked", "knocking them down")
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-				target.visible_message(span_danger("[user.name] kicked [target.name] onto \the [target_table]!"),
-								span_danger("I'm kicked onto \the [target_table] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-				to_chat(user, span_danger("I kick [target.name] onto \the [target_table]!"))
-				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+				if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+					target.visible_message(span_danger("[user.name] kicked [target.name] onto \the [target_table]!"),
+									span_danger("I'm kicked onto \the [target_table] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("I kick [target.name] onto \the [target_table]!"))
+					target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+				else
+					target.visible_message(span_danger("[user.name]'s tail pushed [target.name] onto \the [target_table]!"),
+									span_danger("I'm pushed onto \the [target_table] by [user.name]'s tail!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("I push [target.name] onto \the [target_table] with my tail!"))
+					target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 				log_combat(user, target, "kicked", "onto [target_table] (table)")
 			else if(target_collateral_mob)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target_collateral_mob.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-				target.visible_message(span_danger("[user.name] kicks [target.name] into [target_collateral_mob.name]!"),
-					span_danger("I'm kicked into [target_collateral_mob.name] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-				to_chat(user, span_danger("I kick [target.name] into [target_collateral_mob.name]!"))
+				if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+					target.visible_message(span_danger("[user.name] kicks [target.name] into [target_collateral_mob.name]!"),
+						span_danger("I'm kicked into [target_collateral_mob.name] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("I kick [target.name] into [target_collateral_mob.name]!"))
+				else
+					target.visible_message(span_danger("[user.name]'s tail slams [target.name] into [target_collateral_mob.name]!"),
+						span_danger("I'm slammed into [target_collateral_mob.name] by [user.name]'s tail!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+					to_chat(user, span_danger("I slam [target.name] into [target_collateral_mob.name] with my tail!"))
 				log_combat(user, target, "kicked", "into [target_collateral_mob.name]")
 		else
-			target.visible_message(span_danger("[user.name] kicks [target.name]!"),
-							span_danger("I'm kicked by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("I kick [target.name]!"))
+			if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+				target.visible_message(span_danger("[user.name] kicks [target.name]!"),
+								span_danger("I'm kicked by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, span_danger("I kick [target.name]!"))
+			else
+				target.visible_message(span_danger("[user.name] tailslams [target.name]!"),
+								span_danger("I'm tailslammed by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, span_danger("I slam [target.name] with my tail!"))
 			log_combat(user, target, "kicked")
+
 
 		var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
@@ -1664,7 +1705,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	I.funny_attack_effects(H, user, nodmg)
 
-	H.send_item_attack_message(I, user, parse_zone(selzone))
+	H.send_item_attack_message(I, user, parse_zone(selzone, affecting))
 
 	if(nodmg)
 		return FALSE //dont play a sound
