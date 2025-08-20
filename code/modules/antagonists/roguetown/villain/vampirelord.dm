@@ -65,7 +65,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix)
 	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
 	owner.current.verbs |= /mob/living/carbon/human/proc/vampire_telepathy
-	owner.current.verbs |= /mob/living/carbon/human/proc/disguise_button
 	vamp_look()
 	if(isspawn)
 		owner.current.verbs |= /mob/living/carbon/human/proc/disguise_button
