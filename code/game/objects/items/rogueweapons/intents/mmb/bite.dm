@@ -117,7 +117,6 @@
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(user.mind)
-					var/datum/antagonist/werewolf/lesser/WW = user.mind.has_antag_datum(/datum/antagonist/werewolf/lesser)
 					if(!HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
 						caused_wound?.werewolf_infect_attempt()
 						
@@ -252,7 +251,6 @@
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(user.mind)
-					var/datum/antagonist/werewolf/lesser/WW = user.mind.has_antag_datum(/datum/antagonist/werewolf/lesser)
 					if(!HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
 						caused_wound?.werewolf_infect_attempt()
 				if(prob(30))
@@ -365,6 +363,8 @@
 						VDrinker.handle_vitae(1000)
 				else
 					to_chat(user, span_warning("No more vitae from this blood..."))
+		else if(HAS_TRAIT(user,TRAIT_NOMETABOLISM))
+			//for Golems. I'd use trait_nohunger but I'm not entirely sure whether it'd mess with any other stuff
 		else if(HAS_TRAIT(user, TRAIT_HORDE))
 			// Horde trait allows safe blood drinking
 		else

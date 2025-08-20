@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	data += "<font color='#FFD700'><span class='bold'>Zardmen & Dracon:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_LIZARDS] + GLOB.scarlet_round_stats[STATS_ALIVE_DRACON]]<br>"
 	data += "<font color='#d49d7c'><span class='bold'>Half & Wildkins:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_HALFKIN] + GLOB.scarlet_round_stats[STATS_ALIVE_WILDKIN]]<br>"
 	data += "<font color='#99dfd5'><span class='bold'>Lupians, Vulpkin & Tabaxi:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_LUPIANS] + GLOB.scarlet_round_stats[STATS_ALIVE_VULPS] + GLOB.scarlet_round_stats[STATS_ALIVE_TABAXI]]<br>"
-	data += "<font color='#c0c6c7'><span class='bold'>Golems:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_GOLEMS]]<br>"
+	data += data += "<font color='#c0c6c7'><span class='bold'>Golems & Dolls:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_GOLEMS] + GLOB.scarlet_round_stats[STATS_ALIVE_DOLLS]]<br>"
 	data += "<font color='#9ACD32'><span class='bold'>Fluvian & Axians:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_MOTHS] + GLOB.scarlet_round_stats[STATS_ALIVE_AXIAN]]<br>"
 	data += "</div>"
 
@@ -1553,6 +1553,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/show_character_previews(mutable_appearance/MA)
 	var/pos = 0
+	var/atom/movable/screen/char_preview/background = LAZYACCESS(char_render_holders, "bg")
+	if(background)
+		screen -= background
+		char_render_holders -= background
+		qdel(background)
+	background = new()
+	LAZYSET(char_render_holders, "bg", background)
+	screen += background
+	background.screen_loc = "character_preview_map:0,0 to 3,3"
+
+	// not cardinal anymore, makes taurs more clear
 	for(var/D in GLOB.cardinals)
 		pos++
 		var/atom/movable/screen/char_preview/O = LAZYACCESS(char_render_holders, "[D]")
@@ -1567,13 +1578,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		O.dir = D
 		switch(pos)
 			if(1)
-				O.screen_loc = "character_preview_map:1:2,2:-18"
+				O.screen_loc = "character_preview_map:2,2"
 			if(2)
-				O.screen_loc = "character_preview_map:0:2,2:-18"
+				O.screen_loc = "character_preview_map:1,2"
 			if(3)
-				O.screen_loc = "character_preview_map:1:2,0:10"
+				O.screen_loc = "character_preview_map:1,1"
 			if(4)
-				O.screen_loc = "character_preview_map:0:2,0:10"
+				O.screen_loc = "character_preview_map:2,1"
 
 /client/proc/clear_character_previews()
 	for(var/atom/movable/screen/S in char_render_holders)

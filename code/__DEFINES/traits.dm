@@ -49,11 +49,13 @@
 #define TRAIT_GUARDSMAN "Vigilant Guardsman"
 #define TRAIT_TAVERN_FIGHTER "Tavern Fighter"
 #define TRAIT_WOODSMAN "Talented Woodsman"
+#define TRAIT_LAMIAN_TAIL "Lamian Tail"
 #define TRAIT_DUNGEONMASTER "Ruthless Jailor"
 #define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Member of the Otavan Inquisition"
 #define TRAIT_GOODTRAINER "Good Trainer"
+#define TRAIT_BADTRAINER "Bad Trainer"
 #define TRAIT_OUTDOORSMAN "Outdoorsman"
 #define TRAIT_SEA_DRINKER "Denizen of the Deep"
 #define TRAIT_STUDENT		"Student"
@@ -175,6 +177,7 @@
 #define TRAIT_EORAN_SERENE "Eoran Serenity"
 #define TRAIT_NECRAS_VOW "Necra's Vow"
 #define TRAIT_DYES "Dyemaster"
+#define TRAIT_GOODWRITER "Great Writer"
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
 
@@ -265,6 +268,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DEPRAVED = span_info("The languid scent of Her debauchery is known to me."),
 	TRAIT_SILVER_BLESSED = span_info("I am anointed with holy silver, which preserves me from curses that bite."),
 	TRAIT_GOODTRAINER = span_info("I am a good teacher, and when it comes to weaponry I can train others to be just as skilled as I am."),
+	TRAIT_BADTRAINER = span_info("I've spent yils studying the art of a single weapon, but unfortunately I've no patience to train anyone else. Everyone learning from me will only learn up to two skill levels below mine."),
 	TRAIT_SEA_DRINKER = span_info("As a denizen of the deep, I can drink salty ocean water safely."),
 	TRAIT_BIGGUY = span_info("My immense frame and size allows me to smash through wooden doors, and throw people more easily."),
 	TRAIT_OUTDOORSMAN = span_info("My experience in the wilds allows me to fall asleep on surfaces like treebranches as if they were beds."),
@@ -313,7 +317,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_EORAN_SERENE = span_greentext("Eora has blessed me with all-encompassing serenity. I feel no more stress."),
 	TRAIT_NECRAS_VOW = span_warning("I've pledged myself to Necra. If I fall, I am Hers."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
-	TRAIT_HERESIARCH = span_warning("I know of sacred sites of worship where followers of the Ascendants convene, and the path to the nearest conclave is etched into my memory.")
+	TRAIT_HERESIARCH = span_warning("I know of sacred sites of worship where followers of the Ascendants convene, and the path to the nearest conclave is etched into my memory."),
+	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly.")
 ))
 
 // trait accessor defines
@@ -415,6 +420,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RADIMMUNE			"rad_immunity"
 #define TRAIT_VIRUSIMMUNE		"virus_immunity"
 #define TRAIT_PIERCEIMMUNE		"Pierce Immunity"
+#define TRAIT_CALTROPIMMUNE		"Caltrop Immunity"
 #define TRAIT_NODISMEMBER		"Dismember Immunity"
 #define TRAIT_NOFIRE			"nonflammable"
 #define TRAIT_NOGUNS			"no_guns"

@@ -1435,6 +1435,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			return LEG_LEFT
 		if(BODY_ZONE_R_LEG)
 			return LEG_RIGHT
+		if(BODY_ZONE_LAMIAN_TAIL)
+			return TAIL_LAMIA
 		if(BODY_ZONE_PRECISE_L_HAND)
 			return HAND_LEFT
 		if(BODY_ZONE_PRECISE_R_HAND)

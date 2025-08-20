@@ -113,6 +113,11 @@
 	default_disabled = FALSE
 	customizer_choices = list(/datum/customizer_choice/organ/snout/anthro)
 
+/datum/customizer/organ/snout/lamia
+	allows_disabling = TRUE
+	default_disabled = TRUE
+	customizer_choices = list(/datum/customizer_choice/organ/snout/lamia)
+
 /datum/customizer_choice/organ/snout/anthro
 	name = "Wild-Kin Snout"
 	organ_type = /obj/item/organ/snout/anthro
@@ -221,6 +226,26 @@
 		/datum/sprite_accessory/snout/front/roundlight,
 		/datum/sprite_accessory/snout/stubby,
 		/datum/sprite_accessory/snout/stubbyalt,
+		)
+
+/datum/customizer_choice/organ/snout/lamia
+	name = "Lamian Snout"
+	organ_type = /obj/item/organ/snout/akula
+	sprite_accessories = list(
+		/datum/sprite_accessory/snout/shark,
+		/datum/sprite_accessory/snout/sergal,
+		/datum/sprite_accessory/snout/sharp,
+		/datum/sprite_accessory/snout/round,
+		/datum/sprite_accessory/snout/sharplight,
+		/datum/sprite_accessory/snout/roundlight,
+		/datum/sprite_accessory/snout/front/sharp,
+		/datum/sprite_accessory/snout/front/round,
+		/datum/sprite_accessory/snout/front/sharplight,
+		/datum/sprite_accessory/snout/front/roundlight,
+		/datum/sprite_accessory/snout/stubby,
+		/datum/sprite_accessory/snout/stubbyalt,
+		/datum/sprite_accessory/snout/alienlizard,
+		/datum/sprite_accessory/snout/alienlizardteeth,
 		)
 
 /datum/customizer/organ/snout/tabaxi

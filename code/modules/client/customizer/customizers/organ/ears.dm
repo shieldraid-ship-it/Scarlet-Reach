@@ -242,6 +242,11 @@
 		/datum/sprite_accessory/ears/cobrahoodears,
 		)
 
+/datum/customizer/organ/ears/lamia
+	customizer_choices = list(/datum/customizer_choice/organ/ears/lizard, /datum/customizer_choice/organ/ears/elf)
+	allows_disabling = TRUE
+	default_disabled = TRUE
+
 /datum/customizer/organ/ears/tiefling
 	customizer_choices = list(/datum/customizer_choice/organ/ears/tiefling)
 	allows_disabling = FALSE

@@ -66,8 +66,12 @@
 		return
 	if(door_opened)
 		playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
-		user.visible_message(span_warning("[user] kicks [src] shut!"), \
-			span_notice("I kick [src] shut!"))
+		if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+			user.visible_message(span_warning("[user] slams [src] shut with [user.p_their()] tail!"), \
+				span_notice("I slam [src] shut with my tail!"))
+		else
+			user.visible_message(span_warning("[user] kicks [src] shut!"), \
+				span_notice("I kick [src] shut!"))
 		force_closed()
 	else
 		if(locked)
@@ -77,19 +81,31 @@
 					kickthresh--
 				if((prob(L.STASTR * 0.5) || kickthresh == 0) && (L.STASTR >= initial(kickthresh)))
 					playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
-					user.visible_message(span_warning("[user] kicks open [src]!"), \
-						span_notice("I kick open [src]!"))
+					if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+						user.visible_message(span_warning("[user] slams [src] open with [user.p_their()] tail!"), \
+							span_notice("I tailslam [src] open!"))
+					else
+						user.visible_message(span_warning("[user] kicks open [src]!"), \
+							span_notice("I kick open [src]!"))
 					locked = 0
 					force_open()
 				else
 					playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
-					user.visible_message(span_warning("[user] kicks [src]!"), \
-						span_notice("I kick [src]!"))
+					if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+						user.visible_message(span_warning("[user] tailslams [src]!"), \
+							span_notice("I slam [src] with my tail!"))
+					else
+						user.visible_message(span_warning("[user] kicks [src]!"), \
+							span_notice("I kick [src]!"))
 			//try to kick open, destroy lock
 		else
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
-			user.visible_message(span_warning("[user] kicks open [src]!"), \
-				span_notice("I kick open [src]!"))
+			if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+				user.visible_message(span_warning("[user] slams [src] open with [user.p_their()] tail!"), \
+					span_notice("I tailslam [src] open!"))
+			else
+				user.visible_message(span_warning("[user] kicks open [src]!"), \
+					span_notice("I kick open [src]!"))
 			force_open()
 
 /obj/structure/mineral_door/proc/force_open()
@@ -1072,7 +1088,10 @@
 
 
 /obj/structure/mineral_door/bars/onkick(mob/user)
-	user.visible_message(span_warning("[user] kicks [src]!"))
+	if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
+		user.visible_message(span_warning("[user] tailslams [src]!"))
+	else
+		user.visible_message(span_warning("[user] kicks [src]!"))
 	return
 
 
