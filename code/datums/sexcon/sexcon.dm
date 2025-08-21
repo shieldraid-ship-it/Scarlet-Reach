@@ -400,7 +400,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_controller/proc/handle_passive_ejaculation()
+/datum/sex_controller/proc/handle_passive_ejaculation(var/mob/living/carbon/human/splashed_user = null)
 	var/mob/living/carbon/human/M = user
 	if(aphrodisiac > 1.5)
 		if(M.check_handholding())
@@ -422,6 +422,8 @@
 			else
 				if(prob(3))
 					ejaculate()
+					if(splashed_user)
+						splashed_user.apply_status_effect(/datum/status_effect/facial)
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -429,6 +431,8 @@
 	if(!can_ejaculate())
 		return FALSE
 	ejaculate()
+	if(splashed_user)
+		splashed_user.apply_status_effect(/datum/status_effect/facial)
 
 /datum/sex_controller/proc/can_use_penis()
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))

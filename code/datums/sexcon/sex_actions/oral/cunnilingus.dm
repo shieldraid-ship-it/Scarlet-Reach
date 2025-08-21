@@ -31,6 +31,7 @@
 	if(target.sexcon.check_active_ejaculation())
 		target.visible_message(span_love("[target] ejaculates into [user]'s mouth!"))
 		target.sexcon.cum_into()
+		target.apply_status_effect(/datum/status_effect/facial)
 
 /datum/sex_action/cunnilingus/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] stops sucking [target]'s clit ..."))
