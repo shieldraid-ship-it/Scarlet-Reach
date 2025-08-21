@@ -8,7 +8,8 @@
 	Sirens, mermaids, nagas and many others fall into 'lamia' categorization. While one could consider them to be of Dendor's, he had no hand in their creation. \
 	Lamia are widespread in the southern coastal regions, where their tribes have settled in aeons ago, much of their written and oral history is filled with accounts \
 	of grand raids on coastal regions, for they have been terrorizing any race that has dared to settle near their waters. For this, they are widely shunned by the other races, \
-	with the exception of Axians with whom they share their natural heartlands. Many a sailor has met their end at the claws of Lamias.<br>\
+	with the exception of Axians and some coast-dwelling Zardmen with whom they share their natural heartlands. Many a sailor has met their end at the claws of Lamias. \
+	Yet... not all of them have stayed in the depths of the abyss, for some of the clans have moved far away from the coastal regions, settling in swamps, forests and even deserts, having spread themselves far and wide aeons ago.<br>\
 	(+1 Strength, -1 Speed, Strong kicks, Longstrider, Strong stomach)" // SMOKINGRAWOCB
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, LIPS, HAIR, LAMIAN_TAIL, OLDGREY, MUTCOLORS)
@@ -90,7 +91,7 @@
 
 	languages = list(
 		/datum/language/common,
-		/datum/language/abyssal
+		/datum/language/abyssal //we are hellenic in this bitch
 	)
 
 	body_markings = list(
