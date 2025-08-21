@@ -116,7 +116,7 @@
 		if(has_status_effect(/datum/status_effect/facial))
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 11) ? span_warning("They're glazed with cum!") : span_warning("They're smeared with something glossy!")
+				. += (L.STAPER >= 11) ? span_warning("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
 
 		if (HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) 
 			. += span_phobia("A foreigner...")
