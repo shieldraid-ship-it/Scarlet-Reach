@@ -534,7 +534,7 @@
 		var/obj/item/bodypart/affecting = target.get_bodypart(def_zone)
 
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
-			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
+			target.visible_message(span_info("[target] stirs for a moment, then the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
@@ -610,12 +610,12 @@
 			return FALSE
 
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
-			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
+			target.visible_message(span_info("[target] stirs for a moment, then the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
 
-		UH.visible_message(span_warning("Tiny strands of red link between [UH] and [target], blood being transferred!"))
+		UH.visible_message(span_warning("Tiny strands of red link between [UH] and [target], and droplets of blood flow through it!"))
 		playsound(UH, 'sound/magic/bloodheal_start.ogg', 100, TRUE)
 		var/user_skill = UH.get_skill_level(associated_skill)
 		var/user_informed = FALSE
@@ -643,11 +643,11 @@
 						to_chat(UH, span_info("They're at a healthy blood level, but I can keep going."))
 						user_informed = TRUE
 				else
-					UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
+					UH.visible_message(span_warning("[UH] severs the bloodlink from [target]!"))
 					bloodbeam.End()
 					return TRUE
 			else
-				UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
+				UH.visible_message(span_warning("[UH] severs the bloodlink from [target]!"))
 				bloodbeam.End()
 				return TRUE
 		bloodbeam.End()
