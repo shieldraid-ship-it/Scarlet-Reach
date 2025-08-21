@@ -87,6 +87,12 @@
 		/datum/body_marking_set/tiger_dark,  //Delinefortune: removed TWO /datum/body_marking/ because there supposed to be /datum/body_marking_set
 //		/datum/body_marking_set/lamian_tail // how the fuck do I get it to display over tail
 	)
+
+	languages = list(
+		/datum/language/common,
+		/datum/language/abyssal
+	)
+
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
