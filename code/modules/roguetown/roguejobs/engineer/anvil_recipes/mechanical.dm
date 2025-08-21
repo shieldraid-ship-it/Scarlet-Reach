@@ -201,4 +201,4 @@
 	created_item = /obj/item/golem_skill_core
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
-	craftdiff = 4
+	craftdiff = 3

@@ -357,6 +357,20 @@
 */
 // --------- STEEL RECIPES -----------
 
+/datum/anvil_recipe/armor/steel/helmet/psydonarmet // technically silver but who cares
+	name = "Ornate Armet (+1 Silver)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/silver)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
+	craftdiff = 4
+
+/datum/anvil_recipe/armor/steel/helmet/psydonbarbute
+	name = "Ornate Barbute (+1 Silver)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/silver)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute
+	craftdiff = 4
+
 /datum/anvil_recipe/armor/steel/helmet/sallet
 	name = "Sallet"
 	req_bar = /obj/item/ingot/steel
