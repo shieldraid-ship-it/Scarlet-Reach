@@ -112,6 +112,12 @@
 		if(has_status_effect(/datum/status_effect/leash_pet))
 			. += span_warning("A leash is hooked to their collar. They are being led like a pet.")
 
+		// Facial effect message
+		if(has_status_effect(/datum/status_effect/facial))
+			if(isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 11) ? span_warning("They're glazed with cum!") : span_warning("They're smeared with something glossy!")
+
 		if (HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) 
 			. += span_phobia("A foreigner...")
 
