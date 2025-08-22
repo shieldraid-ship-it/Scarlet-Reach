@@ -166,14 +166,14 @@
 		splashed_user.apply_status_effect(/datum/status_effect/facial)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null, var/splashed_user_inside = TRUE)
+/datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came inside the target")
 	if(oral)
 		playsound(target, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(target, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
 	if(splashed_user)
-		if(splashed_user_inside)
+		if(!oral)
 			splashed_user.apply_status_effect(/datum/status_effect/facial/internal)
 		else
 			splashed_user.apply_status_effect(/datum/status_effect/facial)
