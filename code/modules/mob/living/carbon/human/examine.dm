@@ -112,19 +112,25 @@
 		if(has_status_effect(/datum/status_effect/leash_pet))
 			. += span_warning("A leash is hooked to their collar. They are being led like a pet.")
 
-		// Facial effect message
-		if(has_status_effect(/datum/status_effect/facial))
+		// Facial/Creampie effect message
+		var/facial = has_status_effect(/datum/status_effect/facial)
+		var/creampie = has_status_effect(/datum/status_effect/facial/internal)
+		if(facial && creampie)
+			if(isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] glazed and dripping with cum!") : span_warning("[m1] covered with something glossy!")
+			else
+				. += span_aiprivradio("[m1] glazed and dripping with cum!")
+		else if(facial)
 			if(isliving(user))
 				var/mob/living/L = user
 				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
 			else
 				. += span_aiprivradio("[m1] glazed with cum!")
-
-		// Creampie effect message
-		if(has_status_effect(/datum/status_effect/facial/internal))
+		else if(creampie)
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] leaking out cum!") : span_warning("[m1] leaking something glossy!")
+				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] leaking out cum!") : span_warning("[m1] dripping some glossy stuff!")
 			else
 				. += span_aiprivradio("[m1] leaking out cum!")
 
