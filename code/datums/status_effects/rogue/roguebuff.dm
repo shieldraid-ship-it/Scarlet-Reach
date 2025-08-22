@@ -459,13 +459,24 @@
 	var/filter = owner.get_filter(MIRACLE_HEALING_FILTER)
 	if (!filter)
 		owner.add_filter(MIRACLE_HEALING_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+
+	var/list/wCount = owner.get_wounds()
+	if(wCount.len > 0)
+		var/pain_killed = FALSE //to see if we did actually painkill something
+		for(var/datum/wound/ouchie in wCount)
+			if(!ouchie.pain_reduced)
+				ouchie.pain_reduced = TRUE //halve the pain of our wounds but only once to avoid perma spamming
+				ouchie.woundpain /= 2
+				pain_killed = TRUE
+		if(pain_killed)
+			to_chat(owner, span_notice("The healing aura soothes my wounds' pain."))
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
-	if(owner.construct)//golems can't be healed by miracles cuz they're not living beans
+	if(owner.construct) //golems can't be healed by miracles cuz they're not living beans
 		owner.visible_message(span_warning("The divine aura enveloping [owner]'s inorganic body sputters and fades away."))
 		qdel(src)
 		return
@@ -481,6 +492,9 @@
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
 	owner.adjustCloneLoss(-healing_on_tick, 0)
 
+/datum/status_effect/buff/healing/on_remove()
+	owner.remove_filter(MIRACLE_HEALING_FILTER)
+	owner.update_damage_hud()
 
 #define BLOODHEAL_DUR_SCALE_PER_LEVEL 3 SECONDS
 #define BLOODHEAL_RESTORE_DEFAULT 5
@@ -696,10 +710,6 @@
 	name = "Sated"
 	desc = "I've devoured a stone."
 	icon_state = "buff"
-
-/datum/status_effect/buff/healing/on_remove()
-	owner.remove_filter(MIRACLE_HEALING_FILTER)
-	owner.update_damage_hud()
 
 /datum/status_effect/buff/psyhealing/on_remove()
 	owner.remove_filter(PSYDON_HEALING_FILTER)

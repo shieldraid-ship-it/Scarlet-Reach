@@ -49,6 +49,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/sewn_clotting_threshold = 0
 	/// How much pain this wound causes while on a mob
 	var/woundpain = 0
+	//  Whether this wound's painfulness is being mitigated by something (e.g lesser healing miracle)
+	var/pain_reduced = FALSE
 	/// Pain this wound causes after being sewn
 	var/sewn_woundpain = 0
 	/// Sewing progress, because sewing wounds is snowflakey
