@@ -145,13 +145,13 @@
 			do_crit = FALSE
 	testing("bodypart_attacked_by() dam [dam]")
 
-	manage_dynamic_wound(bclass, dam, armor)
+	var/datum/wound/dynwound = manage_dynamic_wound(bclass, dam, armor)
 
 	if(do_crit)
 		var/crit_attempt = try_crit(bclass, dam, user, zone_precise, silent, crit_message)
 		if(crit_attempt)
 			return crit_attempt
-	return TRUE
+	return dynwound
 
 
 /obj/item/bodypart/proc/manage_dynamic_wound(bclass, dam, armor)
@@ -180,8 +180,10 @@
 		if(ispath(woundtype) && woundtype)
 			if(!isnull(woundtype))
 				var/datum/wound/newwound = add_wound(woundtype)
+				dynwound = newwound
 				if(newwound && !isnull(newwound))	//don't even ask - Free
 					newwound.upgrade(dam, armor)
+	return dynwound
 
 /// Behemoth of a proc used to apply a wound after a bodypart is damaged in an attack
 /obj/item/bodypart/proc/try_crit(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE)
