@@ -348,11 +348,14 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 
 /datum/wound/proc/update_name()
 	var/newname
+	var/oldname = name
 	if(length(severity_names))
 		for(var/sevname in severity_names)
 			if(severity_names[sevname] <= bleed_rate)
 				newname = sevname
 	name = "[newname  ? "[newname] " : ""][initial(name)]"	//[adjective] [name], aka, "gnarly slash" or "slash"
+	if(name != oldname)
+		owner.visible_message(span_red("The [oldname] on [owner]'s [lowertext(bodyzone2readablezone(bodypart_to_zone(bodypart_owner)))] gets worse!"))
 
 // Blank because it'll be overridden by wound code.
 /datum/wound/dynamic
@@ -371,7 +374,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 				bleed_rate = cap
 				if(!is_armor_maxed)
 					playsound(owner, 'sound/combat/armored_wound.ogg', 100, TRUE)
-					owner.visible_message(span_crit("The wound tears open from [bodypart_owner.owner]'s <b>[bodyzone2readablezone(bodypart_to_zone(bodypart_owner))]</b>, the armor won't let it go any further!"))
+					owner.visible_message(span_crit("The wound tears open from [bodypart_owner.owner]'s <b>[lowertext(bodyzone2readablezone(bodypart_to_zone(bodypart_owner)))]</b>, the armor won't let it go any further!"))
 					is_armor_maxed = TRUE
 
 #define CLOT_THRESHOLD_INCREASE_PER_HIT 0.1	//This raises the MINIMUM bleed the wound can clot to.
@@ -386,7 +389,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 			bleed_rate = ARTERY_LIMB_BLEEDRATE
 			if(!is_maxed)
 				playsound(owner, 'sound/combat/wound_tear.ogg', 100, TRUE)
-				owner.visible_message(span_crit("The wound gushes open from [bodypart_owner.owner]'s <b>[bodyzone2readablezone(bodypart_to_zone(bodypart_owner))]</b>, nicking an artery!"))
+				owner.visible_message(span_crit("The wound gushes open from [bodypart_owner.owner]'s <b>[lowertext(bodyzone2readablezone(bodypart_to_zone(bodypart_owner)))]</b>, striking an artery!"))
 				is_maxed = TRUE
 			clotting_rate = CLOT_RATE_ARTERY
 			clotting_threshold = CLOT_THRESHOLD_ARTERY
