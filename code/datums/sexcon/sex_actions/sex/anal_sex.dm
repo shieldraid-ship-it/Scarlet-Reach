@@ -34,9 +34,8 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s butt!"))
-		user.sexcon.cum_into()
+		user.sexcon.cum_into(splashed_user = target)
 		user.virginity = FALSE
-		target.apply_status_effect(/datum/status_effect/facial/internal)
 
 	if(user.sexcon.considered_limp())
 		user.sexcon.perform_sex_action(target, 1.2, 4, FALSE)

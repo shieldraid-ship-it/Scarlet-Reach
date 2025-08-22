@@ -158,18 +158,25 @@
 	set_target(new_target)
 	show_ui()
 
-/datum/sex_controller/proc/cum_onto()
+/datum/sex_controller/proc/cum_onto(var/mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
+	if(splashed_user)
+		splashed_user.apply_status_effect(/datum/status_effect/facial)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE)
+/datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null, var/splashed_user_inside = TRUE)
 	log_combat(user, target, "Came inside the target")
 	if(oral)
 		playsound(target, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(target, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(splashed_user)
+		if(splashed_user_inside)
+			splashed_user.apply_status_effect(/datum/status_effect/facial/internal)
+		else
+			splashed_user.apply_status_effect(/datum/status_effect/facial)
 	after_ejaculation()
 	if(!oral)
 		after_intimate_climax()
