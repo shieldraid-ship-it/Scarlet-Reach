@@ -34,7 +34,7 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s throat!"))
-		user.sexcon.cum_into(oral = TRUE)
+		user.sexcon.cum_into(oral = TRUE, splashed_user = target, splashed_user_inside = FALSE) // give facial status effect for the target, considering this was rough throat sex
 		user.virginity = FALSE
 
 	if(user.sexcon.considered_limp())
