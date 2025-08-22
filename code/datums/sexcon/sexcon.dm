@@ -195,9 +195,10 @@
 
 ///Callback to remove pearl necklace
 /datum/status_effect/facial/proc/clean_up(datum/source, strength)
-	if(strength >= CLEAN_WEAK)
-		to_chat(owner, span_notice("I feel much cleaner now!"))
-		owner.add_stress(/datum/stressevent/bathcleaned)
+	if(strength >= CLEAN_WEAK && !QDELETED(owner))
+		if(!owner.has_stress_event(/datum/stressevent/bathcleaned))
+			to_chat(owner, span_notice("I feel much cleaner now!"))
+			owner.add_stress(/datum/stressevent/bathcleaned)
 		owner.remove_status_effect(src)
 
 /datum/sex_controller/proc/ejaculate()
