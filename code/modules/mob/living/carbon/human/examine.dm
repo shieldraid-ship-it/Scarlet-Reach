@@ -118,9 +118,9 @@
 		if(facial && creampie)
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] glazed and dripping with cum!") : span_warning("[m1] covered with something glossy!")
+				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
 			else
-				. += span_aiprivradio("[m1] glazed and dripping with cum!")
+				. += span_aiprivradio("[m1] glazed and dripping out cum!")
 		else if(facial)
 			if(isliving(user))
 				var/mob/living/L = user
@@ -130,9 +130,9 @@
 		else if(creampie)
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] leaking out cum!") : span_warning("[m1] dripping some glossy stuff!")
+				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
 			else
-				. += span_aiprivradio("[m1] leaking out cum!")
+				. += span_aiprivradio("[m1] dripping out cum!")
 
 		if (HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) 
 			. += span_phobia("A foreigner...")
