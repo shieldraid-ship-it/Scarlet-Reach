@@ -114,7 +114,7 @@
 
 		// Facial/Creampie effect message
 		var/facial = has_status_effect(/datum/status_effect/facial)
-		var/creampie = has_status_effect(/datum/status_effect/facial/internal)
+		var/creampie = has_status_effect(/datum/status_effect/facial/internal) && (observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		if(facial && creampie)
 			if(isliving(user))
 				var/mob/living/L = user
