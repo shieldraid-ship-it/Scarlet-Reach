@@ -180,6 +180,11 @@
 	alert_type = null // don't show an alert on screen
 	duration = 10 MINUTES // wear off eventually or until character washes themselves
 
+/datum/status_effect/facial/internal
+	id = "creampie"
+	alert_type = null // don't show an alert on screen
+	duration = 5 MINUTES // wear off eventually or until character washes themselves
+
 /datum/status_effect/facial/on_apply()
 	RegisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT),PROC_REF(clean_up))
 	return ..()
@@ -193,7 +198,7 @@
 	if(strength >= CLEAN_WEAK)
 		to_chat(owner, span_notice("I feel much cleaner now!"))
 		owner.add_stress(/datum/stressevent/bathcleaned)
-		owner.remove_status_effect(/datum/status_effect/facial)
+		owner.remove_status_effect(src)
 
 /datum/sex_controller/proc/ejaculate()
 	log_combat(user, user, "Ejaculated")

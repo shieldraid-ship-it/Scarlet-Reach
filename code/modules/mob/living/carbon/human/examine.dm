@@ -120,6 +120,14 @@
 			else
 				. += span_aiprivradio("[m1] glazed with cum!")
 
+		// Creampie effect message
+		if(has_status_effect(/datum/status_effect/facial/internal))
+			if(isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 11 && L.STAINT >= 10) ? span_aiprivradio("[m1] leaking out cum!") : span_warning("[m1] leaking something glossy!")
+			else
+				. += span_aiprivradio("[m1] leaking out cum!")
+
 		if (HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) 
 			. += span_phobia("A foreigner...")
 

@@ -47,6 +47,7 @@
 		target.try_impregnate(user)
 		target.virginity = FALSE
 		user.virginity = FALSE
+		target.apply_status_effect(/datum/status_effect/facial/internal)
 
 /datum/sex_action/vaginal_ride_sex/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] gets off [target]."))
