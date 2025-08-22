@@ -161,6 +161,9 @@
 		/datum/sprite_accessory/ears/big/acrador_short,
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/lynx,
+		/datum/sprite_accessory/ears/dendorite,
+		/datum/sprite_accessory/ears/eoran,
+		/datum/sprite_accessory/ears/pestran,
 		)
 
 /datum/customizer/organ/ears/anthro

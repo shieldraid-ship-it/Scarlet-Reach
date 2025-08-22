@@ -80,7 +80,7 @@
 		/obj/item/reagent_containers/glass/cup = 40,
 		/obj/item/reagent_containers/glass/cup/wooden = 40,
 		/obj/item/reagent_containers/glass/cup/steel = 30,
-		/obj/item/reagent_containers/glass/cup/golden = 10,
+		/obj/item/reagent_containers/glass/cup/golden/small = 10,
 		/obj/item/reagent_containers/glass/cup/skull = 10,
 		/obj/item/reagent_containers/glass/bucket/wooden = 30,
 		/obj/item/natural/feather = 40,

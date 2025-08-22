@@ -205,6 +205,19 @@
 		/datum/sprite_accessory/snout/shortnosed,
 		/datum/sprite_accessory/snout/stubby,
 		/datum/sprite_accessory/snout/stubbyalt,
+		/datum/sprite_accessory/snout/front/malum1,
+		/datum/sprite_accessory/snout/front/malum2,
+		/datum/sprite_accessory/snout/front/necran,
+		/datum/sprite_accessory/snout/front/abbysorian,
+		/datum/sprite_accessory/snout/front/dendorite,
+		/datum/sprite_accessory/snout/front/pestran,
+		/datum/sprite_accessory/snout/front/ravoxian,
+		/datum/sprite_accessory/snout/front/eoran,
+		/datum/sprite_accessory/snout/front/comedy1,
+		/datum/sprite_accessory/snout/front/comedy2,
+		/datum/sprite_accessory/snout/front/drama1,
+		/datum/sprite_accessory/snout/front/drama2,
+		/datum/sprite_accessory/snout/front/noccite,
 		)
 
 /datum/customizer/organ/snout/akula
