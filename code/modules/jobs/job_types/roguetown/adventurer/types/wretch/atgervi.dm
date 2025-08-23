@@ -6,7 +6,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/atgervi
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 2
-	traits_applied = list(TRAIT_OUTLANDER, TRAIT_OUTLAW)
+	traits_applied = list(TRAIT_OUTLANDER, TRAIT_OUTLAW, TRAIT_HERESIARCH)
  
 /datum/outfit/job/roguetown/wretch/atgervi/pre_equip(mob/living/carbon/human/H)
 	H.set_blindness(0)
@@ -54,4 +54,5 @@
 	H.cmode_music = 'sound/music/combat_shaman2.ogg'
 
 	H.grant_language(/datum/language/gronnic)
-	backpack_contents = list(/obj/item/roguekey/wretch, /obj/item/rogueweapon/huntingknife)
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife)
+	wretch_select_bounty(H)
