@@ -25,7 +25,8 @@
 	skinned_type = /obj/item/ingot/steel
 	disliked_food = NONE
 	liked_food = NONE
-	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_BLOODLOSS_IMMUNE, TRAIT_NOBREATH, TRAIT_NOSLEEP, TRAIT_NOMETABOLISM)
+	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_BLOODLOSS_IMMUNE, TRAIT_NOBREATH, TRAIT_NOSLEEP, TRAIT_NOMETABOLISM,
+	TRAIT_ZOMBIE_IMMUNE, TRAIT_NOPAIN)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mcom.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fcom.dmi'
@@ -69,9 +70,11 @@
 		/datum/customizer/bodypart_feature/accessory,
 		/datum/customizer/bodypart_feature/face_detail,
 		/datum/customizer/bodypart_feature/underwear,
+		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/ears/demihuman,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/tail/demihuman,
+		/datum/customizer/organ/snout/anthro,
 		/datum/customizer/organ/wings/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
@@ -97,7 +100,7 @@
 		"Iron" = GOLEM_IRON,
 		"Steel" = GOLEM_STEEL,
 		"Bronze" = GOLEM_BRONZE,
-		"Marble" = GOLEM_MARBLE,
+		"Toper" = GOLEM_TOPER,
 		"Coal" = GOLEM_COAL,
 		"Cobalt" = GOLEM_COBALT,
 		"Granite" = GOLEM_GRANITE,
@@ -163,7 +166,7 @@
 	if(user.construct && !self_usable)
 		to_chat(user, span_warning("I am unable to modify Golems. I must ask another."))//Golems NEED to ask organics to modify them.
 		return
-	if(user.get_skill_level(/datum/skill/craft/engineering) < 3 && !self_usable) //need to be at least level 3 skill level in engineering to use this
+	if(user.get_skill_level(/datum/skill/craft/engineering) < SKILL_LEVEL_APPRENTICE && !self_usable) //need to be at least level 2 skill level in engineering to use this
 		to_chat(user, span_warning("I fiddle around trying to properly insert [src] into [M], but I'm not skilled enough."))
 		return
 	if(in_use)

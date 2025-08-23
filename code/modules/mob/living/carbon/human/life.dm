@@ -243,6 +243,8 @@
 			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
 		if(thermal_protection_flags & FOOT_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
+		if(thermal_protection_flags & TAIL_LAMIA)
+			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
 			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)
@@ -301,6 +303,8 @@
 			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
 		if(thermal_protection_flags & FOOT_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
+		if(thermal_protection_flags & TAIL_LAMIA)
+			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
 			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)

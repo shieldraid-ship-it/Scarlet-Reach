@@ -690,7 +690,7 @@
 	if(resting)
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
 			src.visible_message(span_notice("[src] stands up."))
-			if(move_after(src, 20, target = src))
+			if(move_after(src, 20, target = src, uninterrupt = TRUE))
 				set_resting(FALSE, FALSE)
 				return TRUE
 		else
@@ -709,7 +709,7 @@
 	if(resting)
 		if(!IsKnockdown() && !IsStun() && !IsParalyzed())
 			src.visible_message(span_info("[src] begins to stand up."))
-			if(move_after(src, 20, target = src))
+			if(move_after(src, 20, target = src, uninterrupt = TRUE))
 				set_resting(FALSE, FALSE)
 		else
 			src.visible_message(span_warning("[src] struggles to stand up."))

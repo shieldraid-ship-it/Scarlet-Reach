@@ -43,6 +43,27 @@
 	//receiving = list()
 	. = ..()
 
+/proc/do_thrust_animate(atom/movable/user, atom/movable/target, pixels = 4, time = 2.7)
+	var/oldx = user.pixel_x
+	var/oldy = user.pixel_y
+	var/target_x = oldx
+	var/target_y = oldy
+	var/dir = get_dir(user, target)
+	if(user.loc == target.loc)
+		dir = user.dir
+	switch(dir)
+		if(NORTH)
+			target_y += pixels
+		if(SOUTH)
+			target_y -= pixels
+		if(WEST)
+			target_x -= pixels
+		if(EAST)
+			target_x += pixels
+
+	animate(user, pixel_x = target_x, pixel_y = target_y, time = time)
+	animate(pixel_x = oldx, pixel_y = oldy, time = time)
+
 /datum/sex_controller/proc/is_spent()
 	if(charge < CHARGE_FOR_CLIMAX)
 		return TRUE
@@ -222,7 +243,13 @@
 
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
-	if(penis)
+
+	if(user.mind)
+		var/datum/antagonist/werewolf/W = user.mind.has_antag_datum(/datum/antagonist/werewolf/)
+		if(W && W.transformed == TRUE)
+			user.regenerate_icons()
+
+	if(penis && hascall(penis, "update_erect_state"))
 		penis.update_erect_state()
 
 /datum/sex_controller/proc/adjust_arousal(amount)
@@ -460,7 +487,7 @@
 			dat += "</tr><tr>"
 
 	dat += "</tr></table>"
-	var/datum/browser/popup = new(user, "sexcon", "<center>Sate Desire</center>", 490, 550)
+	var/datum/browser/popup = new(user, "sexcon", "<center>Sate Desire</center>", 500, 550)
 	popup.set_content(dat.Join())
 	popup.open()
 	return
