@@ -1,14 +1,15 @@
-/datum/advclass/mercenary/atgervi
+/datum/advclass/wretch/atgervi
 	name = "Atgervi"
-	tutorial = "Fear. What more can you feel when a stranger tears apart your friend with naught but hand and maw? What more can you feel when your warriors fail to slay an invader? What more could you ask for, when hiring a mercenary?"
+	tutorial = "Fear. What more can you feel when a stranger tears apart your friend with naught but hand and maw? What more can you feel when your warriors fail to slay an invader? What more could you ask for?"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervi
-	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_OUTLANDER)
+	category_tags = list(CTAG_WRETCH)
+	maximum_possible_slots = 2
+	traits_applied = list(TRAIT_OUTLANDER, TRAIT_OUTLAW)
 	classes = list("Varangian" = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians.",
 					"Shaman" = "You are a Shaman of the Fjall, The Northern Empty. Savage combatants who commune with the Ecclesical Beast gods through ritualistic violence, rather than idle prayer.")
-
+ 
 /datum/outfit/job/roguetown/mercenary/atgervi/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (!(istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/graggar) || istype(H.patron, /datum/patron/inhumen/baotha)))
@@ -38,7 +39,6 @@
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
-
 			H.change_stat("strength", 2)	
 			H.change_stat("endurance", 3)
 			H.change_stat("constitution", 3)
