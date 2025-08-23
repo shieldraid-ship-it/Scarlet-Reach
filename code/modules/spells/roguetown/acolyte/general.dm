@@ -573,6 +573,8 @@
 			to_chat(user, span_warning("The limb is free of wounds."))
 			revert_cast()
 			return FALSE
+	revert_cast()
+	return FALSE
 
 
 /obj/effect/proc_holder/spell/invoked/blood_heal
@@ -605,11 +607,14 @@
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
 		var/mob/living/carbon/human/UH = user
+		if(NOBLOOD in UH.dna?.species?.species_traits)
+			to_chat(UH, span_warning("I have no blood to provide."))
+			revert_cast()
+			return FALSE
 		if(target.blood_volume >= BLOOD_VOLUME_NORMAL)
 			to_chat(UH, span_warning("Their lyfeblood is at capacity. There is no need."))
 			revert_cast()
 			return FALSE
-
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
 			target.visible_message(span_info("[target] stirs for a moment, then the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
@@ -653,3 +658,5 @@
 				return TRUE
 		bloodbeam.End()
 		return TRUE
+	revert_cast()
+	return FALSE
