@@ -1773,3 +1773,42 @@
 	set category = "Emotes"
 
 	emote("ffsalute", intentional =  TRUE)
+
+/datum/emote/living/lastwords
+    key = "lastwords"
+    key_third_person = "utters their last words"
+    message = ""                   
+    emote_type = EMOTE_AUDIBLE
+    stat_allowed = UNCONSCIOUS      
+    show_runechat = FALSE
+
+/mob/living/carbon/human/verb/emote_lastwords()
+    set name = "Last Words"
+    set category = "Emotes"
+    emote("lastwords", intentional = TRUE)
+
+/datum/emote/living/lastwords/run_emote(mob/user, params, type_override, intentional)
+    if(!user)
+        return FALSE
+
+    var/mob/living/L = user
+
+
+    to_chat(L, span_danger("lastwords"))
+
+
+    var/lastmsg = params
+    if(!lastmsg)
+        lastmsg = input("Whisper your final words:", "Last Words") as text|null
+    if(!lastmsg)
+        return FALSE
+
+    L.whisper(lastmsg)
+
+    if(iscarbon(L))
+        var/mob/living/carbon/C = L
+        C.adjustOxyLoss(200)
+    else
+        L.death()
+
+    return TRUE
