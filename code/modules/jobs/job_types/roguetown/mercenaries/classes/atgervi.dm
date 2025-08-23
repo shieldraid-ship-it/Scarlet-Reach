@@ -1,5 +1,5 @@
 /datum/advclass/mercenary/atgervi
-	name = "Atgervi"
+	name = "Atgervi Varangian"
 	tutorial = "Fear. What more can you feel when a stranger tears apart your friend with naught but hand and maw? What more can you feel when your warriors fail to slay an invader? What more could you ask for, when hiring a mercenary?"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
