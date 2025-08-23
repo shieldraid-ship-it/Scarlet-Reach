@@ -130,7 +130,7 @@
 	W.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 	W.adjust_skillrank(/datum/skill/misc/climbing, 6, TRUE)
 	W.adjust_skillrank(/datum/skill/misc/swimming, 5, TRUE)
-	
+
 	W.STASTR = 20 // LOCK IN
 	W.STACON = 20
 	W.STAEND = 20
