@@ -1774,20 +1774,20 @@
 
 	emote("ffsalute", intentional =  TRUE)
 
-/datum/emote/living/lastwords
-    key = "lastwords"
+/datum/emote/living/suicide
+    key = "suicide"
     key_third_person = "utters their last words"
     message = ""                   
     emote_type = EMOTE_AUDIBLE
     stat_allowed = UNCONSCIOUS      
     show_runechat = FALSE
 
-/mob/living/carbon/human/verb/emote_lastwords()
-    set name = "Last Words"
+/mob/living/carbon/human/verb/emote_suicide()
+    set name = "Suicide"
     set category = "Emotes"
-    emote("lastwords", intentional = TRUE)
+    emote("suicide", intentional = TRUE)
 
-/datum/emote/living/lastwords/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/suicide/run_emote(mob/user, params, type_override, intentional)
     if(!user)
         return FALSE
 
