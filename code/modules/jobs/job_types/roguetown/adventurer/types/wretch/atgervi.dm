@@ -7,8 +7,6 @@
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 2
 	traits_applied = list(TRAIT_OUTLANDER, TRAIT_OUTLAW)
-	classes = list("Varangian" = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians.",
-					"Shaman" = "You are a Shaman of the Fjall, The Northern Empty. Savage combatants who commune with the Ecclesical Beast gods through ritualistic violence, rather than idle prayer.")
  
 /datum/outfit/job/roguetown/wretch/atgervi/pre_equip(mob/living/carbon/human/H)
 	H.set_blindness(0)
