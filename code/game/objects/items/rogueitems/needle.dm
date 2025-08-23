@@ -202,7 +202,7 @@
 		var/bleedreduction = max((medskill / 2), 1)	//Half of medicine skill, or 1, whichever is higher.
 		target_wound.bleed_rate = max( (target_wound.bleed_rate - bleedreduction), 0)
 		if(target_wound.bleed_rate == 0 && !informed)
-			patient.visible_message(span_smallgreen("[capitalize(target_wound.name)] trickles out the last drop from [patient]'s [affecting] and stops bleeding."), span_smallgreen("The throbbing warmth coming out of [target_wound.name] soothes and stops. It no longer bleeds."))
+			patient.visible_message(span_smallgreen("One last drop of blood trickles from the [(target_wound.name)] on [patient]'s [affecting] before it is sewn shut."), span_smallgreen("The throbbing warmth coming out of [target_wound.name] soothes and stops. It no longer bleeds."))
 			informed = TRUE
 		if(istype(target_wound, /datum/wound/dynamic))
 			var/datum/wound/dynamic/dynwound = target_wound
@@ -220,7 +220,7 @@
 			doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [doctor.p_them()]self."), span_notice("I stitch \a [target_wound.name] on my [affecting]."))
 		else
 			if(affecting)
-				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]'s [affecting]."), span_notice("I stitch \a [target_wound.name] on [patient]'s [affecting]."))
+				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]'s [affecting.name]."), span_notice("I stitch \a [target_wound.name] on [patient]'s [affecting.name]."))
 			else
 				doctor.visible_message(span_notice("[doctor] sews \a [target_wound.name] on [patient]."), span_notice("I stitch \a [target_wound.name] on [patient]."))
 		log_combat(doctor, patient, "sew", "needle")
