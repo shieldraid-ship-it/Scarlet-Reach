@@ -6432,6 +6432,11 @@
 /area/rogue/outdoors/mountains)
 "bYN" = (
 /obj/structure/table/vtable,
+/obj/structure/broadcast_horn/loudmouth{
+	pixel_y = 14;
+	dir = 8;
+	pixel_x = -2
+	},
 /obj/item/candle/candlestick/silver/single/lit{
 	pixel_y = 16;
 	pixel_x = 17
@@ -55590,6 +55595,11 @@
 /area/rogue/indoors/shelter)
 "rpi" = (
 /obj/structure/table/vtable/v2,
+/obj/structure/broadcast_horn/loudmouth/guest{
+	dir = 4;
+	pixel_y = 20;
+	pixel_x = 2
+	},
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "rpk" = (
@@ -58090,6 +58100,11 @@
 /area/rogue/indoors/shelter/mountains/decap)
 "sfQ" = (
 /obj/structure/table/wood,
+/obj/structure/broadcast_horn{
+	pixel_y = 12;
+	redstone_id = "streetpipe";
+	dir = 4
+	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town)
 "sgd" = (
