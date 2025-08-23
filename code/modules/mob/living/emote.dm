@@ -1794,7 +1794,7 @@
     var/mob/living/L = user
 
 
-    to_chat(L, span_danger("lastwords"))
+    to_chat(L, span_danger("I pray to my patron for my death... and I am heard."))
 
 
     var/lastmsg = params
@@ -1808,7 +1808,9 @@
     if(iscarbon(L))
         var/mob/living/carbon/C = L
         C.adjustOxyLoss(200)
-    else
+    else if(isliving(L))
         L.death()
+    else
+        to_chat(L, span_warning("Nothing happens."))
 
-    return TRUE
+    return TRUE   
