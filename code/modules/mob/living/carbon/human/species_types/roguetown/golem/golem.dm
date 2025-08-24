@@ -106,6 +106,7 @@
 		"Granite" = GOLEM_GRANITE,
 		"Jade" = GOLEM_JADE,
 		"Amythortz" = GOLEM_AMETHYST
+		"Silver" = GOLEM_SILVER
 	)
 
 /datum/species/golem/metal/get_hairc_list()

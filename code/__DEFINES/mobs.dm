@@ -568,12 +568,25 @@
 #define GOLEM_IRON "525352"
 #define GOLEM_STEEL  "babbb9"
 #define GOLEM_BRONZE "e2a670"
-#define GOLEM_MARBLE "ffffff"
 #define GOLEM_COAL "1f1f1f"
 #define GOLEM_COBALT "323666"
 #define GOLEM_GRANITE "ff8f8f"
 #define GOLEM_JADE "517051"
 #define GOLEM_AMETHYST "3a0b3d"
+#define GOLEM_CORAL "ff96d6" //Pink
+#define GOLEM_SOAPSTONE "c7f9cc" //Seafoam green
+#define GOLEM_LIMESTONE "e6e4d8" //Tan
+#define GOLEM_SILVER "94B9C0" //Ice grey, at least that's what microsoft paint says
+#define GOLEM_COPPER "b87333" //Orange
+#define GOLEM_GOLD "d4af37" //Gold
+#define GOLEM_RUST "B71F1F" //Dark red
+#define GOLEM_OBSIDIAN "19132a" //Black
+#define GOLEM_LAPIS "26619C" //Deep blue
+#define GOLEM_BASALT "474a4c" //Dark grey
+#define GOLEM_MARBLE "E6E6E6" //White
+#define GOLEM_LARIMAR "a9ded1" //Cyan
+#define GOLEM_AMAZONITE "b6f1f2" //also Cyan
+#define GOLEM_ZINC "daeaeb" //Light aqua
 
 //DOLL PAINT COLOR
 #define DOLL_LEAD "ffffff"
