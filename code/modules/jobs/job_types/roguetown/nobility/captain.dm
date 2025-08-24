@@ -126,7 +126,7 @@
 		"Estoc",
 		"Longsword & Shield",
 		"Flail & Shield",
-		"Sabre & Shield",
+		"Law & Order (Sabre & Buckler)",
 		)
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
@@ -150,9 +150,9 @@
 		if("Flail & Shield")
 			beltr = /obj/item/rogueweapon/flail/sflail
 			backl = /obj/item/rogueweapon/shield/tower/metal
-		if("Sabre & Shield")
-			beltr = /obj/item/rogueweapon/sword/sabre
-			backl = /obj/item/rogueweapon/shield/tower/metal
+		if("Law & Order (Sabre & Buckler)") // felt the need to specify
+			beltr = /obj/item/rogueweapon/sword/capsabre
+			backl = /obj/item/rogueweapon/shield/capbuckler
 
 /datum/advclass/captain/cavalry
 	name = "Cavalry Captain"
@@ -208,7 +208,7 @@
 		"Longsword & Recurve Bow",
 		"Mace & Crossbow",
 		"Spear & Shield",
-		"Sabre & Shield",
+		"Law & Order (Sabre & Buckler)",
 		"Lance + Kite Shield"
 		)
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -225,9 +225,9 @@
 		if("Spear & Shield")
 			r_hand = /obj/item/rogueweapon/spear
 			backl = /obj/item/rogueweapon/shield/tower/metal
-		if("Sabre & Shield")
-			beltr = /obj/item/rogueweapon/sword/sabre
-			backl = /obj/item/rogueweapon/shield/tower/metal
+		if("Law & Order (Sabre & Buckler)") // felt the need to specify x2
+			beltr = /obj/item/rogueweapon/sword/capsabre
+			backl = /obj/item/rogueweapon/shield/capbuckler
 		if("Lance + Kite Shield")
 			r_hand = /obj/item/rogueweapon/spear/lance
 			backl = /obj/item/rogueweapon/shield/tower/metal

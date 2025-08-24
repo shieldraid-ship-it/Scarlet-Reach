@@ -1386,3 +1386,20 @@
 			user.overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
 			return
 	..()
+
+/obj/item/rogueweapon/sword/capsabre // just a better sabre, unique knight captain weapon
+	name = "'Law'"
+	desc = "A lavish sabre made for the captain, this one of a kind blacksteel beauty is meant to be used to uphold the law."
+	icon_state = "capsabre"
+	icon = 'icons/roguetown/weapons/special/captain.dmi'
+	force = 25 // same as elvish sabre
+	max_integrity = 200 // more integrity because blacksteel, a bit less than the flamberge
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	gripped_intents = null
+	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
+	swingsound = BLADEWOOSH_SMALL
+	minstr = 5
+	wdefense = 7
+	wbalance = WBALANCE_SWIFT
+	sellprice = 100 // lets not make it too profitable
+	smeltresult = /obj/item/ingot/blacksteel

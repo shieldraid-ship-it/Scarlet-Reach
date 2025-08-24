@@ -181,9 +181,9 @@
 	else if(slot == SLOT_RING)
 		active_item = TRUE
 		to_chat(user, span_notice("Here be dragons."))
-		user.change_stat("strength", 5)
-		user.change_stat("constitution", 5)
-		user.change_stat("endurance", 5)
+		user.change_stat("strength", 2)
+		user.change_stat("constitution", 2)
+		user.change_stat("endurance", 2)
 	return
 
 /obj/item/clothing/ring/dragon_ring/dropped(mob/living/user)

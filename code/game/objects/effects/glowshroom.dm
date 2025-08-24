@@ -30,8 +30,9 @@
 		if(HAS_TRAIT(L, TRAIT_KNEESTINGER_IMMUNITY)) //Dendor kneestinger immunity
 			return TRUE
 
-		if(world.time > L.last_client_interact + 0.2 SECONDS)
-			return FALSE
+		if(L.mind)
+			if(world.time > L.last_client_interact + 0.2 SECONDS)
+				return FALSE
 
 		var/electrodam = 30
 		if(world.time < (L.mob_timers["kneestinger"] + 30 SECONDS))
@@ -54,8 +55,9 @@
 	var/mob/living/victim = movable_victim
 	if(HAS_TRAIT(victim, TRAIT_KNEESTINGER_IMMUNITY)) //Dendor kneestinger immunity
 		return FALSE
-	if(world.time > victim.last_client_interact + 0.2 SECONDS)
-		return FALSE
+	if(victim.mind)
+		if(world.time > victim.last_client_interact + 0.2 SECONDS)
+			return FALSE
 	if(victim.throwing)	//Exemption from floor hazard, you're thrown over it.
 		victim.throwing.finalize(FALSE)
 	//if(victim.is_floor_hazard_immune)	//Floating, flying, etc
