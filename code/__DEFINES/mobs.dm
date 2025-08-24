@@ -587,9 +587,10 @@
 #define GOLEM_LARIMAR "a9ded1" //Cyan
 #define GOLEM_AMAZONITE "b6f1f2" //also Cyan
 #define GOLEM_ZINC "daeaeb" //Light aqua
+#define GOLEM_TOPER "fffb9e"
 
 //DOLL PAINT COLOR
-#define DOLL_LEAD "ffffff"
+#define DOLL_PORCELAIN "ffffff"
 #define DOLL_SIENNA "a0522d"
 
 // Pixel shifting
