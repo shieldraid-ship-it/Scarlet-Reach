@@ -174,7 +174,7 @@
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
-	if(splashed_user)
+	if(splashed_user && !splashed_user.sexcon.knotted_status)
 		splashed_user.apply_status_effect(/datum/status_effect/facial)
 	after_ejaculation()
 
@@ -184,7 +184,9 @@
 		playsound(target, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(target, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
-	if(splashed_user)
+	if(user != target)
+		knot_try()
+	if(splashed_user && !splashed_user.sexcon.knotted_status)
 		if(!oral)
 			splashed_user.apply_status_effect(/datum/status_effect/facial/internal)
 		else
@@ -437,6 +439,7 @@
 			btm.emote("painmoan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
+		btm.apply_status_effect(/datum/status_effect/facial/internal)
 	knot_exit(keep_top_status, keep_btm_status)
 
 /datum/sex_controller/proc/knot_exit(var/keep_top_status = FALSE, var/keep_btm_status = FALSE)
