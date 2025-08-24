@@ -515,6 +515,7 @@
 #define SKIN_COLOR_CHYERNO "252e41"
 #define SKIN_COLOR_DREMA "D16A51"
 #define SKIN_COLOR_CHIR "549ab6"
+#define SKIN_COLOR_VESYL "7A2525"
 
 //GOBLIN SKIN TONES
 #define SKIN_COLOR_OCHRE "968127"
@@ -568,15 +569,15 @@
 #define GOLEM_IRON "525352"
 #define GOLEM_STEEL  "babbb9"
 #define GOLEM_BRONZE "e2a670"
-#define GOLEM_MARBLE "ffffff"
 #define GOLEM_COAL "1f1f1f"
 #define GOLEM_COBALT "323666"
 #define GOLEM_GRANITE "ff8f8f"
 #define GOLEM_JADE "517051"
 #define GOLEM_AMETHYST "3a0b3d"
+#define GOLEM_TOPER "fffb9e"
 
 //DOLL PAINT COLOR
-#define DOLL_LEAD "ffffff"
+#define DOLL_PORCELAIN "ffffff"
 #define DOLL_SIENNA "a0522d"
 
 // Pixel shifting

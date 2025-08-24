@@ -307,6 +307,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	data += "<font color='#af2323'><span class='bold'>Organs Eaten:</span></font> [GLOB.scarlet_round_stats[STATS_ORGANS_EATEN]]<br>"
 	data += "<font color='#afa623'><span class='bold'>Locks Picked:</span></font> [GLOB.scarlet_round_stats[STATS_LOCKS_PICKED]]<br>"
 	data += "<font color='#af2379'><span class='bold'>Kisses Made:</span></font> [GLOB.scarlet_round_stats[STATS_KISSES_MADE]]<br>"
+	data += "<font color='#af232f'><span class='bold'>Knots Tied:</span></font> [GLOB.scarlet_round_stats[STATS_KNOTTED]]<br>"
 	data += "</div>"
 	data += "</div></div>"
 	data += "</div>"
@@ -594,7 +595,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		Drugs snorted: [GLOB.scarlet_round_stats[STATS_DRUGS_SNORTED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_DRUGS_SNORTED))])<br>\
 		Alcohol consumed: [GLOB.scarlet_round_stats[STATS_ALCOHOL_CONSUMED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_ALCOHOL_CONSUMED))])<br>\
 		Number of alcoholics: [GLOB.scarlet_round_stats[STATS_ALCOHOLICS]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_ALCOHOLICS))])<br>\
-		Number of junkies: [GLOB.scarlet_round_stats[STATS_JUNKIES]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_JUNKIES))])", baotha_storyteller)
+		Number of junkies: [GLOB.scarlet_round_stats[STATS_JUNKIES]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_JUNKIES))])<br>\
+		Number of knottings: [GLOB.scarlet_round_stats[STATS_KNOTTED]] ([get_colored_influence_value(SSgamemode.calculate_specific_influence(baotha_storyteller, STATS_KNOTTED))])", baotha_storyteller)
 
 	// Matthios
 	data += god_ui_block("MATTHIOS", "#3d1301", "#ddbb99", "\

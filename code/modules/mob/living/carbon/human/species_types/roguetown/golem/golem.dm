@@ -100,7 +100,7 @@
 		"Iron" = GOLEM_IRON,
 		"Steel" = GOLEM_STEEL,
 		"Bronze" = GOLEM_BRONZE,
-		"Marble" = GOLEM_MARBLE,
+		"Toper" = GOLEM_TOPER,
 		"Coal" = GOLEM_COAL,
 		"Cobalt" = GOLEM_COBALT,
 		"Granite" = GOLEM_GRANITE,

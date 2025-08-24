@@ -138,6 +138,7 @@
 #define STATS_ALCOHOL_CONSUMED "alcohol_consumed"
 #define STATS_ALCOHOLICS "alcoholics"
 #define STATS_JUNKIES "junkies"
+#define STATS_KNOTTED "knottings"
 
 //Matthios
 #define STATS_ITEMS_PICKPOCKETED "items_pickpocketed"
@@ -251,6 +252,7 @@ GLOBAL_LIST_INIT(scarlet_round_stats, list(
 	STATS_ALIVE_TRADESMEN = 0,
 	STATS_LUX_REVIVALS = 0,
 	STATS_PLEASURES = 0,
+	STATS_KNOTTED = 0,
 	STATS_SKILLS_DREAMED = 0,
 ))
 

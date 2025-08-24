@@ -28,6 +28,8 @@
 					say("You have additional mail available.")
 					break
 		if(!any_additional_mail(M, H.real_name))
+			if(!addl_mail && H.has_status_effect(/datum/status_effect/ugotmail)) // we apparently got mail, but never got mail (hint: it was stolen by someone with access to the master mailer)
+				to_chat(user, span_notice("I look inside the machine and find no letter, how strange."))
 			H.remove_status_effect(/datum/status_effect/ugotmail)
 
 /obj/structure/roguemachine/mail/examine()
@@ -137,7 +139,7 @@
 	if(istype(P, /obj/item/paper) || istype(P, /obj/item/smallDelivery))
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
 			var/send2place = input(user, "Where to? (Person or #number)", "SCARLET REACH", null)
-			var/sentfrom = input(user, "Who is this from?", "SCARLET REACH", null)
+			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "SCARLET REACH", null)
 			if(!sentfrom)
 				sentfrom = "Anonymous"
 			if(findtext(send2place, "#"))
@@ -163,6 +165,13 @@
 			else
 				if(!send2place)
 					return
+				var/mob/living/carbon/human/mailrecipient = null
+				for(var/mob/living/carbon/human/H in GLOB.human_list)
+					if(H.real_name == send2place)
+						mailrecipient = H
+						break
+				if(!mailrecipient && (alert("Could not find recipient [send2place]. Still send the letter?", "", "YES", "NO") == "NO")) // ask player if they still want to send a letter to a non-found character
+					return
 				var/findmaster
 				if(SSroguemachine.hermailermaster)
 					var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
@@ -182,10 +191,9 @@
 					visible_message(span_warning("[user] sends something."))
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					send_ooc_note("New letter from <b>[sentfrom].</b>", name = send2place)
-					for(var/mob/living/carbon/human/H in GLOB.human_list)
-						if(H.real_name == send2place)
-							H.apply_status_effect(/datum/status_effect/ugotmail)
-							H.playsound_local(H, 'sound/misc/mail.ogg', 100, FALSE, -1)
+					if(mailrecipient)
+						mailrecipient.apply_status_effect(/datum/status_effect/ugotmail)
+						mailrecipient.playsound_local(mailrecipient, 'sound/misc/mail.ogg', 100, FALSE, -1)
 					return
 	if(istype(P, /obj/item/roguecoin))
 		if(coin_loaded)
@@ -304,6 +312,10 @@
 			PA.cached_mailedto = null
 			PA.update_icon()
 			to_chat(user, span_warning("I carefully re-seal the letter and place it back in the machine, no one will know."))
+		if(PA.mailer && PA.mailedto)
+			for(var/mob/living/carbon/human/H in GLOB.human_list)
+				if(H.real_name == PA.mailedto && !H.has_status_effect(/datum/status_effect/ugotmail)) // quietly readd the status if they tried to check their mail while the letter was being spied on
+					H.apply_status_effect(/datum/status_effect/ugotmail)
 		P.forceMove(loc)
 		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 		STR.handle_item_insertion(P, prevent_warning=TRUE)
