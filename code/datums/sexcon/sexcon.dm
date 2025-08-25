@@ -537,12 +537,12 @@
 /datum/status_effect/facial
 	id = "facial"
 	alert_type = null // don't show an alert on screen
-	duration = 10 MINUTES // wear off eventually or until character washes themselves
+	duration = 12 MINUTES // wear off eventually or until character washes themselves
 
 /datum/status_effect/facial/internal
 	id = "creampie"
 	alert_type = null // don't show an alert on screen
-	duration = 5 MINUTES // wear off eventually or until character washes themselves
+	duration = 7 MINUTES // wear off eventually or until character washes themselves
 
 /datum/status_effect/facial/on_apply()
 	RegisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT),PROC_REF(clean_up))
