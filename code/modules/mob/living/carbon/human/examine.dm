@@ -120,19 +120,19 @@
 		var/facial = has_status_effect(/datum/status_effect/facial)
 		var/creampie = has_status_effect(/datum/status_effect/facial/internal) && (observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		if(facial && creampie)
-			if(isliving(user))
+			if(user != src && isliving(user))
 				var/mob/living/L = user
 				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
 			else
 				. += span_aiprivradio("[m1] glazed and dripping out cum!")
 		else if(facial)
-			if(isliving(user))
+			if(user != src && isliving(user))
 				var/mob/living/L = user
 				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
 			else
 				. += span_aiprivradio("[m1] glazed with cum!")
 		else if(creampie)
-			if(isliving(user))
+			if(user != src && isliving(user))
 				var/mob/living/L = user
 				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
 			else
