@@ -383,18 +383,21 @@
 	if(top.sexcon.considered_limp())
 		knot_remove()
 		return
-	if(get_dist(top, btm) > 2)
-		if(get_dist(top, btm) > 10) // teleported or something else
+	var/dist = get_dist(top, btm)
+	if(dist > 1 &&  dist < 6) // attempt to move the knot recipient to a minimum of 1 tiles away from the knot owner, so they trail behind
+		btm.sexcon.tugging_knot = TRUE
+		for(var/i in 1 to 3)
+			step_towards(btm, top)
+			dist = get_dist(top, btm)
+			if(dist <= 1)
+				break
+		btm.sexcon.tugging_knot = FALSE
+	if(dist > 2)
+		if(dist > 10) // teleported or something else
 			if(knot_movement_mods_remove_his_knot_ty(top, btm))
 				return
 		knot_remove(forceful_removal = TRUE)
 		return
-	btm.sexcon.tugging_knot = TRUE
-	for(var/i in 1 to 3) // try moving three times
-		step_towards(btm, top)
-		if(get_dist(top, btm) <= 1)
-			break
-	btm.sexcon.tugging_knot = FALSE
 	top.set_pull_offsets(btm, GRAB_AGGRESSIVE)
 	if(btm.mobility_flags & MOBILITY_STAND)
 		if(btm.m_intent == MOVE_INTENT_RUN) // running only makes this worse, darling
