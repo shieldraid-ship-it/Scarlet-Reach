@@ -564,7 +564,7 @@
 
 /datum/status_effect/jaw_gaped/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
-	if(owner.stat != CONSCIOUS)
+	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_warning("I finally feel my jaw again."))
 
 /datum/sex_controller/proc/ejaculate()
