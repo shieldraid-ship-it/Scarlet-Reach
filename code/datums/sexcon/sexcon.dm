@@ -523,7 +523,9 @@
 /datum/status_effect/knot_gaped/on_apply()
 	last_loc = get_turf(owner)
 	if(owner.sexcon.tugging_knot_choke && !owner.has_status_effect(/datum/status_effect/jaw_gaped))
-		owner.apply_status_effect(/datum/status_effect/jaw_gaped)
+		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
+		if(head) // only apply this effect if a head is found
+			owner.apply_status_effect(/datum/status_effect/jaw_gaped)
 	return ..()
 
 /datum/status_effect/knot_gaped/tick()
