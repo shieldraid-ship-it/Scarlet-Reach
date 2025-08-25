@@ -122,19 +122,19 @@
 		if(facial && creampie)
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 10 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
 			else
 				. += span_aiprivradio("[m1] glazed and dripping out cum!")
 		else if(facial)
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 10 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
 			else
 				. += span_aiprivradio("[m1] glazed with cum!")
 		else if(creampie)
 			if(isliving(user))
 				var/mob/living/L = user
-				. += (L.STAPER >= 10 && L.STAINT >= 5) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
 			else
 				. += span_aiprivradio("[m1] dripping out cum!")
 
