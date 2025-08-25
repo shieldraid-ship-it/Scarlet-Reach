@@ -248,7 +248,7 @@
 			var/damage = target.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
 			var/body_zone = target.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 			var/obj/item/bodypart/affecting = target.get_bodypart(body_zone)
-			if(affecting && affecting.brute_dam < 150) // cap damage applied
+			if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 				target.apply_damage(damage, BRUTE, body_zone)
 			target.sexcon.try_do_pain_effect(PAIN_HIGH_EFFECT, FALSE)
 		else
@@ -429,15 +429,15 @@
 	if(ishuman(btm) && !QDELETED(btm) && ishuman(top) && !QDELETED(top))
 		if(forceful_removal)
 			var/damage = btm.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
-			var/body_zone = btm.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 			if (top.sexcon.arousal > MAX_AROUSAL / 3) // considered still hard, let it rip like a beyblade
 				damage *= 2
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
 					btm.apply_status_effect(/datum/status_effect/knot_gaped)
-			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage 
+			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage
+				var/body_zone = btm.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 				var/obj/item/bodypart/affecting = btm.get_bodypart(body_zone)
-				if(affecting && affecting.brute_dam < 150) // cap damage applied
+				if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 					btm.apply_damage(damage, BRUTE, body_zone)
 			btm.Stun(80)
 			playsound(btm, 'sound/misc/mat/pop.ogg', 100, TRUE, -2, ignore_walls = FALSE)
