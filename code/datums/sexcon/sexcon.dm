@@ -434,7 +434,7 @@
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
 					btm.apply_status_effect(/datum/status_effect/knot_gaped)
-			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage
+			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage if top force is set to max
 				var/body_zone = btm.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 				var/obj/item/bodypart/affecting = btm.get_bodypart(body_zone)
 				if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
