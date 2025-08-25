@@ -460,12 +460,20 @@
 	max_integrity = 250
 	armor_class = ARMOR_CLASS_LIGHT
 
-/obj/item/clothing/suit/roguetown/armor/leather/hide/warden
-	name = "forestry armor"
-	desc = "A light armor worn by the Wardens of Scarlet Reach. Far more durable than leather."
+/obj/item/clothing/suit/roguetown/armor/leather/studded/warden
+	name = "forester's armor"
+	desc = "A hardened leather harness with a large pauldron worn over a maille coat, associated with the Azurian wardens."
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
-	icon_state = "foresthide"
+	icon_state = "forestleather"
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
+	name = "forester's brigandine"
+	desc = "A hardened leather harness with a large pauldron worn over a tasseted brigandine, imbued with Dendor's essence."
+	icon_state = "forestbrig"
+	max_integrity = 400
+	equip_delay_self = 4 SECONDS
+	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded
 	name = "studded leather armor"
