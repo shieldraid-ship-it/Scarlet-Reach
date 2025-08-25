@@ -382,8 +382,12 @@
 				return
 		knot_remove(forceful_removal = TRUE)
 		return
-	for(var/i in 2 to get_dist(top, btm)) // Move the knot recipient to a minimum of 1 tiles away from the knot owner, so they trail behind
+	btm.sexcon.tugging_knot = TRUE
+	for(var/i in 1 to 3) // try moving three times
 		step_towards(btm, top)
+		if(get_dist(top, btm) <= 1)
+			break
+	btm.sexcon.tugging_knot = FALSE
 	top.set_pull_offsets(btm, GRAB_AGGRESSIVE)
 	if(btm.mobility_flags & MOBILITY_STAND)
 		if(btm.m_intent == MOVE_INTENT_RUN) // running only makes this worse, darling
