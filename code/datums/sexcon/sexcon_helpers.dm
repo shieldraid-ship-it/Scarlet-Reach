@@ -88,7 +88,7 @@
 		return
 	var/prob_for_impreg = vag.impregnation_probability
 	if(wife.sexcon.knotted_status) // if they're knotted, increased by two factor for dramatic impact
-		prob_for_impreg *= 2
+		prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
 	if(prob(prob_for_impreg) && wife.is_fertile() && is_virile())
 		vag.be_impregnated(src)
 		vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
