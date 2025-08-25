@@ -56424,7 +56424,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "siF" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/halberd/glaive,
+/obj/item/rogueweapon/spear/billhook,
 /turf/open/floor/rogue/tile,
 /area/rogue/under/town/basement/keep)
 "siI" = (
