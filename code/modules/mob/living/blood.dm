@@ -184,10 +184,6 @@
 		conbonus = STACON - 10
 	if(mind)
 		amt -= amt * (conbonus * CONSTITUTION_BLEEDRATE_MOD)
-		if(HAS_TRAIT(src, TRAIT_CRITICAL_RESISTANCE))
-			amt = amt / 2
-		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
-			amt = amt * 2
 
 	blood_volume = max(blood_volume - amt, 0)
 	GLOB.scarlet_round_stats[STATS_BLOOD_SPILT] += amt
