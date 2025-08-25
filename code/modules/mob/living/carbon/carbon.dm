@@ -1120,6 +1120,9 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	var/list/wCount = get_wounds()
+	if(wCount.len > 0)
+		heal_wounds(INFINITY)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
