@@ -519,6 +519,8 @@
 
 /datum/status_effect/knot_gaped/on_apply()
 	last_loc = get_turf(owner)
+	if(owner.sexcon.tugging_knot_choke && !owner.has_status_effect(/datum/status_effect/jaw_gaped))
+		owner.apply_status_effect(/datum/status_effect/jaw_gaped)
 	return ..()
 
 /datum/status_effect/knot_gaped/tick()
@@ -541,6 +543,22 @@
 /atom/movable/screen/alert/status_effect/knotted
 	name = "Knotted"
 	desc = "I have to be careful where I step..."
+
+/datum/status_effect/jaw_gaped
+	id = "jaw_gaped"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = -1
+	alert_type = null
+
+/datum/status_effect/jaw_gaped/on_apply()
+	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	to_chat(owner, span_warning("My jaw... It stings!"))
+	return ..()
+
+/datum/status_effect/jaw_gaped/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	to_chat(owner, span_warning("I finally feel my jaw again."))
 
 /datum/sex_controller/proc/ejaculate()
 	log_combat(user, user, "Ejaculated")
