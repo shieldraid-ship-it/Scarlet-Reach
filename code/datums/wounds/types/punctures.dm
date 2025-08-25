@@ -63,7 +63,7 @@
 //Vaguely: Not nearly as painful, higher bleed cap, easier to sew / heal.
 
 #define PUNC_UPG_BLEEDRATE 0.5	//Balanced with the idea of penetrative (through armor) damage being the main source of these.
-#define PUNC_UPG_WHPRATE 0.5
+#define PUNC_UPG_WHPRATE 0.75
 #define PUNC_UPG_SEWRATE 0.65
 #define PUNC_UPG_PAINRATE 0.05
 #define PUNC_UPG_CLAMP_ARMORED 0.75

@@ -57,7 +57,7 @@
 //Vaguely: Hella painful. Hella bleedy. Armor is very effective. Similar to lashing in this way.
 
 #define BITE_UPG_BLEEDRATE 0.2
-#define BITE_UPG_WHPRATE 0.1
+#define BITE_UPG_WHPRATE 0.2
 #define BITE_UPG_SEWRATE 1
 #define BITE_UPG_PAINRATE 1
 #define BITE_UPG_CLAMP_ARMORED 1

@@ -54,7 +54,7 @@
 //Bruise Omniwounds
 //Vaguely: Hella painful. No bleeding. No armor interactions. Every hit also increases its self heal by a little bit.
 
-#define BRUISE_UPG_WHPRATE 1
+#define BRUISE_UPG_WHPRATE 1.3
 #define BRUISE_UPG_PAINRATE 1
 #define BRUISE_UPG_SELFHEAL 1
 
