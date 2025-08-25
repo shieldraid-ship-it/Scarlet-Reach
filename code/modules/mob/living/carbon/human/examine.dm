@@ -739,6 +739,14 @@
 				if (stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
 					. += span_bloody("<b>[m3] \a [stuck_thing] stuck in [m2] [part.name]!</b>")
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/stress = H.get_stress_amount()//stress check for racism
+		if(H.has_flaw(/datum/charflaw/paranoid) || (!HAS_TRAIT(H, TRAIT_EMPATH) && stress >= 4))//if you have paranoid flaw or you're stressed while not being an empath
+			if(H.dna.species.name != dna.species.name)
+				if(dna.species.stress_examine)//some species don't have a stress desc
+					. += dna.species.stress_desc
+
 	if((user != src) && isliving(user))
 		var/mob/living/L = user
 		var/final_str = STASTR
@@ -842,7 +850,7 @@
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))
 		. += trait_exam
-	
+
 
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
