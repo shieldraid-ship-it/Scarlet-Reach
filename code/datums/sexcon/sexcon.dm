@@ -245,9 +245,11 @@
 	log_combat(user, target, "Started knot tugging")
 	if(force > SEX_FORCE_MID) // if using force above default
 		if(force >= SEX_FORCE_EXTREME) // damage if set to max force
-			var/obj/item/bodypart/affecting = target.get_bodypart(BODY_ZONE_CHEST)
+			var/damage = target.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
+			var/body_zone = target.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
+			var/obj/item/bodypart/affecting = target.get_bodypart(body_zone)
 			if(affecting && affecting.brute_dam < 150) // cap damage applied
-				target.apply_damage(30, BRUTE, BODY_ZONE_CHEST)
+				target.apply_damage(damage, BRUTE, body_zone)
 			target.sexcon.try_do_pain_effect(PAIN_HIGH_EFFECT, FALSE)
 		else
 			target.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
@@ -423,18 +425,19 @@
 	var/mob/living/carbon/human/btm = knotted_recipient
 	if(ishuman(btm) && !QDELETED(btm) && ishuman(top) && !QDELETED(top))
 		if(forceful_removal)
-			var/damage = 30 // base damage value
+			var/damage = btm.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
+			var/body_zone = btm.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 			if (top.sexcon.arousal > MAX_AROUSAL / 3) // considered still hard, let it rip like a beyblade
 				damage += 30
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
 					btm.apply_status_effect(/datum/status_effect/knot_gaped)
 			if(force >= SEX_FORCE_EXTREME) // don't cap damage
-				btm.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
+				btm.apply_damage(damage, BRUTE, body_zone)
 			else if(force > SEX_FORCE_MID) // if using force above default
-				var/obj/item/bodypart/affecting = btm.get_bodypart(BODY_ZONE_CHEST)
+				var/obj/item/bodypart/affecting = btm.get_bodypart(body_zone)
 				if(affecting && affecting.brute_dam < 150) // cap damage applied
-					btm.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
+					btm.apply_damage(damage, BRUTE, body_zone)
 			btm.Stun(80)
 			playsound(btm, 'sound/misc/mat/pop.ogg', 100, TRUE, -2, ignore_walls = FALSE)
 			playsound(top, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
