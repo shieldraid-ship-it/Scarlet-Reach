@@ -523,7 +523,7 @@
 
 /datum/status_effect/knot_gaped/on_apply()
 	last_loc = get_turf(owner)
-	if(owner.sexcon.tugging_knot_choke && !owner.has_status_effect(/datum/status_effect/jaw_gaped))
+	if(owner.stat == CONSCIOUS && owner.sexcon.tugging_knot_choke && !owner.has_status_effect(/datum/status_effect/jaw_gaped))
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head) // only apply this effect if a head is found
 			owner.apply_status_effect(/datum/status_effect/jaw_gaped)
@@ -564,7 +564,8 @@
 
 /datum/status_effect/jaw_gaped/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
-	to_chat(owner, span_warning("I finally feel my jaw again."))
+	if(owner.stat != CONSCIOUS)
+		to_chat(owner, span_warning("I finally feel my jaw again."))
 
 /datum/sex_controller/proc/ejaculate()
 	log_combat(user, user, "Ejaculated")
