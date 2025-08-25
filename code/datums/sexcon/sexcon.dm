@@ -38,6 +38,7 @@
 	var/tugging_knot = FALSE
 	var/tugging_knot_check = 0
 	var/tugging_knot_blocked = FALSE
+	var/tugging_knot_choke = FALSE
 	var/mob/living/carbon/knotted_owner = null // whom has the knot
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 	/// Which zones we are using in the current action.
@@ -236,9 +237,11 @@
 	user.sexcon.knotted_recipient = target
 	user.sexcon.knotted_status = KNOTTED_AS_TOP
 	user.sexcon.tugging_knot_blocked = FALSE
+	user.sexcon.tugging_knot_choke = FALSE
 	target.sexcon.knotted_owner = user
 	target.sexcon.knotted_recipient = target
 	target.sexcon.knotted_status = KNOTTED_AS_BTM
+	target.sexcon.tugging_knot_choke = action.knot_throat
 	log_combat(user, target, "Started knot tugging")
 	if(force > SEX_FORCE_MID) // if using force above default
 		if(force >= SEX_FORCE_EXTREME) // damage if set to max force
@@ -358,6 +361,8 @@
 			btm.Stun(15)
 		else if(prob(3))
 			btm.emote("painmoan")
+		else if(btm.sexcon.tugging_knot_choke && btm.getOxyLoss() < 50)
+			btm.adjustOxyLoss(1)
 
 /datum/sex_controller/proc/knot_movement_btm()
 	var/mob/living/carbon/human/top = knotted_owner
@@ -400,6 +405,8 @@
 			btm.emote("groan")
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
+			if(btm.sexcon.tugging_knot_choke && btm.getOxyLoss() < 50)
+				btm.adjustOxyLoss(3)
 		else if(prob(4))
 			btm.emote("painmoan")
 	addtimer(CALLBACK(src, PROC_REF(knot_movement_btm_after)), 0.1 SECONDS)

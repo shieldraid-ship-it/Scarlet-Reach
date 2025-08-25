@@ -19,6 +19,8 @@
 	var/required_grab_state = GRAB_AGGRESSIVE
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
+	/// Apply unique effects when knotting the throat (oxygen loss, temp mute status, etc)
+	var/knot_throat = FALSE
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE

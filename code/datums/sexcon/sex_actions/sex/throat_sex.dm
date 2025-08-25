@@ -63,6 +63,7 @@
 /datum/sex_action/throat_sex/knot
 	name = "Knot their throat"
 	knot_on_finish = TRUE
+	knot_throat = TRUE
 
 /datum/sex_action/throat_sex/knot/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.knot_penis_type())
