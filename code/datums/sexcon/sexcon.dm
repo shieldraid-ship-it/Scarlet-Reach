@@ -428,13 +428,11 @@
 			var/damage = btm.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
 			var/body_zone = btm.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 			if (top.sexcon.arousal > MAX_AROUSAL / 3) // considered still hard, let it rip like a beyblade
-				damage += 30
+				damage *= 2
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
 					btm.apply_status_effect(/datum/status_effect/knot_gaped)
-			if(force >= SEX_FORCE_EXTREME) // don't cap damage
-				btm.apply_damage(damage, BRUTE, body_zone)
-			else if(force > SEX_FORCE_MID) // if using force above default
+			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage 
 				var/obj/item/bodypart/affecting = btm.get_bodypart(body_zone)
 				if(affecting && affecting.brute_dam < 150) // cap damage applied
 					btm.apply_damage(damage, BRUTE, body_zone)
