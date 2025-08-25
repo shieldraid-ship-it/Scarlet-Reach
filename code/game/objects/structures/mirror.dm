@@ -30,6 +30,9 @@
 
 	var/mob/living/carbon/human/H = user
 
+	if(obj_broken || !Adjacent(user))
+		return
+
 	if(!HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
 		to_chat(H, span_warning("You look into the mirror but see only your normal reflection."))
 		if(HAS_TRAIT(user, TRAIT_BEAUTIFUL))
@@ -44,8 +47,7 @@
 			H.add_stress(/datum/stressevent/unseemly)
 		return
 
-	if(obj_broken || !Adjacent(user))
-		return
+
 
 	var/should_update = FALSE
 	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
