@@ -88,8 +88,9 @@
 
 /datum/species/golem/porcelain/get_skin_list()
 	return list(
-		"LEAD" = "ffffff",
-		"SIENNA" = "a0522d",
+		"Porcelain" = DOLL_PORCELAIN,
+		"Sienna" = DOLL_SIENNA,
+
 	)
 
 /datum/species/golem/porcelain/get_hairc_list()
