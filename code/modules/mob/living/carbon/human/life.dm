@@ -191,10 +191,12 @@
 //				coverfeet = TRUE
 	if(locations & HEAD)
 		if(!coverhead && patron?.type != /datum/patron/divine/abyssor) //abyssor friends don't care about a bit of water!!!
-			add_stress(/datum/stressevent/coldhead)
+			if(!isaxian(src) && !islamia(src))//if you aren't an abyssor spawn creature
+				add_stress(/datum/stressevent/coldhead)
 //	if(locations & FEET)
 //		if(!coverfeet && patron?.type != /datum/patron/divine/abyssor)
-//			add_stress(/datum/stressevent/coldfeet)
+//			if(!isaxian(src) && !islamia(src))
+//				add_stress(/datum/stressevent/coldfeet)
 
 //END FIRE CODE
 
