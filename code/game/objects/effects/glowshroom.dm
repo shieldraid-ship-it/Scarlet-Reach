@@ -131,7 +131,7 @@
 	qdel(src)
 
 /obj/structure/glowshroom/dendorite
-	var/timeleft = 60 SECONDS
+	var/timeleft = 5 MINUTES
 
 /obj/structure/glowshroom/dendorite/Initialize()
 	. = ..()
