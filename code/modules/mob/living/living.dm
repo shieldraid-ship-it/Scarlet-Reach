@@ -1130,6 +1130,10 @@
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
 
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		to_chat(src, span_warning("My body is paralyzed!"))
+		return FALSE
+
 	var/wrestling_diff = 0
 	var/resist_chance = 55
 	var/mob/living/L = pulledby
