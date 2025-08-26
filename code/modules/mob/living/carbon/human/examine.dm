@@ -116,6 +116,28 @@
 		if(has_status_effect(/datum/status_effect/knot_tied))
 			. += span_warning("A knot is locked inside them. They're being pulled around like a pet.")
 
+		// Facial/Creampie effect message
+		var/facial = has_status_effect(/datum/status_effect/facial)
+		var/creampie = has_status_effect(/datum/status_effect/facial/internal) && (observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+		if(facial && creampie)
+			if(user != src && isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
+			else
+				. += span_aiprivradio("[m1] glazed and dripping out cum!")
+		else if(facial)
+			if(user != src && isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
+			else
+				. += span_aiprivradio("[m1] glazed with cum!")
+		else if(creampie)
+			if(user != src && isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
+			else
+				. += span_aiprivradio("[m1] dripping out cum!")
+
 		if (HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) 
 			. += span_phobia("A foreigner...")
 
