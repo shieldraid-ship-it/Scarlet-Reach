@@ -59,15 +59,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 		if(H.voice_color)
 			colorpart = "<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
-		if(H.client && H.client.patreonlevel() >= GLOB.patreonsaylevel)
-			spans |= SPAN_PATREON_SAY
+		if(H.client && H.client.prefs.patreon_say_color_enabled && H.client.patreon_colored_say_allowed)
+			spans |= "#[H.client.prefs.patreon_say_color]"
 	if(speaker.voicecolor_override)
 		colorpart = "<span style='color:#[speaker.voicecolor_override];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
 	//End name span.
 	var/endspanpart = "</span></span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, "[raw_message]", spans, message_mode)]</span></span>"
 
 	var/arrowpart = ""
 
@@ -206,13 +206,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]" */
 
 /proc/attach_spans(input, list/spans)
-	return "[message_spans_start(spans)][input]</span>"
+	return "[message_spans_start(spans)][input]</span></span>"
 
 /proc/message_spans_start(list/spans)
 	var/output = "<span class='"
+	var/textcolor = null
 	for(var/S in spans)
-		output = "[output][S] "
-	output = "[output]'>"
+		if(copytext(S, 1, 2) == "#") // All classes that start with a # are colors since # cannot be the first character of a css class.
+			textcolor = S //Vrell - Only needs the "last" color since that one will overwrrite it.
+		else
+			output = "[output][S] "
+	output = "[output]'><span style='color:[textcolor]'>"
 	return output
 
 /proc/say_test(text)
