@@ -190,9 +190,9 @@
 	..()
 	if(active_item)
 		to_chat(user, span_notice("Gone is thy hoard."))
-		user.change_stat("strength", -5)
-		user.change_stat("constitution", -5)
-		user.change_stat("endurance", -5)
+		user.change_stat("strength", -2)
+		user.change_stat("constitution", -2)
+		user.change_stat("endurance", -2)
 		active_item = FALSE
 	return
 
