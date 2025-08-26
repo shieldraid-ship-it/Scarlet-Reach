@@ -171,9 +171,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/descriptor_entries = list()
 	var/list/custom_descriptors = list()
 
-	var/char_accent = "No accent"
-	
+	var/char_accent = "No accent"	
 
+	// PATREON
+	// Vrell - I fucking hate how inconsistent the variable style is for this shit. underscores? all lowercase? camelcase? 
+	var/patreon_say_color = "ff7a05"
+	var/patreon_say_color_enabled = FALSE
+	// END PATREON
 
 	var/datum/loadout_item/loadout
 	var/datum/loadout_item/loadout2
