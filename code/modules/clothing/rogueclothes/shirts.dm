@@ -656,7 +656,7 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 //tattoo code
-/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/Initialize(mapload)
+/obj/item/clothing/suit/roguetown/armor/skin_armor/easttats/Initialize(mapload)
 	. = ..()
 	name = "lenticular tattoos"
 	desc = "It's styled into the shapes of clouds. You shudder as the ink moves and condenses into areas where the skin is struck."
@@ -672,7 +672,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
-/obj/item/clothing/suit/roguetown/shirt/easttats/easttats/dropped(mob/living/carbon/human/user)
+/obj/item/clothing/suit/roguetown/armor/skin_armor/easttats/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(QDELETED(src))
 		return
