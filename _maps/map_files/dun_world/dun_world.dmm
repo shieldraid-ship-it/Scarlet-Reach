@@ -40512,6 +40512,24 @@
 "mMx" = (
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
+"mMy" = (
+/obj/structure/closet/crate/roguecloset/inn,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/flashlight/flare/torch/metal,
+/obj/item/listeningdevice,
+/obj/item/listeningdevice,
+/obj/item/listeningdevice,
+/obj/item/listeningdevice,
+/obj/item/speakerinq,
+/obj/item/speakerinq,
+/obj/item/speakerinq,
+/obj/structure/fluff/walldeco/psybanner/red{
+	pixel_y = 32
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/town/church/basement)
 "mMF" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -57858,7 +57876,7 @@
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "siF" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/halberd/glaive,
+/obj/item/rogueweapon/spear/billhook,
 /turf/open/floor/rogue/tile,
 /area/rogue/under/town/basement/keep)
 "siI" = (

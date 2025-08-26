@@ -208,7 +208,7 @@
 		"Longsword & Recurve Bow",
 		"Mace & Crossbow",
 		"Spear & Shield",
-		"Law & Order (Sabre & Buckler)",
+		"Deliverer (Glaive)", // new, unique weapon, different from the infantry captain's
 		"Lance + Kite Shield"
 		)
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -225,9 +225,9 @@
 		if("Spear & Shield")
 			r_hand = /obj/item/rogueweapon/spear
 			backl = /obj/item/rogueweapon/shield/tower/metal
-		if("Law & Order (Sabre & Buckler)") // felt the need to specify x2
-			beltr = /obj/item/rogueweapon/sword/capsabre
-			backl = /obj/item/rogueweapon/shield/capbuckler
+		if("Deliverer (Glaive)")
+			r_hand = /obj/item/rogueweapon/halberd/capglaive
+			backl = /obj/item/gwstrap
 		if("Lance + Kite Shield")
 			r_hand = /obj/item/rogueweapon/spear/lance
 			backl = /obj/item/rogueweapon/shield/tower/metal

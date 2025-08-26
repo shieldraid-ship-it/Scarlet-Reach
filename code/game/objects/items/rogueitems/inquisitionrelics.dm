@@ -402,7 +402,7 @@ Inquisitorial armory down here
 	if(!istype(parent, /obj/item/rogueweapon))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_ROGUEWEAPON_OBJFIX, PROC_REF(on_fix))
+	RegisterSignal(parent, COMSIG_ITEM_OBJFIX, PROC_REF(on_fix))
 	pre_blessed = preblessed
 	added_force = force
 	added_blade_int = blade_int
