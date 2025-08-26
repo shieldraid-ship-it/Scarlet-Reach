@@ -7,6 +7,7 @@
 	cooldown_min = 50
 	die_with_shapeshifted_form =  FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
+	convert_damage = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/gaseousform
 	name = "Mist Form"
@@ -16,6 +17,7 @@
 	cooldown_min = 50
 	die_with_shapeshifted_form =  FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/gaseousform
+	convert_damage = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/crow
 	name = "Zad Form"
