@@ -190,10 +190,10 @@
 //			if(zone2covered(BODY_ZONE_PRECISE_L_FOOT, C.body_parts_covered))
 //				coverfeet = TRUE
 	if(locations & HEAD)
-		if(!coverhead)
+		if(!coverhead && patron?.type != /datum/patron/divine/abyssor) //abyssor friends don't care about a bit of water!!!
 			add_stress(/datum/stressevent/coldhead)
 //	if(locations & FEET)
-//		if(!coverfeet)
+//		if(!coverfeet && patron?.type != /datum/patron/divine/abyssor)
 //			add_stress(/datum/stressevent/coldfeet)
 
 //END FIRE CODE
