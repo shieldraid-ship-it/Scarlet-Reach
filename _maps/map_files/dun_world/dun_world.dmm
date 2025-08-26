@@ -40522,9 +40522,9 @@
 /obj/item/listeningdevice,
 /obj/item/listeningdevice,
 /obj/item/listeningdevice,
-/obj/item/speakerinq,
-/obj/item/speakerinq,
-/obj/item/speakerinq,
+/obj/item/scomstone/speakerinq,
+/obj/item/scomstone/speakerinq,
+/obj/item/scomstone/speakerinq,
 /obj/structure/fluff/walldeco/psybanner/red{
 	pixel_y = 32
 	},

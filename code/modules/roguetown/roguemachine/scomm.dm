@@ -301,20 +301,13 @@
 	blade_dulling = DULLING_BASH
 	max_integrity = 0
 	pixel_y = 32
+	flags_1 = HEAR_1
 	anchored = TRUE
 	verb_say = "squeaks"
 	var/scom_tag //Vrell - USED FOR SETTING TAG IN MAP CREATION!!!!
 
 	var/next_decree = 0
 	var/datum/scommodule/scom = new/datum/scommodule()
-
-/obj/structure/roguemachine/scomm/Initialize()
-	. = ..()
-	become_hearing_sensitive()
-
-/obj/structure/roguemachine/scomm/Destroy()
-	lose_hearing_sensitivity()
-	return ..()
 
 /obj/structure/roguemachine/scomm/OnCrafted(dirin, mob/user)
 	. = ..()
@@ -496,6 +489,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
+	flags_1 = HEAR_1
 	muteinmouth = TRUE
 	var/hearrange = 1 // change to 0 if you want your special scomstone to be only hearable by wearer
 	drop_sound = 'sound/foley/coinphy (1).ogg'
@@ -522,11 +516,13 @@
 	update_icon()
 
 /obj/item/scomstone/Destroy()
-	SSroguemachine.scomm_machines -= src
+	scom.cleanup()
+	qdel(scom)
 	return ..()
 
 /obj/item/scomstone/Initialize()
 	. = ..()
+	scominit()
 	update_icon()
 
 /obj/item/scomstone/proc/scominit()
@@ -572,7 +568,8 @@
 	obj_flags = null
 	icon = 'icons/roguetown/clothing/neck.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	experimental_inhand = FALSE	
+	experimental_inhand = FALSE
+	flags_1 = HEAR_1
 	muteinmouth = TRUE
 	sellprice = 200
 	grid_width = 32
@@ -609,16 +606,17 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
+	flags_1 = HEAR_1
 	muteinmouth = TRUE
 	sellprice = 0
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/mattcoin/New(loc, ...)
+/obj/item/scomstone/mattcoin/scominit()
+	scom.setup(src, TRUE, TRUE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/foley/coins1.ogg', 20, SCOM_TARGET_MATTHIOS, FALSE, FALSE, TRUE)
+
+/obj/item/scomstone/mattcoin/New(loc, ...)
 	. = ..()
-	become_hearing_sensitive()
-	update_icon()
-	SSroguemachine.scomm_machines += src
 	name = pick("rontz ring", "gold ring")
 
 /obj/item/scomstone/mattcoin/pickup(mob/living/user)
@@ -642,43 +640,6 @@
 	scom.mute(user)
 	update_icon()
 
-/obj/item/mattcoin/Destroy()
-	SSroguemachine.scomm_machines -= src
-	return ..()
-
-/obj/item/mattcoin/Initialize()
-	. = ..()
-	update_icon()
-	SSroguemachine.scomm_machines += src
-
-/obj/item/mattcoin/proc/repeat_message(message, atom/A, tcolor, message_language, list/tspans = list())
-	if(A == src)
-		return
-	if(!ismob(loc))
-		return
-	if(tcolor)
-		voicecolor_override = tcolor
-	if(speaking && message)
-		playsound(loc, 'sound/foley/coins1.ogg', 20, TRUE, -1)
-		say(message, spans = tspans, language = message_language)
-	voicecolor_override = null
-
-
-/obj/item/mattcoin/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	if(!can_speak())
-		return
-	if(message == "" || !message)
-		return
-	spans |= speech_span
-	if(!language)
-		language = get_default_language()
-	if(istype(loc, /obj/item))
-		var/obj/item/I = loc
-		I.send_speech(message, 0, I, , spans, message_language=language)
-	else
-		send_speech(message, 0, src, , spans, message_language=language)
-
-
 // INQUISITORIAL LISTENERS AND RECEIVER
 
 /obj/item/scomstone/speakerinq
@@ -686,7 +647,7 @@
 	desc = "Sweet secrets whispered so freely."
 	sellprice = 20
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "scomite"
+	icon_state = "scomite_active"
 	gripped_intents = null
 	dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -694,54 +655,19 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
-	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_RING
+	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_RING
 	possible_item_intents = list(INTENT_GENERIC)
-	sleeved = 'icons/roguetown/clothing/onmob/neck.dmi'
 	grid_width = 32
 	grid_height = 32
+	hearrange = 0
 
-/obj/item/speakerinq/proc/repeat_message(message, atom/A, tcolor, message_language, list/tspans = list())
-	if(A == src)
-		return
-	if(!ismob(loc))
-		return
-	if(tcolor)
-		voicecolor_override = tcolor
-	if(speaking && message)
-		playsound(loc, 'sound/vo/mobs/rat/rat_life.ogg', 20, TRUE, -1)
-		say(message, spans = tspans, language = message_language)
-	voicecolor_override = null
+/obj/item/scomstone/speakerinq/scominit()
+	scom.setup(src, FALSE, FALSE, TRUE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 20, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, TRUE)
 
-/obj/item/speakerinq/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	if(!can_speak())
-		return
-	if(message == "" || !message)
-		return
-	spans |= speech_span
-	if(!language)
-		language = get_default_language()
-	if(istype(loc, /obj/item))
-		var/obj/item/I = loc
-		I.send_speech(message, 0, I, , spans, message_language=language)
-	else
-		send_speech(message, 0, src, , spans, message_language=language)
-
-/obj/item/speakerinq/Destroy()
-	SSroguemachine.scomm_machines -= src
-	return ..()
-
-/obj/item/speakerinq/Initialize()
-	. = ..()
-	update_icon()
-	SSroguemachine.scomm_machines += src
-
-/obj/item/speakerinq/MiddleClick(mob/user)
-	if(.)
-		return
+/obj/item/scomstone/speakerinq/MiddleClick(mob/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-	speaking = !speaking
-	to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the listener."))
+	scom.mute(user)
 	update_icon()
 
 /obj/item/scomstone/speakerinq/attack_right(mob/user)
@@ -749,27 +675,23 @@
 
 /obj/item/listeningdevice
 	name = "listener"
-	desc = "An ever-attentive ear..."
+	desc = "An ever-attentive ear"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "listenstone"
-	dropshrink = 0.6
+	dropshrink = 0.75
 	gripped_intents = null
 	possible_item_intents = list(INTENT_GENERIC)
 	force = 10
 	throwforce = 10
-	alpha = 255
 	w_class = WEIGHT_CLASS_SMALL
 	experimental_inhand = FALSE
 	grid_width = 32
 	grid_height = 32
 
-
 /obj/item/listeningdevice/attack_self(mob/living/user)
-	var/input = input(user, "SIX LETTERS", "BEND AN EAR")
-	if(!input)
-		label = null
-		inqdesc = "An ever-attentive ear... [span_notice("This ear hasn't been bent. It's unlabelled.")]"
-		desc = inqdesc
+	var/turf/step_turf = get_step(get_turf(user), user.dir)
+	to_chat(user, span_tinynotice("I begin planting the listen-stone..."))
+	if(!do_after(user, 30, src))
 		return
 	new /obj/structure/listeningdeviceactive(step_turf)
 	message_admins("[usr.key] has planted a listening device")
@@ -781,13 +703,16 @@
 	desc = "An ever attentive ear. A red light blinks upon it..."
 	icon_state = "listenstone_active"
 	icon = 'icons/roguetown/items/misc.dmi'
-	var/listening = TRUE
 	density = FALSE
 	anchored = TRUE
 	flags_1 = HEAR_1
 	alpha = 0
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
+	var/datum/scommodule/scom = new/datum/scommodule()
 
+/obj/structure/listeningdeviceactive/Initialize()
+	. = ..()
+	scom.setup(src, TRUE, TRUE, FALSE, FALSE, DEFAULT_GARRISON_COLOR, 'sound/vo/mobs/rat/rat_life.ogg', 100, SCOM_TARGET_INQUISITOR, FALSE, FALSE, FALSE, FALSE)
 
 /obj/structure/listeningdeviceactive/attack_right(mob/user)
 	to_chat(user, span_info("I begin dismounting the listen-stone..."))
@@ -796,24 +721,13 @@
 	new /obj/item/listeningdevice(loc)
 	qdel(src)
 
+/obj/structure/listeningdeviceactive/Destroy()
+	scom.cleanup()
+	qdel(scom)
+	return ..()
+
 /obj/structure/listeningdeviceactive/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
-	if(!ishuman(speaker))
-		return
-	if(!listening)
-		return
-	var/mob/living/carbon/human/H = speaker
-	var/usedcolor = H.voice_color
-	if(H.voicecolor_override)
-		usedcolor = H.voicecolor_override
-	var/list/tspans = list()
-	if(H.client.patreonlevel() >= GLOB.patreonsaylevel)
-		tspans |= SPAN_PATREON_SAY
-	if(!raw_message)
-		return
-	if(length(raw_message) > 100)
-		raw_message = "<small>[raw_message]</small>"
-	for(var/obj/item/speakerinq/S in SSroguemachine.scomm_machines)
-		S.repeat_message(raw_message, src, usedcolor, message_language, tspans)
+	scom.scom_hear(speaker, message_language, raw_message, FALSE)
 
 /obj/structure/broadcast_horn
 	name = "\improper Streetpipe"
@@ -824,6 +738,7 @@
 	max_integrity = 0
 	density = TRUE
 	anchored = TRUE
+	flags_1 = HEAR_1
 	speech_span = SPAN_ORATOR
 	var/datum/scommodule/scom = new/datum/scommodule()
 
