@@ -420,7 +420,7 @@
 						return
 			else
 				to_chat(user, span_warning("[I] is missing an INDEXER."))
-				return							
+				return					
 		
 	if(istype(P, /obj/item/paper) || istype(P, /obj/item/smallDelivery))
 		if(inqcoins)
