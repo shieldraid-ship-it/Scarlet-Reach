@@ -548,7 +548,7 @@
 			return
 
 		if(ishuman(target) && target.mind)
-			var/mob/living/carbon/human/s_user = user
+//			var/mob/living/carbon/human/s_user = user //commented out because it's unused as long as vlord is always vulnerable to silver
 			var/mob/living/carbon/human/H = target
 			var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
 			var/datum/antagonist/vampirelord/lesser/V = H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser)

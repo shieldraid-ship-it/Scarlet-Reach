@@ -333,7 +333,7 @@
 		to_chat(user, span_warning("Sigh. No blood."))
 		return
 	if(C.mob_biotypes & MOB_UNDEAD)
-		to_chat(user, span_warning("Corrupt blood. I cannot."))
+		to_chat(user, span_warning("Corrupt blood. I gain nothing from it."))
 		return
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
