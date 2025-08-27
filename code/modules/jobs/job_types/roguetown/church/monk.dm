@@ -34,6 +34,7 @@
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/storage/keyring/churchie
 	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/rogueweapon/woodstaff
 	backpack_contents = list(/obj/item/ritechalk)
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata)
@@ -111,6 +112,7 @@
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
