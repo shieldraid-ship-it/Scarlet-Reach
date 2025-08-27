@@ -2199,7 +2199,7 @@
 // Warden Helmets
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler
 	name = "wardens's helmet"
-	desc = "A strange visored bascinet with a dark finish and a pair of large antlers of a saiga buck portruding from it. A sure sign of the Scarlet Reach warden, along with their black capes."
+	desc = "A strange visored bascinet with a dark finish and a pair of large antlers of a saiga buck portruding from it. A sure sign of the Scarlet Reach wardens, along with their distinctive cloaks."
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
