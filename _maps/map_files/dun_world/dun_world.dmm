@@ -40512,24 +40512,6 @@
 "mMx" = (
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
-"mMy" = (
-/obj/structure/closet/crate/roguecloset/inn,
-/obj/item/flashlight/flare/torch/lantern,
-/obj/item/flashlight/flare/torch/lantern,
-/obj/item/flashlight/flare/torch/metal,
-/obj/item/flashlight/flare/torch/metal,
-/obj/item/listeningdevice,
-/obj/item/listeningdevice,
-/obj/item/listeningdevice,
-/obj/item/listeningdevice,
-/obj/item/scomstone/speakerinq,
-/obj/item/scomstone/speakerinq,
-/obj/item/scomstone/speakerinq,
-/obj/structure/fluff/walldeco/psybanner/red{
-	pixel_y = 32
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/indoors/town/church/basement)
 "mMF" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -47149,7 +47131,7 @@
 /area/rogue/indoors/town/shop)
 "oOQ" = (
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/inq/basement)
+/area/rogue/indoors/inq/import)
 "oOV" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/ruinedwood,
@@ -75073,7 +75055,6 @@
 /area/rogue/outdoors/beach/forest)
 "xxF" = (
 /obj/structure/closet/crate/coffin,
-/obj/item/listenstone,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave/skeletoncrypt)
 "xxL" = (
