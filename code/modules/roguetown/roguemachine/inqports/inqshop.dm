@@ -267,9 +267,8 @@
 
 /datum/inqports/articles/whisperer
 	name = "1 Secret Whisperer"
-	item_type = /obj/item/speakerinq
+	item_type = /obj/item/scomstone/speakerinq
 	marquescost = 8
-
 
 // ✤ EQUIPMENT ✤ BELONGS HERE! JUST BELOW!
 
