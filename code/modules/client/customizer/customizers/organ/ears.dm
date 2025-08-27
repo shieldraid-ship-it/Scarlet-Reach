@@ -23,7 +23,7 @@
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/otie,
 		/datum/sprite_accessory/ears/wolf,
-		/datum/sprite_accessory/ears/lab
+		/datum/sprite_accessory/ears/lab,
 		/datum/sprite_accessory/ears/cat_big,
 		/datum/sprite_accessory/ears/cat_normal,
 		/datum/sprite_accessory/ears/miqote,
