@@ -432,6 +432,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			owner.current.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/bloodsteal)
 			owner.current.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/bloodlightning)
 			owner.current.adjust_skillrank(/datum/skill/magic/blood, 3, TRUE)
+			/*gas = new //removed for balance reasons
+			owner.current.AddSpell(gas)*/
 			for(var/obj/structure/vampire/bloodpool/B in GLOB.vampire_objects)
 				B.nextlevel = VAMP_LEVEL_THREE
 			to_chat(owner, "<font color='red'>My power is returning. I can once again access my spells. I have also regained usage of my mist form.</font>")
