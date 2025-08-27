@@ -41,9 +41,6 @@
 	if(user)
 		if(zone_precise in list(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND))
 			return FALSE //No dismemberment on hand/feet.
-		if(!istype(user.rmb_intent, /datum/rmb_intent/strong) && !HAS_TRAIT(C, TRAIT_CRITICAL_WEAKNESS) && !HAS_TRAIT(C, TRAIT_EASYDISMEMBER))
-			if(!prob(10))
-				return FALSE //Only 10% chance of dismembering if not on Strong stance (after the limb is capped out on damage, as per the preceding proc).
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
