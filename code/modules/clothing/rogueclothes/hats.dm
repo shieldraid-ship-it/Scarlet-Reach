@@ -2074,7 +2074,7 @@
 // Warden Helmets
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler
 	name = "wardens's helmet"
-	desc = "A beastly snouted armet with the large horns of an elder saiga protruding from it. Residents of Scarlet Reach know not to fear such a sight in the wilds, for they are exclusively associated with the Reaches wardens."
+	desc = "A strange visored bascinet with a dark finish and a pair of large antlers of a saiga buck portruding from it. A sure sign of the Scarlet Reach warden, along with their black capes."
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -2093,6 +2093,11 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/antler/snouted
+	name = "wardens's 'buck' helmet"
+	desc = "A beastly snouted bascinet with the large antlers of a saiga buck protruding from it. Residents of Scarlet Reach know not to fear such a sight in the wilds, for they are exclusively associated with the Reaches wardens."
+	icon_state = "wardensnout"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -2139,7 +2144,7 @@
 
 /obj/item/clothing/head/roguetown/roguehood/warden/antler
 	name = "warden's antlered hood"
-	desc = "A hunter's leather hood with two linen layers, sewn larger than usual tooo accommodate a helmet, and fitted with the large horns of an elder saiga."
+	desc = "A hunter's leather hood with two linen layers, sewn larger than usual tooo accommodate a helmet, and fitted with the large antlers of a saiga buck."
 	icon_state = "wardenhoodalt"
 	item_state = "wardenhoodalt"
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
