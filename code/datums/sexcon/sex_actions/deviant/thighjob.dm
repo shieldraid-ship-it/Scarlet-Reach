@@ -28,7 +28,7 @@
 	do_thrust_animate(user, target)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
-	user.sexcon.handle_passive_ejaculation()
+	user.sexcon.handle_passive_ejaculation(target)
 
 /datum/sex_action/thighjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [user.p_their()] cock out from inbetween [target]'s thighs."))

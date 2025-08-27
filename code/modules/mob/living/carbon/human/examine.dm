@@ -116,6 +116,28 @@
 		if(has_status_effect(/datum/status_effect/knot_tied))
 			. += span_warning("A knot is locked inside them. They're being pulled around like a pet.")
 
+		// Facial/Creampie effect message
+		var/facial = has_status_effect(/datum/status_effect/facial)
+		var/creampie = has_status_effect(/datum/status_effect/facial/internal) && (observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+		if(facial && creampie)
+			if(user != src && isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed and dripping out cum!") : span_warning("[m1] covered in something glossy!")
+			else
+				. += span_aiprivradio("[m1] glazed and dripping out cum!")
+		else if(facial)
+			if(user != src && isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] glazed with cum!") : span_warning("[m1] smeared with something glossy!")
+			else
+				. += span_aiprivradio("[m1] glazed with cum!")
+		else if(creampie)
+			if(user != src && isliving(user))
+				var/mob/living/L = user
+				. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_aiprivradio("[m1] dripping out cum!") : span_warning("[m1] letting out some glossy stuff!")
+			else
+				. += span_aiprivradio("[m1] dripping out cum!")
+
 		if (HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) 
 			. += span_phobia("A foreigner...")
 
@@ -508,6 +530,10 @@
 	if(legcuffed)
 		. += "<A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'><span class='warning'>[m3] \a [legcuffed] around [m2] legs!</span></A>"
 
+	var/datum/status_effect/bugged/effect = has_status_effect(/datum/status_effect/bugged)
+	if(effect && HAS_TRAIT(user, TRAIT_INQUISITION))
+		. += "<A href='?src=[REF(src)];item=[effect.device]'><span class='warning'>[m3] \a [effect.device] implanted.</span></A>"
+
 	//Gets encapsulated with a warning span
 	var/list/msg = list()
 
@@ -739,6 +765,14 @@
 				if (stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
 					. += span_bloody("<b>[m3] \a [stuck_thing] stuck in [m2] [part.name]!</b>")
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/stress = H.get_stress_amount()//stress check for racism
+		if(H.has_flaw(/datum/charflaw/paranoid) || (!HAS_TRAIT(H, TRAIT_EMPATH) && stress >= 4))//if you have paranoid flaw or you're stressed while not being an empath
+			if(H.dna.species.name != dna.species.name)
+				if(dna.species.stress_examine)//some species don't have a stress desc
+					. += dna.species.stress_desc
+
 	if((user != src) && isliving(user))
 		var/mob/living/L = user
 		var/final_str = STASTR
@@ -842,7 +876,7 @@
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))
 		. += trait_exam
-	
+
 
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
@@ -915,7 +949,13 @@
 /mob/living/proc/get_inquisition_text(mob/examiner)
 	var/inquisition_text
 	if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(examiner, TRAIT_INQUISITION))
-		inquisition_text += "Fellow Member of the Inquisition"
+		inquisition_text = "A Practical of our Psydonic Inquisitorial Sect."
+	if(HAS_TRAIT(src, TRAIT_PURITAN) && HAS_TRAIT(examiner, TRAIT_INQUISITION))
+		inquisition_text = "The Lorde-Inquisitor of our Psydonic Inquisitorial Sect."	
+	if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(examiner, TRAIT_PURITAN))
+		inquisition_text = "Subordinate to me in the Psydonic Inquisitorial Sect."
+	if(HAS_TRAIT(src, TRAIT_PURITAN) && HAS_TRAIT(examiner, TRAIT_PURITAN))
+		inquisition_text = "The Lorde-Inquisitor of the Sect sent here. That's me."	
 
 	return inquisition_text
 
