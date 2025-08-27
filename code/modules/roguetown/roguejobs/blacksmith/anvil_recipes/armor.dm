@@ -377,6 +377,13 @@
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet
 	craftdiff = 2
 
+/datum/anvil_recipe/armor/steel/helmet/klapplong
+	name = "Klappenlonger (+2 Steel)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/klapplong
+	craftdiff = 5
+
 /datum/anvil_recipe/armor/steel/helmet/salletv
 	name = "Sallet Visored (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
@@ -580,6 +587,13 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	craftdiff = 3
+
+/datum/anvil_recipe/armor/iron/wardenbrig
+	name = "Forester's Brigandine (+1 Forester's Armor, +1 Iron, +1 Essence of Wilderness)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/warden, /obj/item/ingot/iron, /obj/item/natural/cured/essence)
+	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
+	craftdiff = 4
 
 /datum/anvil_recipe/armor/steel/halfplate
 	name = "Half-Plate Armour (+2 Steel, +1 Cured Leather)"

@@ -190,11 +190,13 @@
 //			if(zone2covered(BODY_ZONE_PRECISE_L_FOOT, C.body_parts_covered))
 //				coverfeet = TRUE
 	if(locations & HEAD)
-		if(!coverhead)
-			add_stress(/datum/stressevent/coldhead)
+		if(!coverhead && patron?.type != /datum/patron/divine/abyssor) //abyssor friends don't care about a bit of water!!!
+			if(!isaxian(src) && !islamia(src))//if you aren't an abyssor spawn creature
+				add_stress(/datum/stressevent/coldhead)
 //	if(locations & FEET)
-//		if(!coverfeet)
-//			add_stress(/datum/stressevent/coldfeet)
+//		if(!coverfeet && patron?.type != /datum/patron/divine/abyssor)
+//			if(!isaxian(src) && !islamia(src))
+//				add_stress(/datum/stressevent/coldfeet)
 
 //END FIRE CODE
 

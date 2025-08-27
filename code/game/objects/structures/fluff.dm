@@ -955,7 +955,7 @@
 		/obj/item/reagent_containers/glass/cup,
 		/obj/item/roguestatue,
 		/obj/item/riddleofsteel,
-		/obj/item/listenstone,
+		/obj/item/scomstone/listenstone,
 		/obj/item/clothing/neck/roguetown/shalal,
 		/obj/item/clothing/neck/roguetown/horus,
 		/obj/item/rogue/painting,

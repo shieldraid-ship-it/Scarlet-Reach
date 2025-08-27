@@ -170,18 +170,27 @@
 	set_target(new_target)
 	show_ui()
 
-/datum/sex_controller/proc/cum_onto()
+/datum/sex_controller/proc/cum_onto(var/mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
+	if(splashed_user && !splashed_user.sexcon.knotted_status)
+		splashed_user.apply_status_effect(/datum/status_effect/facial)
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE)
+/datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came inside the target")
 	if(oral)
 		playsound(target, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(target, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(user != target)
+		knot_try()
+	if(splashed_user && !splashed_user.sexcon.knotted_status)
+		if(!oral)
+			splashed_user.apply_status_effect(/datum/status_effect/facial/internal)
+		else
+			splashed_user.apply_status_effect(/datum/status_effect/facial)
 	if(user != target)
 		knot_try()
 	after_ejaculation()
@@ -430,6 +439,7 @@
 			btm.emote("painmoan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
+		btm.apply_status_effect(/datum/status_effect/facial/internal)
 	knot_exit(keep_top_status, keep_btm_status)
 
 /datum/sex_controller/proc/knot_exit(var/keep_top_status = FALSE, var/keep_btm_status = FALSE)
@@ -523,6 +533,32 @@
 /atom/movable/screen/alert/status_effect/knotted
 	name = "Knotted"
 	desc = "I have to be careful where I step..."
+
+/datum/status_effect/facial
+	id = "facial"
+	alert_type = null // don't show an alert on screen
+	duration = 12 MINUTES // wear off eventually or until character washes themselves
+
+/datum/status_effect/facial/internal
+	id = "creampie"
+	alert_type = null // don't show an alert on screen
+	duration = 7 MINUTES // wear off eventually or until character washes themselves
+
+/datum/status_effect/facial/on_apply()
+	RegisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT),PROC_REF(clean_up))
+	return ..()
+
+/datum/status_effect/facial/on_remove()
+	UnregisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT))
+	return ..()
+
+///Callback to remove pearl necklace
+/datum/status_effect/facial/proc/clean_up(datum/source, strength)
+	if(strength >= CLEAN_WEAK && !QDELETED(owner))
+		if(!owner.has_stress_event(/datum/stressevent/bathcleaned))
+			to_chat(owner, span_notice("I feel much cleaner now!"))
+			owner.add_stress(/datum/stressevent/bathcleaned)
+		owner.remove_status_effect(src)
 
 /datum/sex_controller/proc/ejaculate()
 	log_combat(user, user, "Ejaculated")
@@ -729,7 +765,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_controller/proc/handle_passive_ejaculation()
+/datum/sex_controller/proc/handle_passive_ejaculation(var/mob/living/carbon/human/splashed_user = null)
 	var/mob/living/carbon/human/M = user
 	if(aphrodisiac > 1.5)
 		if(M.check_handholding())
@@ -751,6 +787,8 @@
 			else
 				if(prob(3))
 					ejaculate()
+					if(splashed_user)
+						splashed_user.apply_status_effect(/datum/status_effect/facial)
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -758,6 +796,8 @@
 	if(!can_ejaculate())
 		return FALSE
 	ejaculate()
+	if(splashed_user)
+		splashed_user.apply_status_effect(/datum/status_effect/facial)
 
 /datum/sex_controller/proc/can_use_penis()
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))
