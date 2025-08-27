@@ -375,7 +375,7 @@
 		to_chat(src, span_warning("My curse is hidden."))
 		return
 	if(silver_curse_status)
-		to_chat(src, span_warning("My BANE is not letting me REGEN!."))
+		to_chat(src, span_warning("My BANE is not letting me REGENERATE!"))
 		return
 	if(VD.vitae < 600)
 		to_chat(src, span_warning("Not enough vitae."))

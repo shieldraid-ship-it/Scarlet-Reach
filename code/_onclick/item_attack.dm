@@ -565,14 +565,14 @@
 					H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
 					src.last_used = world.time
 			if(V_lord)
-				if(V_lord.vamplevel < 4 && !V)
+				if(!V)
 					H.visible_message("<font color='white'>The silver weapon weakens the curse temporarily!</font>")
 					to_chat(H, span_userdanger("I'm hit by my BANE!"))
 					H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
 					src.last_used = world.time
-				if(V_lord.vamplevel == 4 && !V)
+				/*if(V_lord.vamplevel == 4 && !V)
 					to_chat(s_user, "<font color='red'> The silver weapon fails!</font>")
-					H.visible_message(H, span_userdanger("This feeble metal can't hurt me, I AM ANCIENT!"))
+					H.visible_message(H, span_userdanger("This feeble metal can't hurt me, I AM ANCIENT!"))*/
 			if(W && W.transformed == TRUE)
 				H.visible_message("<font color='white'>The silver weapon weakens the curse temporarily!</font>")
 				to_chat(H, span_userdanger("I'm hit by my BANE!"))
