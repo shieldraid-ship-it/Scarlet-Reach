@@ -123,7 +123,7 @@
 	miracle = TRUE
 	devotion_cost = 50
 
-/obj/effect/proc_holder/spell/invoked/persistence/proc/get_most_damaged_limb(mob/living/carbon/C, mob/living/user)
+/obj/effect/proc_holder/spell/invoked/persistence/proc/get_most_damaged_limb(mob/living/carbon/C)
 	var/obj/item/bodypart/most_damaged_limb = null
 	var/highest_damage = 0
 	var/obj/item/bodypart/bleeding_limb = null
@@ -137,8 +137,6 @@
 			bleeding_limb = BP
 
 	if(bleeding_limb)
-		if(user)
-			to_chat(user, span_notice("Persistence redirects to [bleeding_limb] due to active bleeding ([highest_bleed_rate])."))
 		return bleeding_limb
 
 	// Otherwise pick the most damaged limb
@@ -148,17 +146,13 @@
 			highest_damage = total_damage
 			most_damaged_limb = BP
 
-	if(most_damaged_limb && user)
-		to_chat(user, span_notice("Persistence redirects to [most_damaged_limb] due to highest damage ([highest_damage])."))
-
 	return most_damaged_limb
 
 /obj/effect/proc_holder/spell/invoked/persistence/cast(list/targets, mob/living/user)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
-
 		if(target.mob_biotypes & MOB_UNDEAD)
-			if(ishuman(target))
+			if(ishuman(target)) // BLEED AND PAIN
 				var/mob/living/carbon/human/human_target = target
 				var/datum/physiology/phy = human_target.physiology
 				phy.bleed_mod *= 1.5
@@ -179,7 +173,7 @@
 
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
-			var/obj/item/bodypart/affecting = get_most_damaged_limb(C, user)   // pass caster for debug
+			var/obj/item/bodypart/affecting = get_most_damaged_limb(C) 
 			if(affecting)
 				for(var/datum/wound/bleeder in affecting.wounds)
 					bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
