@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
 
-/area/rogue/outdoors/banditcamp/exterior
+/area/rogue/outdoors/banditcamp/exterior // Only use these around traveltiles - Constantine
 	name = "bandit camp outdoors"
 
 /area/rogue/outdoors/banditcamp/exterior/can_craft_here() //Made to prevent killboxes - Constantine
@@ -685,7 +685,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = 'sound/music/unholy.ogg'
 	converted_type = /area/rogue/outdoors/dungeon1
 
-/area/rogue/under/cave/inhumen/entrance
+/area/rogue/under/cave/inhumen/entrance // Only use these around traveltiles - Constantine
 	name = "inhumen"
 
 /area/rogue/under/cave/inhumen/entrance/can_craft_here() //Made to prevent killboxes - Constantine
