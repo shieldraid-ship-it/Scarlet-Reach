@@ -113,13 +113,13 @@
 //Vaguely: Not very painful, not very bleedy, but you can't cauterize them. You're still better off using stab every time.
 //Addendum: This was made with the assumption that pick intent penetrates most armors (and being able to crit through them).
 
-#define GOUGE_UPG_BLEEDRATE 0.01
-#define GOUGE_UPG_WHPRATE 1
+#define GOUGE_UPG_BLEEDRATE 0.1
+#define GOUGE_UPG_WHPRATE 1.5
 #define GOUGE_UPG_SEWRATE 0.3
-#define GOUGE_UPG_PAINRATE 0.01
-#define GOUGE_UPG_CLAMP_ARMORED 0.5
-#define GOUGE_UPG_CLAMP_RAW 0.5
-#define GOUGE_ARMORED_BLEED_CLAMP 4
+#define GOUGE_UPG_PAINRATE 0.05
+#define GOUGE_UPG_CLAMP_ARMORED 0.75
+#define GOUGE_UPG_CLAMP_RAW 1
+#define GOUGE_ARMORED_BLEED_CLAMP 6
 
 /datum/wound/dynamic/gouge/upgrade(dam, armor)
 	whp += (dam * GOUGE_UPG_WHPRATE)
