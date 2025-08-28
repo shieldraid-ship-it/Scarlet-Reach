@@ -17,7 +17,7 @@
 	name = "ozium"
 	category = "Table"
 	result = list(/obj/item/reagent_containers/powder/ozium)
-	reqs = list(/obj/item/ash = 2, /datum/reagent/stampoison = 2, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry = 1)
+	reqs = list(/obj/item/ash = 2, /datum/reagent/toxin/stampoison = 2, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/alchemy/ozium_3x
@@ -26,7 +26,7 @@
 	result = list(/obj/item/reagent_containers/powder/ozium,
 					/obj/item/reagent_containers/powder/ozium,
 					/obj/item/reagent_containers/powder/ozium)
-	reqs = list(/obj/item/ash = 3, /datum/reagent/stampoison = 3, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry = 2)
+	reqs = list(/obj/item/ash = 3, /datum/reagent/toxin/stampoison = 3, /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry = 2)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/alchemy/moon
