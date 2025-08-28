@@ -560,7 +560,7 @@
 	tutorial = "You are a cunning thief, even in chains. If you're ever to escape, you'll have an array of skills at your disposal to get you planted right back in the cells you came"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/prisoner/thief
+	outfit = /datum/outfit/job/roguetown/prisoner_thief
 	category_tags = list(CTAG_PRISONER)
 /datum/outfit/job/roguetown/prisoner_thief/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
