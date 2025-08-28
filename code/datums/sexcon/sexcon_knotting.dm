@@ -1,7 +1,3 @@
-#define KNOTTED_NULL 0
-#define KNOTTED_AS_TOP 1
-#define KNOTTED_AS_BTM 2
-
 /datum/sex_controller/proc/knot_penis_type()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis)
@@ -9,6 +5,16 @@
 	switch(penis.penis_type)
 		if(PENIS_TYPE_KNOTTED,PENIS_TYPE_TAPERED_KNOTTED,PENIS_TYPE_TAPERED_DOUBLE_KNOTTED,PENIS_TYPE_BARBED_KNOTTED)
 			return TRUE
+	return FALSE
+
+/datum/sex_controller/proc/knot_check_remove(var/action_path)
+	if(!user.sexcon.knotted_status && !target.sexcon.knotted_status)
+		return FALSE
+	var/datum/sex_action/action = SEX_ACTION(action_path)
+	if(action.user_sex_part & user.sexcon.knotted_part) // check if the knot is not blocking these actions, and thus requires a forceful removal
+		user.sexcon.knot_remove()
+	if(action.target_sex_part & target.sexcon.knotted_part)
+		target.sexcon.knot_remove()
 	return FALSE
 
 /datum/sex_controller/proc/knot_try()
@@ -44,16 +50,16 @@
 	user.sexcon.knotted_recipient = target
 	user.sexcon.knotted_status = KNOTTED_AS_TOP
 	user.sexcon.tugging_knot_blocked = FALSE
-	user.sexcon.tugging_knot_choke = FALSE
+	user.sexcon.knotted_part = action.user_sex_part
 	target.sexcon.knotted_owner = user
 	target.sexcon.knotted_recipient = target
 	target.sexcon.knotted_status = KNOTTED_AS_BTM
-	target.sexcon.tugging_knot_choke = action.knot_throat
+	target.sexcon.knotted_part = action.target_sex_part
 	log_combat(user, target, "Started knot tugging")
 	if(force > SEX_FORCE_MID) // if using force above default
 		if(force >= SEX_FORCE_EXTREME) // damage if set to max force
-			var/damage = target.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
-			var/body_zone = target.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
+			var/damage = target.sexcon.knotted_part&SEX_PART_JAWS ? 10 : 30 // base damage value
+			var/body_zone = target.sexcon.knotted_part&SEX_PART_JAWS ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 			var/obj/item/bodypart/affecting = target.get_bodypart(body_zone)
 			if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 				target.apply_damage(damage, BRUTE, body_zone)
@@ -69,8 +75,8 @@
 	if(!user.has_status_effect(/datum/status_effect/knotted)) // only apply status if we don't have it already
 		user.apply_status_effect(/datum/status_effect/knotted)
 	target.remove_status_effect(/datum/status_effect/knot_gaped)
-	RegisterSignal(user.sexcon.knotted_owner, COMSIG_MOVABLE_MOVED, PROC_REF(knot_movement))
-	RegisterSignal(user.sexcon.knotted_recipient, COMSIG_MOVABLE_MOVED, PROC_REF(knot_movement))
+	RegisterSignal(user.sexcon.knotted_owner, COMSIG_MOVABLE_MOVED, PROC_REF(knot_movement), TRUE)
+	RegisterSignal(user.sexcon.knotted_recipient, COMSIG_MOVABLE_MOVED, PROC_REF(knot_movement), TRUE)
 	GLOB.scarlet_round_stats[STATS_KNOTTED]++
 
 /datum/sex_controller/proc/knot_movement_mods_remove_his_knot_ty(var/mob/living/carbon/human/top, var/mob/living/carbon/human/btm)
@@ -170,7 +176,7 @@
 			btm.Stun(15)
 		else if(prob(3))
 			btm.emote("painmoan")
-		else if(btm.sexcon.tugging_knot_choke && btm.getOxyLoss() < 50)
+		else if(btm.sexcon.knotted_part&SEX_PART_JAWS && btm.getOxyLoss() < 50)
 			btm.adjustOxyLoss(1)
 
 /datum/sex_controller/proc/knot_movement_btm()
@@ -217,7 +223,7 @@
 			btm.emote("groan")
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
-			if(btm.sexcon.tugging_knot_choke && btm.getOxyLoss() < 50)
+			if(btm.sexcon.knotted_part&SEX_PART_JAWS && btm.getOxyLoss() < 50)
 				btm.adjustOxyLoss(3)
 		else if(prob(4))
 			btm.emote("painmoan")
@@ -235,14 +241,14 @@
 	var/mob/living/carbon/human/btm = knotted_recipient
 	if(ishuman(btm) && !QDELETED(btm) && ishuman(top) && !QDELETED(top))
 		if(forceful_removal)
-			var/damage = btm.sexcon.tugging_knot_choke ? 10 : 30 // base damage value
+			var/damage = btm.sexcon.knotted_part&SEX_PART_JAWS ? 10 : 30 // base damage value
 			if (top.sexcon.arousal > MAX_AROUSAL / 3) // considered still hard, let it rip like a beyblade
 				damage *= 2
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
 					btm.apply_status_effect(/datum/status_effect/knot_gaped)
 			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage if top force is set to max
-				var/body_zone = btm.sexcon.tugging_knot_choke ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
+				var/body_zone = btm.sexcon.knotted_part&SEX_PART_JAWS ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 				var/obj/item/bodypart/affecting = btm.get_bodypart(body_zone)
 				if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 					btm.apply_damage(damage, BRUTE, body_zone)
@@ -331,7 +337,7 @@
 
 /datum/status_effect/knot_gaped/on_apply()
 	last_loc = get_turf(owner)
-	if(owner.stat == CONSCIOUS && owner.sexcon.tugging_knot_choke && !owner.has_status_effect(/datum/status_effect/jaw_gaped))
+	if(owner.stat == CONSCIOUS && owner.sexcon.knotted_part&SEX_PART_JAWS && !owner.has_status_effect(/datum/status_effect/jaw_gaped))
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head) // only apply this effect if a head is found
 			owner.apply_status_effect(/datum/status_effect/jaw_gaped)
@@ -374,7 +380,3 @@
 	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
 	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_warning("I finally feel my jaw again."))
-
-#undef KNOTTED_NULL
-#undef KNOTTED_AS_TOP
-#undef KNOTTED_AS_BTM

@@ -1,6 +1,8 @@
 /datum/sex_action/throat_sex
 	name = "Fuck their throat"
 	stamina_cost = 1.0
+	user_sex_part = SEX_PART_COCK
+	target_sex_part = SEX_PART_JAWS
 
 /datum/sex_action/throat_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -63,7 +65,6 @@
 /datum/sex_action/throat_sex/knot
 	name = "Knot their throat"
 	knot_on_finish = TRUE
-	knot_throat = TRUE
 
 /datum/sex_action/throat_sex/knot/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.knot_penis_type())

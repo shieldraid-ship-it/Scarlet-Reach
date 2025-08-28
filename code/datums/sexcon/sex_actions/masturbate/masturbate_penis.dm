@@ -1,5 +1,7 @@
 /datum/sex_action/masturbate_penis
 	name = "Jerk off"
+	user_sex_part = SEX_PART_COCK
+	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/masturbate_penis/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user != target)

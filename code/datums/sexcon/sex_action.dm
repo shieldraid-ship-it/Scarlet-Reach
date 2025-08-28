@@ -17,10 +17,12 @@
 	var/require_grab = FALSE
 	/// If a grab is required, this is the required state of it
 	var/required_grab_state = GRAB_AGGRESSIVE
+	/// Set which part/oriface the user will be using
+	var/user_sex_part = SEX_PART_NULL
+	/// Set which part/oriface the target will be using
+	var/target_sex_part = SEX_PART_NULL
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
-	/// Apply unique effects when knotting the throat (oxygen loss, temp mute status, etc)
-	var/knot_throat = FALSE
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
