@@ -105,6 +105,12 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = 'sound/music/area/banditcamp.ogg'
 	droning_sound_night = 'sound/music/area/banditcamp.ogg'
 
+/area/rogue/outdoors/banditcamp/exterior
+	name = "bandit camp outdoors"
+
+/area/rogue/outdoors/banditcamp/exterior/can_craft_here() //Made to prevent killboxes - Constantine
+	return FALSE
+
 /area/rogue/indoors/shelter
 	icon_state = "shelter"
 	droning_sound = 'sound/music/area/townstreets.ogg'
@@ -679,6 +685,12 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = 'sound/music/unholy.ogg'
 	converted_type = /area/rogue/outdoors/dungeon1
 
+/area/rogue/under/cave/inhumen/entrance
+	name = "inhumen"
+
+/area/rogue/under/cave/inhumen/entrance/can_craft_here() //Made to prevent killboxes - Constantine
+	return FALSE
+
 /area/rogue/under/cave/fishmandungeon //idk what the fish guys are called in lore
 	name = "fishmandungeon"
 	icon_state = "under"
@@ -867,6 +879,9 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "dock warehouse import"
 	icon_state = "warehouse"
 
+/area/rogue/indoors/town/warehouse/can_craft_here()
+	return FALSE
+
 /area/rogue/indoors/inq
 	name = "The Inquisition"
 	icon_state = "chapel"
@@ -878,14 +893,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/indoors/inq/basement
 	name = "The Inquisition's Basement"
-	icon_state = "chapel"	
-
-/area/rogue/indoors/town/warehouse/can_craft_here()
-	return FALSE
+	icon_state = "chapel"
+	ceiling_protected = TRUE
 
 /area/rogue/indoors/inq/import
 	name = "foreign imports"
 	icon_state = "warehouse"
+	ceiling_protected = TRUE
 
 /area/rogue/indoors/inq/import/can_craft_here()
 	return FALSE
