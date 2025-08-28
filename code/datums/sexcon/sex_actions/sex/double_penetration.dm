@@ -28,7 +28,7 @@
 	if(penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE && penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE_KNOTTED)
 		return FALSE
 	if(!user.sexcon.can_use_penis())
-		return
+		return FALSE
 	return TRUE
 
 /datum/sex_action/double_penetration_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

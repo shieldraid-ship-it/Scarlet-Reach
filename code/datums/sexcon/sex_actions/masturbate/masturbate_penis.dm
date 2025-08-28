@@ -18,7 +18,7 @@
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
 	if(!user.sexcon.can_use_penis())
-		return
+		return FALSE
 	return TRUE
 
 /datum/sex_action/masturbate_penis/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

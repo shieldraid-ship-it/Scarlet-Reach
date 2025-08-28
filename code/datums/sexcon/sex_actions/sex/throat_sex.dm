@@ -25,7 +25,7 @@
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
 	if(!user.sexcon.can_use_penis())
-		return
+		return FALSE
 	if(isdullahan(target) && knot_on_finish)
 		var/datum/species/dullahan/dullahan = target.dna.species
 		if(dullahan.headless)
