@@ -820,7 +820,7 @@
 		//tiny picture when you are not examining closer, shouldnt take too much space.
 	var/list/lines
 	if(get_visible_name() in unknown_names)
-		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src)
+		lines = build_cool_description_unknown(get_mob_descriptors(obscure_name, user), src)
 	else
 		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)
 	for(var/line in lines)
