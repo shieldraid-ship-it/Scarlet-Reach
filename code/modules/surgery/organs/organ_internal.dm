@@ -101,7 +101,12 @@
 		humanized.update_body_parts(TRUE)
 //	START_PROCESSING(SSobj, src)
 
-
+/obj/item/organ/forceMove(atom/destination)
+	if((organ_flags & ORGAN_INTERNAL_ONLY) && last_owner)
+		qdel(src)
+		return
+	..()
+	
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
@@ -160,6 +165,7 @@
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
 	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
 		eat_effect = /datum/status_effect/buff/foodbuff
+		check_culling(eater)
 		foodtype = RAW | MEAT
 	else
 		eat_effect = initial(eat_effect)
@@ -167,7 +173,6 @@
 	if(bitecount >= bitesize)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, eater)
 		GLOB.scarlet_round_stats[STATS_ORGANS_EATEN]++
-		check_culling(eater)
 		SEND_SIGNAL(eater, COMSIG_ORGAN_CONSUMED, src.type)
 	. = ..()
 

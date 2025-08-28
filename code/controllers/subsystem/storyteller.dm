@@ -571,11 +571,6 @@ SUBSYSTEM_DEF(gamemode)
 	if(ttime >= GLOB.round_timer)
 		if(roundvoteend)
 			if(ttime >= round_ends_at)
-				for(var/mob/living/carbon/human/H in GLOB.human_list)
-					if(H.stat != DEAD)
-						if(H.allmig_reward)
-							H.adjust_triumphs(H.allmig_reward)
-							H.allmig_reward = 0
 				return TRUE
 		else
 			if(!SSvote.mode)
@@ -1123,7 +1118,6 @@ SUBSYSTEM_DEF(gamemode)
 	GLOB.scarlet_round_stats[STATS_ALCOHOLICS] = 0
 	GLOB.scarlet_round_stats[STATS_JUNKIES] = 0
 	GLOB.scarlet_round_stats[STATS_GREEDY_PEOPLE] = 0
-	GLOB.scarlet_round_stats[STATS_PLEASURES] = 0
 
 	// Gender count
 	GLOB.scarlet_round_stats[STATS_MALE_POPULATION] = 0
@@ -1150,6 +1144,7 @@ SUBSYSTEM_DEF(gamemode)
 	GLOB.scarlet_round_stats[STATS_ALIVE_HALFKIN] = 0
 	GLOB.scarlet_round_stats[STATS_ALIVE_WILDKIN] = 0
 	GLOB.scarlet_round_stats[STATS_ALIVE_GOLEMS] = 0
+	GLOB.scarlet_round_stats[STATS_ALIVE_DOLLS] = 0
 	GLOB.scarlet_round_stats[STATS_ALIVE_VERMINFOLK] = 0
 	GLOB.scarlet_round_stats[STATS_ALIVE_DRACON] = 0
 	GLOB.scarlet_round_stats[STATS_ALIVE_AXIAN] = 0
@@ -1252,6 +1247,8 @@ SUBSYSTEM_DEF(gamemode)
 				GLOB.scarlet_round_stats[STATS_ALIVE_WILDKIN]++
 			if(isgolemp(human_mob))
 				GLOB.scarlet_round_stats[STATS_ALIVE_GOLEMS]++
+			if(isdoll(human_mob))
+				GLOB.scarlet_round_stats[STATS_ALIVE_DOLLS]++
 			if(isvermin(human_mob))
 				GLOB.scarlet_round_stats[STATS_ALIVE_VERMINFOLK]++
 			if(isdracon(human_mob))

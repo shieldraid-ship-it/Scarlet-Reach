@@ -168,7 +168,7 @@
 	max_integrity = 350
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	resistance_flags = FIRE_PROOF
-	body_parts_covered = NECK|MOUTH|NOSE|HAIR|EARS|HEAD|CHEST
+	body_parts_covered = NECK|MOUTH|NOSE|HAIR|EARS|HEAD
 	adjustable = CAN_CADJUST
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
@@ -212,7 +212,7 @@
 	max_integrity = 275
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	resistance_flags = FIRE_PROOF
-	body_parts_covered = NECK|MOUTH|NOSE|HAIR|EARS|HEAD|CHEST
+	body_parts_covered = NECK|MOUTH|NOSE|HAIR|EARS|HEAD
 	adjustable = CAN_CADJUST
 	smeltresult = /obj/item/ingot/iron
 	smelt_bar_num = 2
@@ -290,6 +290,10 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/neck/roguetown/fencerguard/Initialize()
+	. = ..()		
+	update_icon()		
+
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
 	name = "forlorn collar"
 	desc = "A old reminder."
@@ -322,6 +326,7 @@
 	body_parts_covered = NECK
 	prevent_crits = list()
 	blocksound = PLATEHIT
+	leashable = TRUE
 
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize()
 	. = ..()
@@ -430,6 +435,11 @@
 	name = "amulet of Eora"
 	desc = "In a world full of horror and hardship, all we have is each other."
 	icon_state = "eora"
+
+/obj/item/clothing/neck/roguetown/psicross/xylix
+	name = "amulet of Xylix"
+	desc = "In lyfe a smile is sharper than any blade."
+	icon_state = "xylix"
 
 /obj/item/clothing/neck/roguetown/psicross/wood
 	name = "wooden psycross"
@@ -639,12 +649,6 @@
 	bellsound = FALSE
 	bell = FALSE
 
-//This right here is how you init components without copying the same bloody init repeatedly like how armorcode does it. I really don't like how this is done in the rest of the codebase. So have a proper example ~Neri
-/obj/item/clothing/neck/roguetown/collar/Initialize(mapload)
-	if(bellsound == TRUE)
-		. = ..()
-		AddComponent(/datum/component/squeak, SFX_COLLARJINGLE, 50, 100, 1) //We want squeak so wearer jingles if touched while wearing collar
-
 /obj/item/clothing/neck/roguetown/collar/leather
 	name = "leather collar"
 	desc = "A sturdy leather collar."
@@ -670,6 +674,10 @@
 	dropshrink = 0.5
 	bellsound = TRUE
 
+/obj/item/clothing/neck/roguetown/collar/cowbell/Initialize(mapload)
+		. = ..()
+		AddComponent(/datum/component/squeak, SFX_COLLARJINGLE, 50, 100, 1) //We want squeak so wearer jingles if touched while wearing collar
+
 /obj/item/clothing/neck/roguetown/collar/catbell
 	name = "catbell collar"
 	desc = "A leather collar with a jingling catbell attached."
@@ -681,6 +689,10 @@
 	resistance_flags = FIRE_PROOF
 	dropshrink = 0.5
 	bellsound = TRUE
+
+/obj/item/clothing/neck/roguetown/collar/catbell/Initialize(mapload)
+		. = ..()
+		AddComponent(/datum/component/squeak, SFX_COLLARJINGLE, 50, 100, 1) //We want squeak so wearer jingles if touched while wearing collar
 
 /obj/item/clothing/neck/roguetown/collar/feldcollar
 	name = "feldcollar"

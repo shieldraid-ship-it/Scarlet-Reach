@@ -100,6 +100,8 @@
 	var/bleed_rate = 0
 	if(bandage && !HAS_BLOOD_DNA(bandage))
 		return 0
+	if(NOBLOOD in owner?.dna?.species?.species_traits)
+		return FALSE
 	for(var/datum/wound/wound in wounds)
 		if(istype(wound, /datum/wound))
 			bleed_rate += wound.bleed_rate
@@ -107,6 +109,8 @@
 		if(!embedded.embedding.embedded_bloodloss)
 			continue
 		bleed_rate += embedded.embedding.embedded_bloodloss
+
+	grabbedby = SANITIZE_LIST(grabbedby)
 	for(var/obj/item/grabbing/grab in grabbedby)
 		bleed_rate *= grab.bleed_suppressing
 	bleed_rate = max(round(bleed_rate, 0.1), 0)
@@ -194,7 +198,7 @@
 	if(user && dam)
 		if(user.goodluck(2))
 			dam += 10
-	if((bclass = BCLASS_PUNCH) && (user && dam))
+	if((bclass == BCLASS_PUNCH) && (user && dam))
 		if(user && HAS_TRAIT(user, TRAIT_CIVILIZEDBARBARIAN))
 			dam += 15
 	if(bclass in GLOB.dislocation_bclasses)

@@ -45,7 +45,7 @@
 			neck = /obj/item/clothing/neck/roguetown/chaincoif
 			beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
 			beltr = /obj/item/flashlight/flare/torch
-			r_hand = /obj/item/rogueweapon/halberd/glaive
+			r_hand = /obj/item/rogueweapon/halberd/bardiche
 			backr = /obj/item/gwstrap
 			backpack_contents = list(/obj/item/roguekey/mercenary, /obj/item/storage/belt/rogue/pouch/coins/poor)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
@@ -81,3 +81,4 @@
 	H.adjust_skillrank(/datum/skill/labor/farming, 2, TRUE)
 	ADD_TRAIT(H, TRAIT_AZURENATIVE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)	

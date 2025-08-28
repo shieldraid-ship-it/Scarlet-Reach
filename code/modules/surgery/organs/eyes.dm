@@ -178,9 +178,13 @@
 
 /obj/item/organ/eyes/night_vision/wild_goblin/on_life()
 	. = ..()
-	if (!istype(owner, /mob/living/carbon/human/species/goblin))
+	if (!isgoblinp(owner))
 		if (prob(10))
-			owner.adjustToxLoss(0.2)
+			owner.adjustToxLoss(5)
+			applyOrganDamage(5)
+			owner.blur_eyes(3)
+			if(prob(50))
+				to_chat(owner, span_red("My eyes burn and my body aches."))
 
 /obj/item/organ/eyes/night_vision/mushroom
 	name = "fung-eye"
@@ -451,3 +455,14 @@
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
 
+/proc/set_eye_color(var/mob/living/carbon/mob, color_one, color_two)
+	var/obj/item/organ/eyes/eyes = mob.getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		return
+	if(color_one)
+		eyes.eye_color = color_one
+	if(color_two)
+		eyes.second_color = color_two
+	eyes.update_accessory_colors()
+	if(eyes.owner)
+		eyes.owner.update_body_parts(TRUE)

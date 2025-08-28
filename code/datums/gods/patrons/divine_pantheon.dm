@@ -56,7 +56,7 @@
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/targeted/wildshape			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/targeted/beasttame			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/targeted/conjure_glowshroom	= CLERIC_T3,
+					// /obj/effect/proc_holder/spell/targeted/conjure_glowshroom	= CLERIC_T3, - Moved to the druid job type, people were abusing it and blocking entire areas with it. This leaves Dendorites without a T3, but I don't care!
 					/obj/effect/proc_holder/spell/self/howl/call_of_the_moon	= CLERIC_T4,
 	)
 	confess_lines = list(
@@ -68,7 +68,7 @@
 
 /datum/patron/divine/abyssor
 	name = "Abyssor"
-	domain = "God of the Ocean, Storms and the Tide"
+	domain = "The great dreamer, primordial father of the tides. The ancient one, the most warped and potent of the ten."
 	desc = "The strongest of the Ten; when awakened, the world flooded for a thousand daes and a thousand nights before he was put to slumber. Resting fitfully did Dendor split from his skull like a gaping wound. Communes rarely with his followers, only offering glimpses in dreams. Gifted primordial Man water. "
 	worshippers = "Men of the Sea, Primitive Aquatics"
 	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER)
@@ -122,6 +122,8 @@
 					/obj/effect/proc_holder/spell/invoked/avert					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/deaths_door			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/targeted/abrogation			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/speakwithdead		= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/fieldburials			= CLERIC_T3,
 	)
 	confess_lines = list(
 		"ALL SOULS FIND THEIR WAY TO NECRA!",
@@ -275,7 +277,7 @@
 	return FALSE
 
 
-// Dendor - In grove, bog, cross, or ritual chalk 
+// Dendor - In grove, bog, cross, or ritual chalk
 // Yes, he is NOT calling the master cus he's unique. Whole bog is his prayer zone. Druids exist for a reason instead of in the church.
 /datum/patron/divine/dendor/can_pray(mob/living/follower)
 	. = ..()
