@@ -35,11 +35,12 @@
 		if(!target.sexcon.knotted_status)
 			to_chat(target, span_notice("I feel their deflated knot slip out."))
 		return
+	var/target_knotted_twice = FALSE
 	if(target.sexcon.knotted_status) // only one knot at a time, you slut
 		var/repeated_customer = target.sexcon.knotted_owner == user ? TRUE : FALSE // we're knotting the same character we were already knotted to, don't remove the status effects (this fixes a weird perma stat debuff if we try to remove/apply the same effect in the same tick)
-		var/target_is_a_bottom = target.sexcon.knotted_status == KNOTTED_AS_BTM // keep the same status effect in place, they're still getting topped
-		target.sexcon.knot_remove(keep_btm_status = target_is_a_bottom, keep_top_status = repeated_customer)
-		if(target_is_a_bottom && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // if the target is getting double teamed, give them the fucked stupid status
+		target_knotted_twice = target.sexcon.knotted_status == KNOTTED_AS_BTM // keep the same status effect in place, they're still getting topped
+		target.sexcon.knot_remove(notify = FALSE, keep_btm_status = target_knotted_twice, keep_top_status = repeated_customer)
+		if(target_knotted_twice && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // if the target is getting double teamed, give them the fucked stupid status
 			target.apply_status_effect(/datum/status_effect/knot_fucked_stupid)
 	if(user.sexcon.knotted_status)
 		var/top_still_topping = user.sexcon.knotted_status == KNOTTED_AS_TOP // top just reknotted a different character, don't retrigger the same status (this fixes a weird perma stat debuff if we try to remove/apply the same effect in the same tick)
@@ -69,7 +70,10 @@
 		target.Stun(80) // stun for dramatic effect
 	user.visible_message(span_notice("[user] ties their knot inside of [target]!"), span_notice("I tie my knot inside of [target]."))
 	if(target.stat != DEAD)
-		to_chat(target, span_userdanger("You have been knotted!"))
+		if(!target_knotted_twice)
+			to_chat(target, span_userdanger("You have been knotted!"))
+		else
+			to_chat(target, span_userdanger("You have been double-knotted!"))
 	if(!target.has_status_effect(/datum/status_effect/knot_tied)) // only apply status if we don't have it already
 		target.apply_status_effect(/datum/status_effect/knot_tied)
 	if(!user.has_status_effect(/datum/status_effect/knotted)) // only apply status if we don't have it already
