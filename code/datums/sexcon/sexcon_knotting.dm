@@ -35,18 +35,22 @@
 		if(!target.sexcon.knotted_status)
 			to_chat(target, span_notice("I feel their deflated knot slip out."))
 		return
-	var/target_knotted_twice = FALSE
+
+	var/target_knotted_part = SEX_PART_NULL
 	if(target.sexcon.knotted_status) // only one knot at a time, you slut
 		var/repeated_customer = target.sexcon.knotted_owner == user ? TRUE : FALSE // we're knotting the same character we were already knotted to, don't remove the status effects (this fixes a weird perma stat debuff if we try to remove/apply the same effect in the same tick)
-		target_knotted_twice = target.sexcon.knotted_status == KNOTTED_AS_BTM // keep the same status effect in place, they're still getting topped
-		target.sexcon.knot_remove(notify = FALSE, keep_btm_status = target_knotted_twice, keep_top_status = repeated_customer)
-		if(target_knotted_twice && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // if the target is getting double teamed, give them the fucked stupid status
+		var/target_is_a_bottom = target.sexcon.knotted_status == KNOTTED_AS_BTM // keep the same status effect in place, they're still getting topped
+		if(target_is_a_bottom)
+			target_knotted_part = target.sexcon.knotted_part // store so we can combine with the new action occupied part flags
+		target.sexcon.knot_remove(notify = FALSE, keep_btm_status = target_is_a_bottom, keep_top_status = repeated_customer)
+		if(target_is_a_bottom && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // if the target is getting double teamed, give them the fucked stupid status
 			target.apply_status_effect(/datum/status_effect/knot_fucked_stupid)
 	if(user.sexcon.knotted_status)
 		var/top_still_topping = user.sexcon.knotted_status == KNOTTED_AS_TOP // top just reknotted a different character, don't retrigger the same status (this fixes a weird perma stat debuff if we try to remove/apply the same effect in the same tick)
 		user.sexcon.knot_remove(keep_top_status = top_still_topping)
 	if((target.compliance || user.patron && istype(user.patron, /datum/patron/inhumen/baotha)) && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // as requested, if the top is of the baotha faith, or the target has compliance mode on
 		target.apply_status_effect(/datum/status_effect/knot_fucked_stupid)
+
 	user.sexcon.knotted_owner = user
 	user.sexcon.knotted_recipient = target
 	user.sexcon.knotted_status = KNOTTED_AS_TOP
@@ -55,8 +59,9 @@
 	target.sexcon.knotted_owner = user
 	target.sexcon.knotted_recipient = target
 	target.sexcon.knotted_status = KNOTTED_AS_BTM
-	target.sexcon.knotted_part = action.target_sex_part
+	target.sexcon.knotted_part = action.target_sex_part|target_knotted_part // add existing knotted parts flags to new knotted orifice flags
 	log_combat(user, target, "Started knot tugging")
+
 	if(force > SEX_FORCE_MID) // if using force above default
 		if(force >= SEX_FORCE_EXTREME) // damage if set to max force
 			var/damage = target.sexcon.knotted_part&SEX_PART_JAWS ? 10 : 30 // base damage value
@@ -70,10 +75,13 @@
 		target.Stun(80) // stun for dramatic effect
 	user.visible_message(span_notice("[user] ties their knot inside of [target]!"), span_notice("I tie my knot inside of [target]."))
 	if(target.stat != DEAD)
-		if(!target_knotted_twice)
-			to_chat(target, span_userdanger("You have been knotted!"))
-		else
-			to_chat(target, span_userdanger("You have been double-knotted!"))
+		switch(target.sexcon.knotted_part)
+			if(SEX_PART_CUNT,SEX_PART_ANUS,SEX_PART_JAWS)
+				to_chat(target, span_userdanger("You have been knotted!"))
+			if(SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_JAWS)
+				to_chat(target, span_userdanger("You have been triple-knotted!"))
+			else
+				to_chat(target, span_userdanger("You have been double-knotted!"))
 	if(!target.has_status_effect(/datum/status_effect/knot_tied)) // only apply status if we don't have it already
 		target.apply_status_effect(/datum/status_effect/knot_tied)
 	if(!user.has_status_effect(/datum/status_effect/knotted)) // only apply status if we don't have it already
