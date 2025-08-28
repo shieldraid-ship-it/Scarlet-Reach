@@ -1417,6 +1417,7 @@
 	emote_environment = 3
 	body_parts_covered = FULL_HEAD|NECK
 	block2add = FOV_BEHIND // now good
+	max_integrity = 370
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
 	worn_x_dimension = 64
 	worn_y_dimension = 64
