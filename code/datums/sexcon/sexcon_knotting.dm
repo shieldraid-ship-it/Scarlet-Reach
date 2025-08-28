@@ -282,6 +282,7 @@
 		top.sexcon.knotted_owner = null
 		top.sexcon.knotted_recipient = null
 		top.sexcon.knotted_status = KNOTTED_NULL
+		top.sexcon.knotted_part = SEX_PART_NULL
 		log_combat(top, top, "Stopped knot tugging")
 	if(istype(btm) && btm.sexcon.knotted_status)
 		if(!keep_btm_status) // only keep the status if we're reapplying the knot
@@ -290,6 +291,7 @@
 		btm.sexcon.knotted_owner = null
 		btm.sexcon.knotted_recipient = null
 		btm.sexcon.knotted_status = KNOTTED_NULL
+		btm.sexcon.knotted_part = SEX_PART_NULL
 		log_combat(btm, btm, "Stopped knot tugging")
 	if(knotted_status) // this should never trigger, but if it does clear up the invalid state
 		if(src.user)
@@ -299,6 +301,7 @@
 		knotted_owner = null
 		knotted_recipient = null
 		knotted_status = KNOTTED_NULL
+		knotted_part = SEX_PART_NULL
 
 /mob/living/carbon/human/werewolf_transform() // needed to ensure that we safely remove the tie before transitioning
 	if(src.sexcon.knotted_status)
