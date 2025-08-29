@@ -2352,3 +2352,18 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+
+// the wizard helmet
+/obj/item/clothing/head/roguetown/helmet/bascinet/wizardhelm
+	name = "wizard bascinet"
+	desc = "A steel bascinet helmet, with a purely decorative built in wizard hat. Though it lacks a visor, it still protects the head and ears."
+	icon = 'icons/roguetown/clothing/special/wizardhelm.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/wizardhelm.dmi'
+	icon_state = "wizardhelm"
+	item_state = "wizardhelm"
+	emote_environment = 3
+	body_parts_covered = HEAD|HAIR|EARS
+	flags_inv = HIDEEARS|HIDEHAIR
+	block2add = FOV_BEHIND
+	max_integrity = 250
+	smeltresult = /obj/item/ingot/steel
