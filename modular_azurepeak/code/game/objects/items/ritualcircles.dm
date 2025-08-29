@@ -251,7 +251,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Storm"
 	desc = "A Holy Rune of Abyssor. You sense your mind getting pulled into the drawn spiral."
 	icon_state = "abyssor_chalky" // mortosasye
-//	var/stormrites = list("Rite of the Crystal Spire")
+	var/stormrites = list("Rite of the Abyssal Call")
 
 /obj/structure/ritualcircle/abyssor_alt // For future use with more malicious rituals, for example.
 	name = "Rune of Stirring"
@@ -268,7 +268,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
-	var/riteselection = input(user, "Rituals of the Storm", src) as null|anything in abyssorrites
+	var/riteselection = input(user, "Rituals of the Storm", src) as null|anything in stormrites
 	switch(riteselection)
 		if("Rite of the Abyssal Call")
 			if(do_after(user, 50))
