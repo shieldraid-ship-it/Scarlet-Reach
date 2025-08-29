@@ -251,7 +251,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Storm"
 	desc = "A Holy Rune of Abyssor. You sense your mind getting pulled into the drawn spiral."
 	icon_state = "abyssor_chalky" // mortosasye
-var/stormrites = list("Rite of the Abyssal Call")
+	var/stormrites = list("Rite of the Abyssal Call")
 
 /obj/structure/ritualcircle/abyssor_alt // For future use with more malicious rituals, for example.
 	name = "Rune of Stirring"
