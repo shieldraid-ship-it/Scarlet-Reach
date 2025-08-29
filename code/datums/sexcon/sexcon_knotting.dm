@@ -9,13 +9,12 @@
 
 /datum/sex_controller/proc/knot_check_remove(var/action_path)
 	if(!user.sexcon.knotted_status && !target.sexcon.knotted_status)
-		return FALSE
+		return
 	var/datum/sex_action/action = SEX_ACTION(action_path)
 	if(action.user_sex_part & user.sexcon.knotted_part) // check if the knot is not blocking these actions, and thus requires a forceful removal
 		user.sexcon.knot_remove()
 	if(action.target_sex_part & target.sexcon.knotted_part)
 		target.sexcon.knot_remove()
-	return FALSE
 
 /datum/sex_controller/proc/knot_try()
 	if(!user.sexcon.can_use_penis())
