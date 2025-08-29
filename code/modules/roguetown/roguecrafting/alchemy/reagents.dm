@@ -359,7 +359,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 
 /datum/reagent/toxin/stampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.stamina_add(15) //Slowly leech energy
+		M.stamina_add(15) //Slowly leech stam
 	return ..()
 
 /datum/reagent/toxin/strongstampoison
@@ -374,7 +374,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 
 /datum/reagent/toxin/strongstampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.stamina_add(45) //Rapidly leech energy
+		M.stamina_add(45) //Rapidly leech stam
 	return ..()
 
 /datum/reagent/toxin/killersice
