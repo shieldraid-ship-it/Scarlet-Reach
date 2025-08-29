@@ -89,7 +89,7 @@
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	parrysound = list('sound/combat/parry/bladed/bladedsmall (1).ogg','sound/combat/parry/bladed/bladedsmall (2).ogg','sound/combat/parry/bladed/bladedsmall (3).ogg')
-	max_blade_int = 100
+	max_blade_int = 200
 	max_integrity = 175
 	swingsound = list('sound/combat/wooshes/bladed/wooshsmall (1).ogg','sound/combat/wooshes/bladed/wooshsmall (2).ogg','sound/combat/wooshes/bladed/wooshsmall (3).ogg')
 	associated_skill = /datum/skill/combat/knives
@@ -262,7 +262,6 @@
 	desc = "This is a common dagger of iron."
 	icon_state = "idagger"
 	smeltresult = /obj/item/ingot/iron
-	blade_dulling = DULLING_SHAFT_REINFORCED
 
 /obj/item/rogueweapon/huntingknife/idagger/adagger
 	name = "decrepit dagger"
@@ -272,6 +271,7 @@
 	icon_state = "adagger"
 	smeltresult = /obj/item/ingot/aalloy
 	blade_dulling = DULLING_SHAFT_CONJURED
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
 	name = "ancient dagger"
@@ -321,6 +321,7 @@
 	throwforce = 15
 	icon_state = "spdagger"
 	wdefense = 6
+	max_integrity = 200
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero
 	name = "sail dagger"
@@ -497,7 +498,7 @@
 	icon_state = "stone_knife"
 	smeltresult = null
 	max_integrity = 50
-	max_blade_int = 50
+	max_blade_int = 100
 	wdefense = 1
 	resistance_flags = FLAMMABLE
 
@@ -505,6 +506,7 @@
 	name = "elvish dagger"
 	desc = "This beautiful dagger is of intricate, elvish design. Sharper, too."
 	force = 22
+	max_blade_int = 250
 	icon_state = "elfdagger"
 	item_state = "elfdag"
 	last_used = 0
@@ -587,6 +589,7 @@
 	icon_state = "throw_knifea"
 	force = 7
 	throwforce = 16
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/huntingknife/throwingknife/steel
 	name = "steel tossblade"

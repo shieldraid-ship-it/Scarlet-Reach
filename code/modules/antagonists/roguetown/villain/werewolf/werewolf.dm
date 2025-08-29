@@ -167,7 +167,6 @@
 	force = 35
 	block_chance = 0
 	wdefense = 10
-	blade_dulling = DULLING_SHAFT_GRAND
 	armor_penetration = 30
 	associated_skill = /datum/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL

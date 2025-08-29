@@ -107,7 +107,6 @@
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/peel)
-	armor = ARMOR_SWORD
 	damage_deflection = 14
 	icon_state = "sword1"
 	icon = 'icons/roguetown/weapons/32.dmi'
@@ -120,7 +119,7 @@
 		)
 	swingsound = BLADEWOOSH_MED
 	associated_skill = /datum/skill/combat/swords
-	max_blade_int = 100
+	max_blade_int = 200
 	max_integrity = 175
 	wlength = WLENGTH_NORMAL
 	w_class = WEIGHT_CLASS_BULKY
@@ -129,7 +128,6 @@
 	flags_1 = CONDUCT_1
 	throwforce = 10
 	thrown_bclass = BCLASS_CUT
-	blade_dulling = DULLING_SHAFT_METAL
 	//dropshrink = 0.75
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
@@ -168,7 +166,7 @@
 	force = 22
 	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/sword/strike, /datum/intent/sword/peel)
 	icon_state = "falx"
-	max_blade_int = 100
+	max_blade_int = 250
 	max_integrity = 125
 	gripped_intents = null
 	minstr = 4
@@ -205,7 +203,7 @@
 	name = "stone sword"
 	desc = "A crude mockery of what seems to be a sword, really just a long knapped stone tied to a carved wooden shaft."
 	icon_state = "stone_sword"
-	max_blade_int = 70
+	max_blade_int = 100
 	max_integrity = 70
 	anvilrepair = /datum/skill/craft/crafting
 	smeltresult = null
@@ -260,6 +258,7 @@
 	associated_skill = /datum/skill/combat/swords
 	throwforce = 15
 	thrown_bclass = BCLASS_CUT
+	max_blade_int = 280
 	dropshrink = 0.75
 	smeltresult = /obj/item/ingot/steel
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_greatsword.ogg'
@@ -313,7 +312,6 @@
 	force = 30
 	force_wielded = 35
 	icon_state = "zizosword"
-	blade_dulling = DULLING_SHAFT_GRAND
 
 /obj/item/rogueweapon/sword/long/zizo/pickup(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_CABAL))
@@ -454,7 +452,6 @@
 	max_integrity = 9999
 	throwforce = 15
 	thrown_bclass = BCLASS_CUT
-	blade_dulling = DULLING_SHAFT_GRAND
 	dropshrink = 0.75
 	smeltresult = /obj/item/ingot/steel
 	sellprice = 363
@@ -645,6 +642,7 @@
 	force = 18
 	smeltresult = /obj/item/ingot/aalloy
 	blade_dulling = DULLING_SHAFT_CONJURED
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/sword/iron/short/gladius
 	name = "gladius"
@@ -662,6 +660,7 @@
 	icon_state = "agladius"
 	smeltresult = /obj/item/ingot/aalloy
 	blade_dulling = DULLING_SHAFT_CONJURED
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/sword/iron/short/gladius/pagladius
 	name = "ancient gladius"
@@ -764,7 +763,7 @@
 	icon_state = "nockhopesh"
 	force = 25	//Base is 22
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/chop/falx, /datum/intent/sword/peel)
-	max_integrity = 200
+	max_integrity = 280
 
 /obj/item/rogueweapon/sword/sabre/alloy
 	name = "decrepit khopesh"
@@ -774,6 +773,7 @@
 	max_integrity = 115
 	icon_state = "akhopesh"
 	blade_dulling = DULLING_SHAFT_CONJURED
+	randomize_blade_int_on_init = TRUE
 
 /obj/item/rogueweapon/sword/sabre/palloy
 	name = "ancient khopesh"
@@ -962,7 +962,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 	smelt_bar_num = 2
-	max_blade_int = 150
+	max_blade_int = 230
 	max_integrity = 200
 
 /obj/item/rogueweapon/sword/long/blackflamb
