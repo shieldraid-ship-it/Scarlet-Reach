@@ -7,7 +7,7 @@
 	)
 	roundstart = TRUE
 	antag_flag = ROLE_BANDIT
-	max_occurences = 0
+	max_occurrences = 0
 	shared_occurence_type = SHARED_MINOR_THREAT
 
 	restricted_roles = list(
@@ -36,6 +36,7 @@
 		"Court Magician",
 		"Inquisitor",
 		"Orthodoxist",
+		"Absolver",
 		"Warden",
 		"Squire",
 		"Veteran",
