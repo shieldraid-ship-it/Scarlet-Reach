@@ -2356,13 +2356,13 @@
 // the wizard helmet
 /obj/item/clothing/head/roguetown/helmet/bascinet/wizardhelm
 	name = "wizard bascinet"
-	desc = "A steel bascinet helmet, with a purely decorative built in wizard hat. Though it lacks a visor, it still protects the head and ears."
+	desc = "A steel bascinet helmet, with a purely decorative built in wizard hat. Though it lacks a working visor, what wont a wizard do for fashion, right?"
 	icon = 'icons/roguetown/clothing/special/wizardhelm.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/wizardhelm.dmi'
 	icon_state = "wizardhelm"
 	item_state = "wizardhelm"
 	emote_environment = 3
-	body_parts_covered = HEAD|HAIR|EARS
+	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEEARS|HIDEHAIR
 	block2add = FOV_BEHIND
 	max_integrity = 250
