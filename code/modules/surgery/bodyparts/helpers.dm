@@ -138,9 +138,12 @@
 		full += BODY_ZONE_L_LEG
 	else
 		full += BODY_ZONE_LAMIAN_TAIL
-	for(var/zone in full)
-		if(get_bodypart(zone))
-			full -= zone
+
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		full -= bodypart.body_zone
+		for(var/subzone in bodypart.subtargets)
+			full -= subzone
+
 	return full
 
 /mob/living/proc/get_disabled_limbs()

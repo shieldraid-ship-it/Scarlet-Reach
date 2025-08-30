@@ -17,7 +17,6 @@
 	var/garrisonline = TRUE
 	var/messagereceivedsound = 'sound/misc/scom.ogg'
 	var/hearrange = 0 // Only hearable by wearer
-	flags_1 = HEAR_1
 	is_important = TRUE
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/Initialize()
@@ -27,6 +26,7 @@
 	else
 		SSroguemachine.crown = src
 		SSroguemachine.scomm_machines += src
+	become_hearing_sensitive()
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/proc/anti_stall()
 	src.visible_message(span_warning("The Crown of Scarlet Reach crumbles to dust, the ashes spiriting away in the direction of the Keep."))
@@ -113,3 +113,7 @@
 		I.send_speech(message, hearrange, I, , spans, message_language=language)
 	else
 		send_speech(message, hearrange, src, , spans, message_language=language)
+
+/obj/item/clothing/head/roguetown/crown/serpcrown/Destroy()
+	lose_hearing_sensitivity()
+	return ..()

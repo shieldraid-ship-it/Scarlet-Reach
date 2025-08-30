@@ -38,7 +38,7 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s cunt!"))
-		user.sexcon.cum_into()
+		user.sexcon.cum_into(splashed_user = target)
 		user.try_impregnate(target)
 		user.virginity = FALSE
 		target.virginity = FALSE
@@ -79,7 +79,7 @@
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
 		user.visible_message(span_love("[user] cums into [target]'s cunt!"))
-		user.sexcon.cum_into()
+		user.sexcon.cum_into(splashed_user = target)
 		user.try_impregnate(target)
 		user.virginity = FALSE
 		target.virginity = FALSE
