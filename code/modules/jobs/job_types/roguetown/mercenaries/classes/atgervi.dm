@@ -61,7 +61,7 @@
 			beltl = /obj/item/flashlight/flare/torch
 
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
-			C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = FALSE, devotion_limit = CLERIC_REQ_2)	//Capped to T1 miracles.
+			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)	//Capped to T1 miracles.
 
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)	
