@@ -30751,6 +30751,10 @@
 /obj/structure/flora/roguegrass/herb/rosa,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/rtfield/eora)
+"jpj" = (
+/obj/effect/landmark/events/haunts,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town)
 "jpn" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/rogue/carpet/lord/center/no_teleport,
@@ -31168,6 +31172,7 @@
 /area/rogue/outdoors/town)
 "jwl" = (
 /obj/effect/decal/cobbleedge,
+/obj/effect/landmark/events/haunts,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/exposed/town/keep)
 "jwq" = (
@@ -73447,6 +73452,10 @@
 /obj/structure/roguerock,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
+"wlo" = (
+/obj/effect/landmark/events/haunts,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church/chapel)
 "wlu" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10;
@@ -256519,7 +256528,7 @@ guo
 iQi
 lVH
 exD
-exD
+wfT
 exD
 exD
 rtz
@@ -258820,7 +258829,7 @@ qbZ
 bCz
 hyr
 oae
-qfA
+jpj
 qfA
 saG
 dJN
@@ -260599,7 +260608,7 @@ dra
 cDX
 cDX
 owU
-sns
+qxe
 sns
 cLw
 fpx
@@ -261072,7 +261081,7 @@ oPK
 cAy
 cVA
 cVA
-cVA
+wlo
 cVA
 kAK
 qRB
@@ -271488,7 +271497,7 @@ sns
 oPJ
 btK
 pWT
-sns
+qxe
 sns
 sns
 esi
@@ -271887,7 +271896,7 @@ exD
 exD
 exD
 exD
-exD
+wfT
 exD
 exD
 sns
@@ -272326,7 +272335,7 @@ exD
 exD
 fpx
 fpx
-exD
+wfT
 exD
 exD
 exD
@@ -277803,7 +277812,7 @@ ehv
 bUt
 cMz
 sns
-sns
+qxe
 sns
 eKH
 hJC
@@ -280483,7 +280492,7 @@ dme
 dme
 exD
 exD
-exD
+wfT
 exD
 exD
 exD
@@ -288146,7 +288155,7 @@ fpx
 fpx
 fpx
 exD
-exD
+wfT
 exD
 exD
 fpx
