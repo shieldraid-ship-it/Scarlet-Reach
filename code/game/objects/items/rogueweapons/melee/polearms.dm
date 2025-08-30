@@ -198,8 +198,6 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
 	blade_dulling = DULLING_SHAFT_WOOD
 	sharpness = IS_BLUNT
 	walking_stick = TRUE
@@ -283,8 +281,8 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	minstr = 8
 	max_blade_int = 100
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -442,8 +440,8 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	minstr = 8
 	max_blade_int = 200
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -660,8 +658,8 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	minstr = 9
 	max_blade_int = 200
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -789,8 +787,8 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	minstr = 11
 	smeltresult = /obj/item/ingot/steel
 	associated_skill = /datum/skill/combat/polearms
@@ -878,8 +876,8 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	blade_dulling = DULLING_SHAFT_METAL
 	minstr = 9
 	smeltresult = /obj/item/ingot/steel
@@ -1030,8 +1028,8 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 5 SECONDS
-	unequip_delay_self = 3.5 SECONDS
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	blade_dulling = DULLING_SHAFT_METAL
 	minstr = 8
 	smeltresult = /obj/item/ingot/steel
