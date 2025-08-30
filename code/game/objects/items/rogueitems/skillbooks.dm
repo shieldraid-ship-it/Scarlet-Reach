@@ -33,7 +33,7 @@
 			else
 				icon_state = "book[iconval]_[open]"
 
-/obj/item/skillbook/fire_act()
+/obj/item/skillbook/burn()
 	GLOB.scarlet_round_stats[STATS_BOOKS_BURNED]++
 	..()
 
