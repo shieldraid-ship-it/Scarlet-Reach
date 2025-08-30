@@ -101,6 +101,8 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
 
+	picklvl = 1
+
 	grid_height = 64
 	grid_width = 32
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_dagger.ogg'
@@ -187,6 +189,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/steel
 
+	picklvl = 0.8
+
 /obj/item/rogueweapon/huntingknife/cleaver/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -231,6 +235,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/steel
 
+	picklvl = 0.9
+
 /obj/item/rogueweapon/huntingknife/combat
 	force = 16
 	name = "seax"
@@ -246,6 +252,8 @@
 	thrown_bclass = BCLASS_CHOP
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/steel
+
+	picklvl = 1.1
 
 /obj/item/rogueweapon/huntingknife/combat/getonmobprop(tag)
 	. = ..()
@@ -264,6 +272,8 @@
 	smeltresult = /obj/item/ingot/iron
 	blade_dulling = DULLING_SHAFT_REINFORCED
 
+	picklvl = 1.1
+
 /obj/item/rogueweapon/huntingknife/idagger/adagger
 	name = "decrepit dagger"
 	desc = "an incredibly withered daggered. Aeon's grasp is upon its form."
@@ -273,11 +283,15 @@
 	smeltresult = /obj/item/ingot/aalloy
 	blade_dulling = DULLING_SHAFT_CONJURED
 
+	picklvl = 0.95
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
 	name = "ancient dagger"
 	desc = "A dagger made of ancient alloys. Aeon's grasp has been lifted from its form."
 	icon_state = "adagger"
 	smeltresult = /obj/item/ingot/aaslag
+
+	picklvl = 1
 
 /obj/item/rogueweapon/huntingknife/idagger/steel
 	name = "steel dagger"
@@ -287,6 +301,8 @@
 	max_integrity = 150
 	smeltresult = /obj/item/ingot/steel
 
+	picklvl = 1.15
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/holysee
 	name = "eclipsum dagger"
 	desc = "A blade forged from the Holy metals of the twinned gods Noc and Astrata, Silver and Gold fused under an Eclipse and blessed, these daggers are very grudgingly given out by the Grenzelhoftian See to ordained Priests of the Ten."
@@ -294,12 +310,16 @@
 	max_integrity = 200
 	icon_state = "gsdagger"
 
+	picklvl = 1.2
+
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle
 	name ="plaguebringer sickle"
 	desc = "A wicked edge brings feculent delights."
 	icon_state = "pestrasickle"
 	max_integrity = 200
+
+	picklvl = 0.98
 
 /*
 	name = "facón"
@@ -314,6 +334,8 @@
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
 
+	picklvl = 1.2
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/parrying //direct upgrade but more costly.
 	name = "steel parrying dagger"
 	desc = "This is a parrying dagger made of solid steel, used to catch opponent's weapons in the handguard, but it's not as good for actual stabbing work."
@@ -322,6 +344,8 @@
 	icon_state = "spdagger"
 	wdefense = 6
 
+	picklvl = 1.1
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero
 	name = "sail dagger"
 	desc = "An exceptionally protective parrying dagger popular in the Etruscan Isles, this dagger features a plain metal guard in the shape of a ship's sail."
@@ -329,6 +353,8 @@
 	force = 17
 	throwforce = 17
 	icon_state = "sail_dagger"
+
+	picklvl = 1.11
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	icon_state = "sdaggeralt"
@@ -339,6 +365,8 @@
 	wrapping of twisted cordage provides a secure grip."
 	icon_state = "eastdagger"
 
+	picklvl = 1.1
+
 /obj/item/rogueweapon/huntingknife/idagger/silver
 	name = "silver dagger"
 	desc = "This silver dagger can be the banishment of vampires and werewolves."
@@ -348,12 +376,16 @@
 	last_used = 0
 	is_silver = TRUE
 
+	picklvl = 1.11
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "ornate dagger"
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of those cursed, in the hands of a faithful hunter. \
 	It is said that on induction into the Inquisitorial order, a new member of the martial arm is handed such a blade. A token, for their service."
 	icon_state = "psydagger"
 	sellprice = 70
+
+	picklvl = 1.175
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger/ComponentInitialize()
 	. = ..()					//+2 force, +50 int, +1 def, make silver
@@ -418,6 +450,8 @@
 	name = "glowing purple silver dagger"
 	desc = "This dagger glows a faint purple. Quicksilver runs across its blade."
 	var/is_bled = FALSE
+
+	picklvl = 0.95
 
 /obj/item/weapon/knife/dagger/silver/arcyne/Initialize()
 	. = ..()
@@ -501,6 +535,8 @@
 	wdefense = 1
 	resistance_flags = FLAMMABLE
 
+	picklvl = 0.8
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
 	name = "elvish dagger"
 	desc = "This beautiful dagger is of intricate, elvish design. Sharper, too."
@@ -510,12 +546,16 @@
 	last_used = 0
 	is_silver = TRUE
 
+	picklvl = 1.17
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish/drow
 	name = "drowish dagger"
 	desc = "A vicious wave-bladed dagger from the Underdark."
 	force = 25
 	last_used = 0
 	is_silver = TRUE
+
+	picklvl = 1.1
 
 /obj/item/rogueweapon/huntingknife/idagger/navaja
 	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut,  /datum/intent/dagger/thrust/pick)
@@ -527,6 +567,8 @@
 	var/extended = 0
 	wdefense = 2
 	sellprice = 30 //shiny :o
+
+	picklvl = 0
 
 /obj/item/rogueweapon/huntingknife/idagger/navaja/attack_self(mob/user)
 	extended = !extended
@@ -540,6 +582,7 @@
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		sharpness = IS_SHARP
 		playsound(user, 'sound/items/knife_open.ogg', 100, TRUE)
+		picklvl = 1.12
 	else
 		force = 5
 		w_class = WEIGHT_CLASS_SMALL
@@ -565,6 +608,8 @@
 	smeltresult = null
 	sellprice = 1
 	thrown_damage_flag = "piercing"		//Checks piercing type like an arrow.
+
+	picklvl = 0.95
 
 /obj/item/rogueweapon/huntingknife/throwingknife/getonmobprop(tag)
 	. = ..()
@@ -624,6 +669,8 @@
 	name = "iron scissors"
 	desc = "Scissors made of iron that may be used to salvage usable materials from clothing."
 	icon_state = "iscissors"
+
+	picklvl = 0.85
 
 /obj/item/rogueweapon/huntingknife/scissors/steel
 	force = 14
