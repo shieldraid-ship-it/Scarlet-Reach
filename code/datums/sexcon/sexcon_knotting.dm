@@ -89,6 +89,8 @@
 	RegisterSignal(user.sexcon.knotted_owner, COMSIG_MOVABLE_MOVED, PROC_REF(knot_movement), TRUE)
 	RegisterSignal(user.sexcon.knotted_recipient, COMSIG_MOVABLE_MOVED, PROC_REF(knot_movement), TRUE)
 	GLOB.scarlet_round_stats[STATS_KNOTTED]++
+	if(!islupian(user)) // only add to counter if top isn't a Lupian (for lore reasons)
+		GLOB.scarlet_round_stats[STATS_KNOTTED_NOT_LUPIANS]++
 
 /datum/sex_controller/proc/knot_movement_mods_remove_his_knot_ty(var/mob/living/carbon/human/top, var/mob/living/carbon/human/btm)
 	var/obj/item/organ/penis/penor = top.getorganslot(ORGAN_SLOT_PENIS)
