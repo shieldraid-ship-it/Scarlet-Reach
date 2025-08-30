@@ -185,7 +185,7 @@
 
 /obj/item/reagent_containers/food/snacks/organ/check_culling(mob/living/eater)
 	. = ..()
-	if(!QDELETED(organ_inside) || !istype(organ_inside, /obj/item/organ/heart))
+	if(QDELETED(organ_inside) || !istype(organ_inside, /obj/item/organ/heart))
 		return
 
 	for(var/datum/culling_duel/D in GLOB.graggar_cullings)
