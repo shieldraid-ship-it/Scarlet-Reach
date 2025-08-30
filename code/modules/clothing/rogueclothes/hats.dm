@@ -2356,7 +2356,7 @@
 // the wizard helmet
 /obj/item/clothing/head/roguetown/helmet/bascinet/wizardhelm
 	name = "wizard bascinet"
-	desc = "A steel bascinet helmet, with a purely decorative built in wizard hat. Though it lacks a working visor, what wont a wizard do for fashion, right?"
+	desc = "A steel bascinet helmet, with a purely decorative built in wizard hat. Though it lacks a working visor, what won't a wizard do for fashion, right?"
 	icon = 'icons/roguetown/clothing/special/wizardhelm.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/wizardhelm.dmi'
 	icon_state = "wizardhelm"
