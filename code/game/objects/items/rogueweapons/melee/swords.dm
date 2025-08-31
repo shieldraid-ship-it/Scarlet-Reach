@@ -622,7 +622,7 @@
 /obj/item/rogueweapon/sword/long/oldpsysword
 	name = "old psydonian longsword"
 	desc = "A finely made longsword, plated in a worn-down veneer of grubby silver. It's long seen better daes. Yet alike PSYDON, it ENDURES."
-	icon_state = "opsysword"
+	icon_state = "oldpsybroadsword"
 	dropshrink = 1
 
 /obj/item/rogueweapon/sword/long/psysword

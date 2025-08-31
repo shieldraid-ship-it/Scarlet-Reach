@@ -1416,8 +1416,8 @@
 	item_state = "absolutionisthelm"
 	emote_environment = 3
 	body_parts_covered = FULL_HEAD|NECK
-	block2add = FOV_RIGHT|FOV_LEFT
-	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	block2add = FOV_BEHIND // now good
+	max_integrity = 370
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'

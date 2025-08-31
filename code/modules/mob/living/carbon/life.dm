@@ -4,6 +4,9 @@
 	if(notransform)
 		return
 
+	if(stasis)//if we're in stasis via wildshape then we don't want to be messing with anything related to bleeding or whatever
+		return
+
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
