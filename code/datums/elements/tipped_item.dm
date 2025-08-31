@@ -24,6 +24,9 @@
 		return
 	if(!(attacked_container.reagents.flags & DRAINABLE))
 		return
+	if(!attacked_container.reagents.total_volume)
+		to_chat(attacker, span_warning("\The [attacked_container] is empty!"))
+		return
 	var/max_volume = HAS_TRAIT(attacker, TRAIT_LEGENDARY_ALCHEMIST) ? 2 : 1 // legendary alchemists get the ability to double their max volume
 	if(dipper.reagents.total_volume >= max_volume) // don't let user attempt to double dip
 		var/reagent_color = mix_color_from_reagents(dipper.reagents.reagent_list)
