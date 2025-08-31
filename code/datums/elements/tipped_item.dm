@@ -10,6 +10,7 @@
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(check_dip))
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(try_inject))
+	RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_dip))
 
 /datum/element/tipped_item/Detach(datum/source, force)
 	. = ..()
@@ -22,7 +23,9 @@
 		return
 	if(!(attacked_container.reagents.flags & DRAINABLE))
 		return
-	if(dipper.reagents.total_volume == dipper.reagents.maximum_volume)
+	if(dipper.reagents.total_volume == dipper.reagents.maximum_volume) // don't let user attempt to double dip
+		var/reagent_color = mix_color_from_reagents(dipper.reagents.reagent_list)
+		to_chat(attacker, span_warning("\The [dipper] is already soaked with <font color=[reagent_color]>something</font>. Washing should clean the <font color=[reagent_color]>coating</font> off."))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(start_dipping), dipper, attacked_container, attacker)
@@ -49,3 +52,10 @@
 	if(source.reagents.total_volume)
 		var/reagent_color = mix_color_from_reagents(source.reagents.reagent_list)
 		examine_list += span_red("Has been dipped in <font color=[reagent_color]>something</font>!")
+
+/datum/element/tipped_item/proc/clean_dip(datum/source, strength)
+	if(strength < CLEAN_WEAK)
+		return
+	var/obj/item/dipper = source
+	if(istype(dipper) && dipper.reagents.total_volume)
+		dipper.reagents.clear_reagents()
