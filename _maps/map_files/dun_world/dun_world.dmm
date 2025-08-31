@@ -56918,7 +56918,9 @@
 	},
 /area/rogue/indoors/shelter/mountains/decap)
 "rnp" = (
-/obj/structure/fermentation_keg,
+/obj/structure/fermentation_keg/random/water{
+	color = "#8f7f62"
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
 "rnq" = (
