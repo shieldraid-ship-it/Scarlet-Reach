@@ -192,6 +192,15 @@
 		log_combat(user, src, "armed and dropped [src] near travel tiles")
 		break
 
+/obj/item/restraints/legcuffs/beartrap/after_throw(datum/callback/callback)
+	..()
+	if(!armed)
+		return
+	for(var/obj/structure/fluff/traveltile/TT in range(1, src)) // don't allow armed traps to be placed near travel tiles
+		close_trap()
+		log_combat(src, null, "[src] was kicked towards travel tiles")
+		break
+
 // When craftable beartraps get added, make these the ones crafted.
 /obj/item/restraints/legcuffs/beartrap/crafted
 	rusty = FALSE
