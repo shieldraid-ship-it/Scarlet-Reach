@@ -21,6 +21,10 @@
 	advjob_examine = FALSE
 	give_bank_account = 15
 
+	virtue_restrictions = list(
+		/datum/virtue/utility/deathless,
+	)
+
 // REMEMBER FLAGELLANT? REMEMBER LASZLO? THIS IS HIM NOW. FEEL OLD YET?
 
 /datum/job/roguetown/absolver/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

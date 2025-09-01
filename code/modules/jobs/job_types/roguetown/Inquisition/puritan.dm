@@ -16,6 +16,10 @@
 	cmode_music = 'sound/music/inquisitorcombat.ogg'
 	selection_color = JCOLOR_INQUISITION
 
+	virtue_restrictions = list(
+		/datum/virtue/utility/deathless,
+	)
+
 	outfit = /datum/outfit/job/roguetown/puritan
 	display_order = JDO_PURITAN
 	advclass_cat_rolls = list(CTAG_PURITAN = 20)

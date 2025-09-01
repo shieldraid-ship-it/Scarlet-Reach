@@ -23,6 +23,10 @@
 	advjob_examine = TRUE
 	give_bank_account = 15
 
+	virtue_restrictions = list(
+		/datum/virtue/utility/deathless,
+	)
+
 /datum/job/roguetown/orthodoxist/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
 	if(L)
