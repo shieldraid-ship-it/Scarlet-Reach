@@ -168,10 +168,12 @@
 /datum/virtue/utility/deathless
 	name = "Deathless"
 	desc = "Some fell magick has rendered me inwardly unliving - I do not hunger, and I do not breathe."
-	added_traits = list(TRAIT_NOHUNGER, TRAIT_NOBREATH)
+	added_traits = list(TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_DEATHLESS, TRAIT_ZOMBIE_IMMUNE)
 
-/*/datum/virtue/utility/deathless/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.mob_biotypes |= MOB_UNDEAD*/
+/datum/virtue/utility/deathless/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.mob_biotypes |= MOB_UNDEAD
+	recipient.dna.species.soundpack_m = new /datum/voicepack/deathless()
+	recipient.dna.species.soundpack_f = new /datum/voicepack/deathlessfem()
 
 /datum/virtue/utility/blacksmith
 	name = "Blacksmith's Apprentice"

@@ -26,6 +26,7 @@
 //	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
+	var/t_do = p_do()
 	var/obscure_name = FALSE
 	var/race_name = dna.species.name
 	var/datum/antagonist/maniac/maniac = user.mind?.has_antag_datum(/datum/antagonist/maniac)
@@ -38,10 +39,12 @@
 	var/m1 = "[t_He] [t_is]"
 	var/m2 = "[t_his]"
 	var/m3 = "[t_He] [t_has]"
+	var/m4 = "[t_He] [t_do]"
 	if(user == src)
 		m1 = "I am"
 		m2 = "my"
 		m3 = "I have"
+		m4 = "I do"
 
 	if(isliving(user))
 		var/mob/living/L = user
@@ -232,6 +235,15 @@
 					. += span_redtext("[m1] repugnant!")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_redtext("[m1] repulsive!")
+
+		if (HAS_TRAIT(src, TRAIT_DEATHLESS))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_dead("[m4] not seem to be...  particularly alive.")
+				if (SHE_HER, HE_HIM_F)
+					. += span_dead("[m4] not seem to be... particularly alive.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_dead("[m4] not seem to be... particularly alive.")
 	
 	if (HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS) && (!HAS_TRAIT(src, TRAIT_VAMP_DREAMS)))
 		if(isliving(user))
@@ -737,7 +749,10 @@
 			msg += span_warning("[m1] barely conscious.")
 		else
 			if(stat >= UNCONSCIOUS)
-				msg += "[m1] [IsSleeping() ? "sleeping" : "unconscious"]."
+				if(!(mob_biotypes & MOB_UNDEAD))
+					msg += "[m1] [IsSleeping() ? "sleeping" : "unconscious"]."
+				else
+					msg += "[m1] in torpor."
 			else if(eyesclosed)
 				msg += "[capitalize(m2)] eyes are closed."
 			else if(has_status_effect(/datum/status_effect/debuff/sleepytime))
