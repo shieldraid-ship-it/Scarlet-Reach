@@ -535,7 +535,7 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/slice = new slice_path(loc)
 			slice.filling_color = filling_color
 			initialize_slice(slice, reagents_per_slice)
-			if(add_reagents_from_knife)
+			if(add_reagents_from_knife) // for a batch slice, copy reagents into all slices instead of transferring (becuase a fraction of the knife's reagent would be too small to have an impact)
 				W.reagents.copy_to(slice, add_reagents_from_knife)
 		if(add_reagents_from_knife)
 			var/reagent_color = mix_color_from_reagents(W.reagents.reagent_list)
@@ -555,7 +555,8 @@ All foods are distributed among various categories. Use common sense.
 		if(add_reagents_from_knife)
 			var/reagent_color = mix_color_from_reagents(W.reagents.reagent_list)
 			W.reagents.trans_to(slice, add_reagents_from_knife)
-			to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
+			if(!W.reagents.total_volume)
+				to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
 		slices_num--
 		if(slices_num == 1)
 			slice = new slice_path(loc)
@@ -564,7 +565,8 @@ All foods are distributed among various categories. Use common sense.
 			if(add_reagents_from_knife)
 				var/reagent_color = mix_color_from_reagents(W.reagents.reagent_list)
 				W.reagents.trans_to(slice, add_reagents_from_knife)
-				to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
+				if(!W.reagents.total_volume)
+					to_chat(user, span_notice("\The [W] loses its <font color=[reagent_color]>coating</font>."))
 			qdel(src)
 			return TRUE
 		if(slices_num <= 0)
