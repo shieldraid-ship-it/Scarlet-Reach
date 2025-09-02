@@ -190,9 +190,6 @@
 			for(var/trait in traits_rotman)
 				ADD_TRAIT(zombie, trait, "[type]")
 			to_chat(zombie, span_green("I no longer crave for flesh... <i>But I still feel ill.</i>"))
-			if(HAS_TRAIT(src, TRAIT_ROTMAN))
-				zombie.dna.species.soundpack_m = new /datum/voicepack/zombie/m()
-				zombie.dna.species.soundpack_f = new /datum/voicepack/zombie/f()
 		else
 			if(!was_i_undead)
 				zombie.mob_biotypes &= ~MOB_UNDEAD
