@@ -82,7 +82,9 @@
         "pal": "friend",
         "best friend": "confidant",
         "comrade": "companion",
-        "amazing": "impressive"
+        "amazing": "impressive",
+        "prince": "young master",
+        "princess": "young lady"
 		},
     "start": {
         "fuck off": "you are courting death"
