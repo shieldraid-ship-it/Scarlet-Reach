@@ -62,6 +62,7 @@
         "Astrata": "Yang",
         "Noc": "Yin",
         "priest": "abbot",
+		"priestess": "abbess",
         "acolyte": "novice",
         "templar": "warrior-monk",
         "cultist": "demonic cultivator",
@@ -106,3 +107,4 @@
     }
 
 }
+
