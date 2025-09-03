@@ -266,7 +266,7 @@
 	reqs = list(/obj/item/natural/fibers = 4,
 				/obj/item/grown/log/tree/stick = 4,
 				/obj/item/ingot/iron = 1,)
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/coif
 	name = "coif (1 fibers, 2 cloth)"
