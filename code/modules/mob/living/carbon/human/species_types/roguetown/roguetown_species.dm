@@ -45,7 +45,7 @@
 			return strings("russian_replacement.json", type, convert_HTML = TRUE)
 		if("Pirate accent")
 			return strings("axian_replacement.json", type, convert_HTML = TRUE)
-		if("Western Kazengun accent")
+		if("West Kazengun accent")
 			return strings("cultivator_replacement.json", type, convert_HTML = TRUE)
 
 /datum/species/proc/get_accent(mob/living/carbon/human/H)
