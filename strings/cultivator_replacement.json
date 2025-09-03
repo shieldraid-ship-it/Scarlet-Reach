@@ -69,7 +69,7 @@
         "heretic": "demonic cultivator",
         "inhumenite": "demonic cultivator",
 		"zizoid": "demonic cultivator",
-		"zizoist": "demonic cultviator",
+		"zizoist": "demonic cultivator",
         "warband": "sect",
         "cult": "sect",
         "gang": "sect",
@@ -107,4 +107,5 @@
     }
 
 }
+
 
