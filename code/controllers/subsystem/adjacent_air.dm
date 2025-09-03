@@ -176,24 +176,26 @@ SUBSYSTEM_DEF(adjacent_air)
 	var/turf/climb_target = src
 	var/mob/living/carbon/human/climber = user
 	var/wall2wall_dir
-	var/list/adjacent_wall_list = get_adjacent_turfs(climb_target)
+	var/list/adjacent_wall_list = get_adjacent_turfs(climb_target) // get and add to the list turfs centered around climb_target (turf we drag mob to) in CARDINAL (NORTH, SOUTH, WEST, EAST) directions
 	var/list/adjacent_wall_list_final = list()
 	var/turf/wall_for_message
-	for(var/turf/closed/adjacent_wall in adjacent_wall_list)
-		if(adjacent_wall.wallclimb)
+	for(var/turf/closed/adjacent_wall in adjacent_wall_list) // we add any turf that is a wall, aka /turf/closed/...
+		if(adjacent_wall.wallclimb) // if the wall has a climbable var TRUE, then we do the following shit
 			adjacent_wall_list_final += adjacent_wall
-			wall_for_message = pick(adjacent_wall_list_final)
+			wall_for_message = pick(adjacent_wall_list_final) // if we are shimmying between 2 climbable walls, then we just pick one along which our sprite and message will be adjusted
 			wall2wall_dir = get_dir(climb_target, wall_for_message)
-	if(!adjacent_wall_list_final.len)
+	if(!adjacent_wall_list_final.len) // if there are no /turf/closed WALLS or none of the WALLS have wallclimb set to TRUE, then the list will be empty so we can't climb there
 		to_chat(climber, span_warningbig("I can't climb there!"))
 	else
 		climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
-		climber.movement_type = FLYING
-		climber.forceMove(climb_target)
-		climber.movement_type = GROUND
-		climber.update_wallpress_slowdown()
-		climber.wallpressed = wall2wall_dir
-		switch(wall2wall_dir)
+		climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
+		climber.stamina_add(10) // eat some of climber's stamina when we move onto the next wall
+		climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff
+		climber.forceMove(climb_target) // while our MOVEMENT TYPE is FLYING, we move onto next tile and can't fall cos of the flying
+		climber.movement_type = GROUND // if we move and it's an empty space tile, we fall. otherwise we either just walk into a wall along which we climb and don't fall, or walk onto a solid turf, like... floor or water
+//		climber.update_wallpress_slowdown()
+		climber.wallpressed = wall2wall_dir // we set our wallpressed flag to TRUE and regain blue bar somewhat, might wanna remove dat idk
+		switch(wall2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
 			if(NORTH)
 				climber.setDir(NORTH)
 				climber.set_mob_offsets("wall_press", _x = 0, _y = 20)

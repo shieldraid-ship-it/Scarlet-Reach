@@ -473,8 +473,11 @@
 	desc = "Something has chilled me to the bone! It's hard to move."
 	icon_state = "muscles"
 
-// CLIMBING STUFF
+//////////////////////
+/// CLIMBING STUFF //
+////////////////////
 
+/// FLYING BASED CLIMBING
 /datum/status_effect/debuff/active_climbing
 	id = "active_climbing"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/active_climbing
@@ -501,5 +504,46 @@
 
 /atom/movable/screen/alert/status_effect/debuff/active_climbing
 	name = "I am climbing"
+	desc = ""
+	icon_state = "muscles"
+
+/// OPEN SPACE TURF BASED CLIMBING, MOB DRAG-DROP TILE
+/datum/status_effect/debuff/climbing_lfwb
+	id = "climbing_lfwb"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
+	tick_interval = 10
+
+/datum/status_effect/debuff/climbing_lfwb/on_apply()
+	. = ..()
+//	var/mob/living/carbon/human/climber = owner
+//	climber.movement_type = FLYING
+
+/datum/status_effect/debuff/climbing_lfwb/tick()
+	. = ..()
+	var/mob/living/carbon/human/climber = owner
+	climber.stamina_add(10) // every 1 second (or tick_inverval) we remove 10 stamina
+	var/turf/tile_under_climber = climber.loc
+	var/list/branch_under_climber = list()
+	for(var/obj/structure/flora/newbranch/branch in climber.loc)
+		branch_under_climber += branch
+	if(!istype(tile_under_climber, /turf/open/transparent/openspace))// if we aren't on open space turf, remove debuff (aka our feet are on solid shi or water)
+		to_chat(climber, span_warningbig("Floor tiles!"))// debug msg
+		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+	if(branch_under_climber.len) // branches dont remove open space turf, so we have to check for it separately
+		to_chat(climber, span_warningbig("Branches!"))// debug msg
+		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+	else if(climber.stamina >= climber.max_stamina) // if we run out of green bar stamina, we fall
+		to_chat(climber, span_warningbig("I can't hold onto the ledge for any longer!"))
+		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+		tile_under_climber.zFall(climber)
+
+/*
+/datum/status_effect/debuff/climbing_lfwb/on_remove()
+	. = ..()
+	var/mob/living/carbon/human/climber = owner
+	climber.movement_type = GROUND
+*/
+/atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
+	name = "Climbing..."
 	desc = ""
 	icon_state = "muscles"

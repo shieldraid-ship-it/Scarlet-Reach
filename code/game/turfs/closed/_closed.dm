@@ -172,8 +172,9 @@
 				var/pulling = user.pulling
 				if(ismob(pulling))
 					user.pulling.forceMove(target)
-//				randysandy_climb(user, target)
 				user.movement_type = FLYING
+				L.stamina_add(10)
+				L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 				user.forceMove(target)
 				user.movement_type = GROUND
 				user.start_pulling(pulling,supress_message = TRUE)
