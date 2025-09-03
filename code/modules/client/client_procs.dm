@@ -349,8 +349,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	data += "<font color='#FFD700'><span class='bold'>Zardmen & Dracon:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_LIZARDS] + GLOB.scarlet_round_stats[STATS_ALIVE_DRACON]]<br>"
 	data += "<font color='#d49d7c'><span class='bold'>Half & Wildkins:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_HALFKIN] + GLOB.scarlet_round_stats[STATS_ALIVE_WILDKIN]]<br>"
 	data += "<font color='#99dfd5'><span class='bold'>Lupians, Vulpkin & Tabaxi:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_LUPIANS] + GLOB.scarlet_round_stats[STATS_ALIVE_VULPS] + GLOB.scarlet_round_stats[STATS_ALIVE_TABAXI]]<br>"
-	data += data += "<font color='#c0c6c7'><span class='bold'>Golems & Dolls:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_GOLEMS] + GLOB.scarlet_round_stats[STATS_ALIVE_DOLLS]]<br>"
+	data += "<font color='#c0c6c7'><span class='bold'>Golems & Dolls:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_GOLEMS] + GLOB.scarlet_round_stats[STATS_ALIVE_DOLLS]]<br>"
 	data += "<font color='#9ACD32'><span class='bold'>Fluvian & Axians:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_MOTHS] + GLOB.scarlet_round_stats[STATS_ALIVE_AXIAN]]<br>"
+	data += "<font color='#00CC99'><span class='bold'>Lamiae:</span></font> [GLOB.scarlet_round_stats[STATS_ALIVE_LAMIA]]<br>"
 	data += "</div>"
 
 	data += "</div></div>"
@@ -407,7 +408,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 				break
 	var/apostasy_followers = GLOB.patron_follower_counts["Godless"] || 0
 	var/psydonite_monarch = GLOB.scarlet_round_stats[STATS_MONARCH_PATRON] == "Psydon" ? TRUE : FALSE
-	var/psydon_influence = (psydon_followers * 20) + (GLOB.confessors.len * 20) + (GLOB.scarlet_round_stats[STATS_HUMEN_DEATHS] * -10) + (GLOB.scarlet_round_stats[STATS_ALIVE_TIEFLINGS] * -20) + (psydonite_monarch ? (psydonite_monarch * 500) : -250) + (largest_religion? (largest_religion * 500) : -250) + (GLOB.scarlet_round_stats[STATS_PSYCROSS_USERS] * 10) + (apostasy_followers * -20) + (GLOB.scarlet_round_stats[STATS_LUX_HARVESTED] * -50) + (psydonite_user ? 10000 : -10000)
+	var/psydon_influence = (psydon_followers * 20) + (GLOB.confessors.len * 20) + (GLOB.accused.len * 15) + (GLOB.indexed.len * 5) + (GLOB.scarlet_round_stats[STATS_HUMEN_DEATHS] * -10) + (psydonite_monarch ? (psydonite_monarch * 500) : -250) + (largest_religion? (largest_religion * 500) : -250) + (GLOB.scarlet_round_stats[STATS_PSYCROSS_USERS] * 10) + (GLOB.scarlet_round_stats[STATS_MARQUES_MADE] * 1) + (apostasy_followers * -20) + (GLOB.scarlet_round_stats[STATS_LUX_HARVESTED] * -50) + (psydonite_user ? 10000 : -10000)
 
 
 	data += "<div style='width: 42.5%; margin: 0 auto 30px; border: 2px solid #2f6c7a; background: #1d4a54; color: #d0d0d0; max-height: 420px;'>"
@@ -420,15 +421,17 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	data += "Number of followers: [psydon_followers] ([get_colored_influence_value(psydon_followers * 20)])<br>"
 	data += "People wearing psycross: [GLOB.scarlet_round_stats[STATS_PSYCROSS_USERS]] ([get_colored_influence_value(GLOB.scarlet_round_stats[STATS_PSYCROSS_USERS] * 10)])<br>"
 	data += "Number of confessions: [GLOB.confessors.len] ([get_colored_influence_value(GLOB.confessors.len * 20)])<br>"
-	data += "Largest faith: [largest_religion ? "YES" : "NO"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
+	data += "Number of accusations: [GLOB.accused.len] ([get_colored_influence_value(GLOB.accused.len * 15)])<br>"
+	data += "People INDEXED: [GLOB.indexed.len] ([get_colored_influence_value(GLOB.indexed.len * 5)])<br>"
 	data += "Psydonite monarch: [psydonite_monarch ? "YES" : "NO"] ([get_colored_influence_value((psydonite_monarch ? (psydonite_monarch * 500) : -250))])<br>"
 	data += "</div>"
 
 	data += "<div style='flex: 1; padding-left: 60px;'>"
 	data += "Number of apostates: [apostasy_followers] ([get_colored_influence_value(apostasy_followers * -20)])<br>"
 	data += "Humen deaths: [GLOB.scarlet_round_stats[STATS_HUMEN_DEATHS]] ([get_colored_influence_value(GLOB.scarlet_round_stats[STATS_HUMEN_DEATHS] * -10)])<br>"
+	data += "Largest faith: [largest_religion ? "YES" : "NO"] ([get_colored_influence_value(largest_religion ? 500 : -250)])<br>"
 	data += "Lux harvested: [GLOB.scarlet_round_stats[STATS_LUX_HARVESTED]] ([get_colored_influence_value(GLOB.scarlet_round_stats[STATS_LUX_HARVESTED] * -50)])<br>"
-	data += "Number of demonspawns: [GLOB.scarlet_round_stats[STATS_ALIVE_TIEFLINGS]] ([get_colored_influence_value(GLOB.scarlet_round_stats[STATS_ALIVE_TIEFLINGS] * -20)])<br>"
+	data += "Marques made: [GLOB.scarlet_round_stats[STATS_MARQUES_MADE]] ([get_colored_influence_value(GLOB.scarlet_round_stats[STATS_MARQUES_MADE] * 1)])<br>"
 	data += "God's status: [psydonite_user ? "ALIVE" : "DEAD"] ([get_colored_influence_value(psydonite_user ? 10000 : -10000)])<br>"
 	data += "</div>"
 

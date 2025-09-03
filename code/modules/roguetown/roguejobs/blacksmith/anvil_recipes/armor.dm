@@ -377,6 +377,20 @@
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet
 	craftdiff = 2
 
+/datum/anvil_recipe/armor/steel/helmet/klapplong
+	name = "Klappenlonger (+2 Steel)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/klapplong
+	craftdiff = 5
+
+/datum/anvil_recipe/armor/steel/helmet/wizardhelm
+	name = "Wizard bascinet (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/wizardhelm
+	craftdiff = 3
+
 /datum/anvil_recipe/armor/steel/helmet/salletv
 	name = "Sallet Visored (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
@@ -581,6 +595,13 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	craftdiff = 3
 
+/datum/anvil_recipe/armor/iron/wardenbrig
+	name = "Forester's Brigandine (+1 Forester's Armor, +1 Iron, +1 Essence of Wilderness)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/warden, /obj/item/ingot/iron, /obj/item/natural/cured/essence)
+	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
+	craftdiff = 4
+
 /datum/anvil_recipe/armor/steel/halfplate
 	name = "Half-Plate Armour (+2 Steel, +1 Cured Leather)"
 	req_bar = /obj/item/ingot/steel
@@ -773,6 +794,27 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
 	craftdiff = 3
 
+/datum/anvil_recipe/armor/steel/half/fencer/psy
+	name = "Psydonian Chestplate (+1 Blessed Silver)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/silverblessed)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
+	craftdiff = 3
+
+/datum/anvil_recipe/armor/steel/helmsallpsy
+	name = "Psydonian Sallet (+1 Blessed Silver)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/silverblessed)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
+	craftdiff = 3
+
+/datum/anvil_recipe/armor/steel/helmbucketpsy
+	name = "Psydonian Bucket Helm (+1 Blessed Silver)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/silverblessed)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
+	craftdiff = 3
+
 /datum/anvil_recipe/armor/steel/scalemail
 	name = "Scalemail (+1 Steel)"
 	req_bar = /obj/item/ingot/steel
@@ -791,6 +833,13 @@
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/iron
 	createditem_num = 1
+
+/datum/anvil_recipe/armor/steel/helmetabso
+	name = "Psydonian Conical Helm (+1 Steel, +1 Blessed Silver)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/silverblessed)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/absolver
+	craftdiff = 3
 
 /datum/anvil_recipe/armor/steel/bevor
 	name = "Bevor"
