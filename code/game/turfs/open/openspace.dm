@@ -134,12 +134,15 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 		user.visible_message(span_warning("[user] starts to climb down."), span_warning("I start to climb down."))
 		if(do_after(L, (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30), target = src))
+//			randysandy_climb(user, target)
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 			var/pulling = user.pulling
 			if(ismob(pulling))
 				user.pulling.forceMove(target)
+			user.movement_type = FLYING
 			user.forceMove(target)
+			user.movement_type = GROUND
 			user.start_pulling(pulling,supress_message = TRUE)
 
 /turf/open/transparent/openspace/attack_ghost(mob/dead/observer/user)

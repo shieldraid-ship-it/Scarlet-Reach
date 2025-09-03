@@ -136,3 +136,349 @@ SUBSYSTEM_DEF(adjacent_air)
 	if(isturf(T))
 		T.air_update_turf(1)
 	air_update_turf(1)
+/*
+/turf/proc/randysandy_climb(mob/user, turf/climb_target) // lfwb
+	var/mob/living/carbon/human/climber = user
+	if(istype(climb_target, /turf/open/transparent/openspace))
+		climber.apply_status_effect(/datum/status_effect/debuff/active_climbing)
+	else
+		climber.remove_status_effect(/datum/status_effect/debuff/active_climbing)
+
+/turf/open/transparent/openspace/Entered(atom/movable/AM)
+	. = ..()
+	if(isliving(AM) && !AM.throwing)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/climber = AM
+			var/list/valid_climbs = list()
+			for(var/turf/closed/valid_climb_target in range(1, climber.loc))
+				if(valid_climb_target.wallclimb)
+					valid_climbs += valid_climb_target
+			if(!valid_climbs.len)
+				to_chat(climber, span_warningbig("YOU FELL OFF!"))
+				climber.remove_status_effect(/datum/status_effect/debuff/active_climbing)
+				zFall(climber)
+				climber.apply_damage(5, BURN, BODY_ZONE_CHEST, forced = TRUE)
+				to_chat(climber, span_warningbig("The water seeps into my pores. I am crumbling!"))
+*/
+/turf/open/transparent/openspace/MouseDrop_T(atom/movable/O, mob/user)
+	. = ..()
+	if(user == O && isliving(O))
+		var/mob/living/L = O
+		if(isanimal(L))
+			var/mob/living/simple_animal/A = L
+			if (!A.dextrous)
+				return
+		if(L.mobility_flags & MOBILITY_MOVE)
+			wallpress(L)
+			return
+
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // only cardinals, correct chat
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/wall2wall_dir
+	var/list/adjacent_wall_list = get_adjacent_turfs(climb_target)
+	var/list/adjacent_wall_list_final = list()
+	var/turf/wall_for_message
+	for(var/turf/closed/adjacent_wall in adjacent_wall_list)
+		if(adjacent_wall.wallclimb)
+			adjacent_wall_list_final += adjacent_wall
+			wall_for_message = pick(adjacent_wall_list_final)
+			wall2wall_dir = get_dir(climb_target, wall_for_message)
+	if(!adjacent_wall_list_final.len)
+		to_chat(climber, span_warningbig("I can't climb there!"))
+	else
+		climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
+		climber.movement_type = FLYING
+		climber.forceMove(climb_target)
+		climber.movement_type = GROUND
+		climber.update_wallpress_slowdown()
+		climber.wallpressed = wall2wall_dir
+		switch(wall2wall_dir)
+			if(NORTH)
+				climber.setDir(NORTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+				climber.visible_message(span_info("NORTH"))
+			if(SOUTH)
+				climber.setDir(SOUTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+				climber.visible_message(span_info("SOUTH"))
+			if(EAST)
+				climber.setDir(EAST)
+				climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+				climber.visible_message(span_info("EAST"))
+			if(WEST)
+				climber.setDir(WEST)
+				climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+				climber.visible_message(span_info("WEST"))
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // cardinals working wrong chat
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/dir2wall
+	var/turf/swag
+	for(var/turf/closed/adjacent_wall in range(1, climb_target))
+		dir2wall = get_dir(climb_target, adjacent_wall)
+		if(!((adjacent_wall.wallclimb) && (dir2wall in GLOB.cardinals)))
+			to_chat(climber, span_warningbig("I can't climb there!"))
+		else
+			swag = pick(valid_climb_target)
+			adjacent_wall = adjacent_wall.wallclimb
+			dir2wall = get_dir(climb_target, adjacent_wall)
+			climber.visible_message(span_info("[climber] climbs along [adjacent_wall]..."))
+			climber.movement_type = FLYING
+			climber.forceMove(climb_target)
+			climber.movement_type = GROUND
+			climber.update_wallpress_slowdown()
+			climber.wallpressed = dir2wall
+			switch(dir2wall)
+				if(NORTH)
+					climber.setDir(NORTH)
+					climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+					climber.visible_message(span_info("NORTH"))
+				if(SOUTH)
+					climber.setDir(SOUTH)
+					climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+					climber.visible_message(span_info("SOUTH"))
+				if(EAST)
+					climber.setDir(EAST)
+					climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+					climber.visible_message(span_info("EAST"))
+				if(WEST)
+					climber.setDir(WEST)
+					climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+					climber.visible_message(span_info("WEST"))
+*/
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // CARDINAL
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/turf/closed/adjacent_wall
+	var/dir2wall
+	var/list/adjacent_wall_list = list()
+	var/turf/message_shit
+	for(adjacent_wall in range(1, climb_target))
+		dir2wall = get_dir(climb_target, adjacent_wall)
+		if((adjacent_wall.wallclimb) && (dir2wall in GLOB.cardinals))
+			dir2wall = get_dir(climb_target, adjacent_wall)
+			adjacent_wall_list += adjacent_wall.wallclimb
+			message_shit = pick(adjacent_wall_list)
+	if(!adjacent_wall_list.len)
+		to_chat(climber, span_warningbig("I can't climb there!"))
+	else
+		climber.visible_message(span_info("[climber] climbs along [message_shit]..."))
+		climber.movement_type = FLYING
+		climber.forceMove(climb_target)
+		climber.movement_type = GROUND
+		climber.update_wallpress_slowdown()
+		climber.wallpressed = dir2wall
+		switch(dir2wall)
+			if(NORTH)
+				climber.setDir(NORTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+				climber.visible_message(span_info("NORTH"))
+			if(SOUTH)
+				climber.setDir(SOUTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+				climber.visible_message(span_info("SOUTH"))
+			if(EAST)
+				climber.setDir(EAST)
+				climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+				climber.visible_message(span_info("EAST"))
+			if(WEST)
+				climber.setDir(WEST)
+				climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+				climber.visible_message(span_info("WEST"))
+*/
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // current
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/turf/closed/adjacent_wall
+	var/dir2wall
+	var/list/adjacent_wall_list = list()
+	for(adjacent_wall in range(1, climb_target))
+		if(adjacent_wall.wallclimb)
+			adjacent_wall_list += adjacent_wall
+	if(!adjacent_wall_list.len)
+		to_chat(climber, span_warningbig("I can't climb there!"))
+	else
+		var/turf/message_shit = pick(adjacent_wall_list)
+		climber.visible_message(span_info("[climber] climbs along [message_shit]..."))
+		climber.movement_type = FLYING
+		climber.forceMove(climb_target)
+		climber.movement_type = GROUND
+		dir2wall = get_dir(climber, adjacent_wall)
+		climber.wallpressed = dir2wall
+		switch(dir2wall)
+			if(NORTH)
+				climber.setDir(NORTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+				climber.visible_message(span_info("NORTH"))
+			if(SOUTH)
+				climber.setDir(SOUTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+				climber.visible_message(span_info("SOUTH"))
+			if(EAST)
+				climber.setDir(EAST)
+				climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+				climber.visible_message(span_info("EAST"))
+			if(WEST)
+				climber.setDir(WEST)
+				climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+				climber.visible_message(span_info("WEST"))
+*/
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // shift user on climb
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/turf/valid_climbs
+	var/turf/closed/adjacent_wall
+	var/dir2wall
+	for(adjacent_wall in range(1, climb_target))
+		dir2wall = get_dir(climb_target, adjacent_wall)
+		if(adjacent_wall.wallclimb)
+			valid_climbs = adjacent_wall
+			if((adjacent_wall.wallclimb) && (dir2wall in GLOB.cardinals))
+				dir2wall = get_dir(climb_target, adjacent_wall)
+	if(!valid_climbs)
+		to_chat(climber, span_warningbig("I can't climb there!"))
+	else
+		climber.visible_message(span_info("[climber] climbs along [valid_climbs]..."))
+		climber.movement_type = FLYING
+		climber.forceMove(climb_target)
+		climber.movement_type = GROUND
+		climber.update_wallpress_slowdown()
+		climber.wallpressed = dir2wall
+		switch(dir2wall)
+			if(NORTH)
+				climber.setDir(NORTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+				climber.visible_message(span_info("NORTH"))
+			if(SOUTH)
+				climber.setDir(SOUTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+				climber.visible_message(span_info("SOUTH"))
+			if(EAST)
+				climber.setDir(EAST)
+				climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+				climber.visible_message(span_info("EAST"))
+			if(WEST)
+				climber.setDir(WEST)
+				climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+				climber.visible_message(span_info("WEST"))
+*/
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // cardinals workingwrong chat
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/list/valid_climbs = list()
+	var/turf/closed/message_shit
+	var/dir2wall
+	var/turf/swag
+	for(var/turf/closed/valid_climb_target in range(1, climb_target))
+		dir2wall = get_dir(climb_target, valid_climb_target)
+		if((valid_climb_target.wallclimb) && (dir2wall in GLOB.cardinals))
+			swag = pick(valid_climb_target)
+		if(swag)
+			dir2wall = get_dir(climb_target, valid_climb_target)
+			climber.visible_message(span_info("[climber] climbs along [swag]..."))
+			climber.movement_type = FLYING
+			climber.forceMove(climb_target)
+			climber.movement_type = GROUND
+			climber.update_wallpress_slowdown()
+			climber.wallpressed = dir2wall
+			switch(dir2wall)
+				if(NORTH)
+					climber.setDir(NORTH)
+					climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+				if(SOUTH)
+					climber.setDir(SOUTH)
+					climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+				if(EAST)
+					climber.setDir(EAST)
+					climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+				if(WEST)
+					climber.setDir(WEST)
+					climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+			climber.visible_message(span_info("[dir2wall]..."))
+		else
+			to_chat(climber, span_warningbig("I can't climb there!"))
+*/
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // shift user on climb
+	var/turf/climb_target = src
+	var/mob/living/carbon/human/climber = user
+	var/turf/valid_climbs
+	var/turf/closed/adjacent_wall
+	var/dir2wall
+	for(adjacent_wall in range(1, climb_target))
+		dir2wall = get_dir(climb_target, adjacent_wall)
+		if(adjacent_wall.wallclimb)
+			valid_climbs = adjacent_wall
+			dir2wall = get_dir(climb_target, adjacent_wall)
+	if(!valid_climbs)
+		to_chat(climber, span_warningbig("I can't climb there!"))
+	else
+		climber.visible_message(span_info("[climber] climbs along [valid_climbs]..."))
+		climber.movement_type = FLYING
+		climber.forceMove(climb_target)
+		climber.movement_type = GROUND
+		climber.update_wallpress_slowdown()
+		climber.wallpressed = dir2wall
+		switch(dir2wall)
+			if(NORTH || NORTHWEST || NORTHEAST)
+				climber.setDir(NORTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+			if(SOUTH || SOUTHEAST || SOUTHWEST)
+				climber.setDir(SOUTH)
+				climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+			if(EAST)
+				climber.setDir(EAST)
+				climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+			if(WEST)
+				climber.setDir(WEST)
+				climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+		climber.visible_message(span_info("[dir2wall]..."))
+*/
+/*
+/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // shift user on climb
+	var/mob/living/carbon/human/climber = user
+	var/turf/climb_target = src
+	if(!(climber.mobility_flags & MOBILITY_STAND))
+		return
+	var/dir2wall = get_dir(climber,src)
+	if(!(dir2wall in GLOB.cardinals))
+		return
+	climber.wallpressed = dir2wall
+	climber.update_wallpress_slowdown()
+	climber.visible_message(span_info("[climber] climbs along [climb_target]..."))
+
+	switch(dir2wall)
+		if(NORTH)
+			climber.setDir(NORTH)
+			climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+		if(SOUTH)
+			climber.setDir(SOUTH)
+			climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+		if(EAST)
+			climber.setDir(EAST)
+			climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+		if(WEST)
+			climber.setDir(WEST)
+			climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+
+	climber.movement_type = FLYING
+	climber.forceMove(climb_target)
+	climber.movement_type = GROUND
+	var/list/valid_climbs = list()
+	for(var/turf/closed/valid_climb_target in range(1, climb_target.loc))
+		if(valid_climb_target.wallclimb)
+			valid_climbs += valid_climb_target
+		if(!valid_climbs.len)
+			to_chat(climber, span_warningbig("YOU FELL OFF!"))
+			zFall(climber)
+			climber.apply_damage(5, BURN, BODY_ZONE_CHEST, forced = TRUE)
+			to_chat(climber, span_warningbig("The water seeps into my pores. I am crumbling!"))
+//	if(!climber.has_status_effect(/datum/status_effect/debuff/active_climbing))
+//		climber.apply_status_effect(/datum/status_effect/debuff/active_climbing)
+*/

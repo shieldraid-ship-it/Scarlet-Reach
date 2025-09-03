@@ -24,7 +24,7 @@
 			wallpress(L)
 			return
 
-/turf/closed/proc/wallpress(mob/living/user)
+/turf/closed/proc/wallpress(mob/living/user) // shift user on climb
 	if(user.wallpressed)
 		return
 	if(user.is_shifted)
@@ -121,8 +121,8 @@
 /turf/closed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/closed/attack_hand(mob/user)
-	if(wallclimb)
+/turf/closed/attack_hand(mob/user) // let us see
+	if(wallclimb) // apply flying move type and see if the code forces us to drop or it's just the gravity
 		if(isliving(user))
 			var/mob/living/L = user
 			var/climbsound = 'sound/foley/climb.ogg'
@@ -172,7 +172,10 @@
 				var/pulling = user.pulling
 				if(ismob(pulling))
 					user.pulling.forceMove(target)
+//				randysandy_climb(user, target)
+				user.movement_type = FLYING
 				user.forceMove(target)
+				user.movement_type = GROUND
 				user.start_pulling(pulling,supress_message = TRUE)
 				if(user.m_intent != MOVE_INTENT_SNEAK)
 					playsound(user, 'sound/foley/climb.ogg', 100, TRUE)

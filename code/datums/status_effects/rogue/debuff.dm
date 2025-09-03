@@ -258,7 +258,7 @@
 
 /datum/status_effect/debuff/submissive/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier("SUBMISSIVE", multiplicative_slowdown = 4)
+	owner.add_movespeed_modifier("SUBMISSIVE", multiplicative_slowdown = 4) // lfwb climbing
 
 /datum/status_effect/debuff/submissive/on_remove()
 	. = ..()
@@ -471,4 +471,35 @@
 /atom/movable/screen/alert/status_effect/debuff/cold
 	name = "Cold"
 	desc = "Something has chilled me to the bone! It's hard to move."
+	icon_state = "muscles"
+
+// CLIMBING STUFF
+
+/datum/status_effect/debuff/active_climbing
+	id = "active_climbing"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/active_climbing
+	effectedstats = list("strength" = -2,"perception" = -2,"intelligence" = -2, "constitution" = -2, "endurance" = -2, "speed" = -2)
+	tick_interval = 30
+
+/datum/status_effect/debuff/active_climbing/on_apply()
+	. = ..()
+	var/mob/living/carbon/human/climber = owner
+	climber.movement_type = FLYING
+
+/datum/status_effect/debuff/active_climbing/tick()
+	. = ..()
+	var/mob/living/carbon/climber = owner
+	var/tile_under_climber = climber.loc
+	if(!istype(tile_under_climber, /turf/open/transparent/openspace))
+		to_chat(climber, span_warningbig("NICE COCK BRO!"))
+		climber.remove_status_effect(/datum/status_effect/debuff/active_climbing)
+
+/datum/status_effect/debuff/active_climbing/on_remove()
+	. = ..()
+	var/mob/living/carbon/human/climber = owner
+	climber.movement_type = GROUND
+
+/atom/movable/screen/alert/status_effect/debuff/active_climbing
+	name = "I am climbing"
+	desc = ""
 	icon_state = "muscles"
