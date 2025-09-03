@@ -1762,7 +1762,7 @@
 /obj/item/clothing/head/roguetown/wizhat/gen/wise
 	name = "wise hat"
 	sellprice = 100
-	desc = "Only the wisest of nimrods wear this."
+	desc = "Only the wisest of dimwits wear this."
 
 /obj/item/clothing/head/roguetown/wizhat/gen/wise/equipped(mob/user, slot)
 	. = ..()
