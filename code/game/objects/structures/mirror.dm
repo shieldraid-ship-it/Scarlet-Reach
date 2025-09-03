@@ -861,10 +861,10 @@
 
 	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
 		to_chat(H, span_notice("This mirror isn't large enough for me to use mirror magic."))
-	to_chat(H, span_warning("You look into the mirror but see only your normal reflection."))
+	to_chat(H, span_warning("You look into [src] but see only your normal reflection."))
 	if(HAS_TRAIT(user, TRAIT_BEAUTIFUL))
 		H.add_stress(/datum/stressevent/beautiful)
-		to_chat(H, span_smallgreen("I look great!"))
+		H.visible_message(span_notice("[H] admires [H.p_their()] reflection in [src]."), span_smallgreen("I look great!"))
 		// Apply Xylix buff when examining someone with the beautiful trait
 		if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
