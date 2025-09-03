@@ -59,11 +59,14 @@
 	desc = "Blacksteel-heeled boots. The leather refuses to be worn down, no matter how far you march through these lands."
 	icon_state = "psydonboots"
 	item_state = "psydonboots"
-	sewrepair = TRUE
-	armor = ARMOR_BOOTS_BAD
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	blocksound = SOFTHIT
+	max_integrity = 200
+	armor = ARMOR_BOOTS
+	allowed_race = NON_DWARVEN_RACE_TYPES
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
-
+	sewrepair = TRUE
 /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	name = "noble boots"
 	//dropshrink = 0.75

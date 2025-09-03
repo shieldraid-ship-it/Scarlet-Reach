@@ -1416,8 +1416,8 @@
 	item_state = "absolutionisthelm"
 	emote_environment = 3
 	body_parts_covered = FULL_HEAD|NECK
-	block2add = FOV_RIGHT|FOV_LEFT
-	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	block2add = FOV_BEHIND // now good
+	max_integrity = 370
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
@@ -2352,6 +2352,21 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+
+// the wizard helmet
+/obj/item/clothing/head/roguetown/helmet/bascinet/wizardhelm
+	name = "wizard bascinet"
+	desc = "A steel bascinet helmet, with a purely decorative built in wizard hat. Though it lacks a working visor, what won't a wizard do for fashion, right?"
+	icon = 'icons/roguetown/clothing/special/wizardhelm.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/wizardhelm.dmi'
+	icon_state = "wizardhelm"
+	item_state = "wizardhelm"
+	emote_environment = 3
+	body_parts_covered = FULL_HEAD
+	flags_inv = HIDEEARS|HIDEHAIR
+	block2add = FOV_BEHIND
+	max_integrity = 250
+	smeltresult = /obj/item/ingot/steel
 
 /obj/item/clothing/head/roguetown/helmet/carapacecap
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP

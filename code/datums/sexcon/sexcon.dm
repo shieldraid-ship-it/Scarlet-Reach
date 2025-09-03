@@ -191,8 +191,6 @@
 			splashed_user.apply_status_effect(/datum/status_effect/facial/internal)
 		else
 			splashed_user.apply_status_effect(/datum/status_effect/facial)
-	if(user != target)
-		knot_try()
 	after_ejaculation()
 	if(!oral)
 		after_intimate_climax()
@@ -909,9 +907,9 @@
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
-				set_arousal(arousal + (amount * aphrodisiac))
+				set_arousal(amount * aphrodisiac)
 			else
-				set_arousal(arousal + amount)
+				set_arousal(amount)
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen

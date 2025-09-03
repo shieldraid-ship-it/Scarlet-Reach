@@ -195,6 +195,6 @@
 	accfactor = 1.3
 	reloadtime = 20
 	hasloadedsprite = TRUE
-	movingreload = TRUE
+	movingreload = FALSE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
 
