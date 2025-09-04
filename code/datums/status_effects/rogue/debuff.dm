@@ -511,7 +511,6 @@
 /datum/status_effect/debuff/climbing_lfwb
 	id = "climbing_lfwb"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
-	tick_interval = 10
 
 /datum/status_effect/debuff/climbing_lfwb/on_apply()
 	. = ..()
@@ -521,7 +520,11 @@
 /datum/status_effect/debuff/climbing_lfwb/tick()
 	. = ..()
 	var/mob/living/carbon/human/climber = owner
-	climber.stamina_add(10) // every 1 second (or tick_inverval) we remove 10 stamina
+	var/baseline_stamina_cost = 12
+	var/climb_gear_bonus = 1
+	var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
+	var/stamina_cost_final = baseline_stamina_cost - climbing_skill
+	climber.stamina_add(stamina_cost_final) // every 1 second (or tick_inverval) we remove (10 - climbing_skill) stamina
 	var/turf/tile_under_climber = climber.loc
 	var/list/branch_under_climber = list()
 	for(var/obj/structure/flora/newbranch/branch in climber.loc)

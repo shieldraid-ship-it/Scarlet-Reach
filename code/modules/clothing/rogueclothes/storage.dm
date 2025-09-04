@@ -480,3 +480,19 @@
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/bronze
 	component_type = /datum/component/storage/concrete/grid/headhook/bronze
+
+/obj/item/clothing/climbing_gear
+	name = "climbing gear"
+	desc = "Lets you do the impossible."
+	color = null
+	icon = 'icons/roguetown/clothing/storage.dmi'
+	item_state = "climbing_gear" // sprites from lfwb kitbashed with grappler for inventory sprite
+	icon_state = "climbing_gear"
+	alternate_worn_layer = UNDER_CLOAK_LAYER
+	inhand_mod = FALSE
+	slot_flags = ITEM_SLOT_BACK
+
+/obj/item/clothing/climbing_gear/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	playsound(loc, 'sound/items/garrotegrab.ogg', 100, TRUE)
+
