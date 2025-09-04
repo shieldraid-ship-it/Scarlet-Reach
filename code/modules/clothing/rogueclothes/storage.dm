@@ -487,7 +487,7 @@
 	color = null
 	icon = 'icons/roguetown/clothing/storage.dmi'
 	item_state = "climbing_gear" // sprites from lfwb kitbashed with grappler for inventory sprite
-	icon_state = "climbing_gear"
+	icon_state = "climbing_gear" // sprites from lfwb kitbashed among each other for onmob sprite
 	alternate_worn_layer = UNDER_CLOAK_LAYER
 	inhand_mod = FALSE
 	slot_flags = ITEM_SLOT_BACK
