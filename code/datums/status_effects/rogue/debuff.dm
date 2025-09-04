@@ -478,6 +478,7 @@
 ////////////////////
 
 /// FLYING BASED CLIMBING
+/*
 /datum/status_effect/debuff/active_climbing
 	id = "active_climbing"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/active_climbing
@@ -506,7 +507,7 @@
 	name = "I am climbing"
 	desc = ""
 	icon_state = "muscles"
-
+*/
 /// OPEN SPACE TURF BASED CLIMBING, MOB DRAG-DROP TILE
 /datum/status_effect/debuff/climbing_lfwb
 	id = "climbing_lfwb"

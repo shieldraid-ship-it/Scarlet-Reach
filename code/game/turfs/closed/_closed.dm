@@ -121,8 +121,8 @@
 /turf/closed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/closed/attack_hand(mob/user) // let us see
-	if(wallclimb) // apply flying move type and see if the code forces us to drop or it's just the gravity
+/turf/closed/attack_hand(mob/user)
+	if(wallclimb)
 		if(isliving(user))
 			var/mob/living/L = user
 			var/climbsound = 'sound/foley/climb.ogg'

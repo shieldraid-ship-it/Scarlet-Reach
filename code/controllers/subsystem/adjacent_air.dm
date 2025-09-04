@@ -187,16 +187,27 @@ SUBSYSTEM_DEF(adjacent_air)
 	var/mob/living/carbon/human/climber = user
 	if(climber.movement_type == FLYING) // if you fly then fuck off
 		return
+	if(climber.stat != CONSCIOUS)
+		return
 	var/pulling = climber.pulling
 	if(ismob(pulling)) // if you are grabbing someone then fuck off, could forceMove() both grabber and the grabee for fun doe
 		climber.visible_message(span_info("I can't get a good grip while dragging someone."))
+		return
+	if(!(climber.mobility_flags & MOBILITY_STAND))
+		climber.visible_message(span_info("I can't get a good grip while prone."))
 		return
 	var/wall2wall_dir
 	var/list/adjacent_wall_list = get_adjacent_turfs(climb_target) // get and add to the list turfs centered around climb_target (turf we drag mob to) in CARDINAL (NORTH, SOUTH, WEST, EAST) directions
 	var/list/adjacent_wall_list_final = list()
 	var/turf/wall_for_message
+	var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
+	var/adjacent_wall_diff
+	var/climber_armor_class
 	for(var/turf/closed/adjacent_wall in adjacent_wall_list) // we add any turf that is a wall, aka /turf/closed/...
-		if(adjacent_wall.wallclimb) // if the wall has a climbable var TRUE, then we do the following shit
+		adjacent_wall_diff = adjacent_wall.climbdiff
+		if(!(climbing_skill == 6))
+			adjacent_wall_diff += 1
+		if((adjacent_wall.wallclimb) && (climbing_skill >= adjacent_wall_diff)) // if the wall has a climbable var TRUE and we got the skill, then we do the following shit
 			adjacent_wall_list_final += adjacent_wall
 			wall_for_message = pick(adjacent_wall_list_final) // if we are shimmying between 2 climbable walls, then we just pick one along which our sprite and message will be adjusted
 			wall2wall_dir = get_dir(climb_target, wall_for_message)
@@ -204,12 +215,16 @@ SUBSYSTEM_DEF(adjacent_air)
 		to_chat(climber, span_warningbig("I can't climb there!"))
 	else
 		climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
-		climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
+		climber_armor_class = climber.highest_ac_worn()
+		if(!(climber_armor_class <= ARMOR_CLASS_LIGHT))
+			climber.visible_message(span_danger("The armor weighs me down!"))
+		else
+			climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
 		climber.stamina_add(10) // eat some of climber's stamina when we move onto the next tile
 		climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff
 		climber.forceMove(climb_target) // while our MOVEMENT TYPE is FLYING, we move onto next tile and can't fall cos of the flying
 		climber.movement_type = GROUND // if we move and it's an empty space tile, we fall. otherwise we either just walk into a wall along which we climb and don't fall, or walk onto a solid turf, like... floor or water
-//		climber.update_wallpress_slowdown()
+		climber.update_wallpress_slowdown()
 		climber.wallpressed = wall2wall_dir // we set our wallpressed flag to TRUE and regain blue bar somewhat, might wanna remove dat idk
 		switch(wall2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
 			if(NORTH)
