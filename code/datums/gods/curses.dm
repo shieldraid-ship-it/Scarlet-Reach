@@ -210,11 +210,11 @@
 	. = ..()
 	if(curse_resist && prob(50))
 		return
-	ADD_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_CURSE)
 
 /datum/curse/astrata/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_CURSE)
 
 //NECRA//
 /datum/curse/necra/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
@@ -222,12 +222,12 @@
 	owner.STACON -= (10 * (1 - curse_resist))
 	if(curse_resist && prob(50))
 		return
-	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_CURSE)
 
 /datum/curse/necra/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STACON += (10 * (1 - curse_resist))
-	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_CURSE)
 
 //PESTRA//
 /datum/curse/pestra/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
@@ -235,14 +235,14 @@
 	owner.STAEND -= (10 * (1 - curse_resist))
 	if(curse_resist && prob(50))
 		return
-	ADD_TRAIT(owner, TRAIT_NORUN, TRAIT_GENERIC)
-	ADD_TRAIT(owner, TRAIT_MISSING_NOSE, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_NORUN, TRAIT_CURSE)
+	ADD_TRAIT(owner, TRAIT_MISSING_NOSE, TRAIT_CURSE)
 
 /datum/curse/pestra/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STAEND += (10 * (1 - curse_resist))
-	REMOVE_TRAIT(owner, TRAIT_NORUN, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_MISSING_NOSE, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_NORUN, TRAIT_CURSE)
+	REMOVE_TRAIT(owner, TRAIT_MISSING_NOSE, TRAIT_CURSE)
 
 //XYLIX//
 /datum/curse/xylix/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
@@ -258,17 +258,19 @@
 	. = ..()
 	var/curse_chance = (100 * (1 - curse_resist))
 	if(prob(curse_chance))
-		ADD_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_GENERIC)
+		ADD_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_CURSE)
+	if(!HAS_TRAIT(owner, TRAIT_BEAUTIFUL)) // Eora has already endowed you with beauty and would not want to make you ugly.
+		if(prob(curse_chance))
+			ADD_TRAIT(owner, TRAIT_UNSEEMLY, TRAIT_CURSE)
 	if(prob(curse_chance))
-		ADD_TRAIT(owner, TRAIT_UNSEEMLY, TRAIT_GENERIC)
-	if(prob(curse_chance))
-		ADD_TRAIT(owner, TRAIT_BAD_MOOD, TRAIT_GENERIC)
+		ADD_TRAIT(owner, TRAIT_BAD_MOOD, TRAIT_CURSE)
 
 /datum/curse/eora/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_UNSEEMLY, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_BAD_MOOD, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_CURSE)
+	if(HAS_TRAIT(owner, TRAIT_UNSEEMLY))
+		REMOVE_TRAIT(owner, TRAIT_UNSEEMLY, TRAIT_CURSE)
+	REMOVE_TRAIT(owner, TRAIT_BAD_MOOD, TRAIT_CURSE)
 
 //ASCENDANTS//
 
@@ -276,50 +278,50 @@
 /datum/curse/zizo/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STAINT -= (20 * (1 - curse_resist))
-	ADD_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, TRAIT_CURSE)
 
 /datum/curse/zizo/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STAINT += (20 * (1 - curse_resist))
-	REMOVE_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, TRAIT_CURSE)
 
 //GRAGGAR//
 /datum/curse/graggar/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STASTR -= (14 * (1 - curse_resist))
-	ADD_TRAIT(owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
-	ADD_TRAIT(owner, TRAIT_INHUMEN_ANATOMY, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_DISFIGURED, TRAIT_CURSE)
+	ADD_TRAIT(owner, TRAIT_INHUMEN_ANATOMY, TRAIT_CURSE)
 
 /datum/curse/graggar/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STASTR += (14 * (1 - curse_resist))
-	REMOVE_TRAIT(owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_INHUMEN_ANATOMY, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_DISFIGURED, TRAIT_CURSE)
+	REMOVE_TRAIT(owner, TRAIT_INHUMEN_ANATOMY, TRAIT_CURSE)
 
 //MATTHIOS//
 /datum/curse/matthios/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STALUC -= (14 * (1 - curse_resist))
-	ADD_TRAIT(owner, TRAIT_CLUMSY, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_CLUMSY, TRAIT_CURSE)
 
 /datum/curse/matthios/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	owner.STALUC += (14 * (1 - curse_resist))
-	REMOVE_TRAIT(owner, TRAIT_CLUMSY, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_CLUMSY, TRAIT_CURSE)
 
 //BAOTHA//
 /datum/curse/baotha/on_gain(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
 	var/curse_chance = (100 * (1 - curse_resist))
 	if(prob(curse_chance))
-		ADD_TRAIT(owner, TRAIT_NUDIST, TRAIT_GENERIC)
+		ADD_TRAIT(owner, TRAIT_NUDIST, TRAIT_CURSE)
 	if(prob(curse_chance))
-		ADD_TRAIT(owner, TRAIT_NUDE_SLEEPER, TRAIT_GENERIC)
+		ADD_TRAIT(owner, TRAIT_NUDE_SLEEPER, TRAIT_CURSE)
 	if(prob(curse_chance))
-		ADD_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_GENERIC)
+		ADD_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_CURSE)
 
 /datum/curse/baotha/on_loss(mob/living/carbon/human/owner, curse_resist = FALSE)
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_NUDIST, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_NUDE_SLEEPER, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_NUDIST, TRAIT_CURSE)
+	REMOVE_TRAIT(owner, TRAIT_NUDE_SLEEPER, TRAIT_CURSE)
+	REMOVE_TRAIT(owner, TRAIT_LIMPDICK, TRAIT_CURSE)
