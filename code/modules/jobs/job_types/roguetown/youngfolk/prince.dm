@@ -114,7 +114,6 @@
 /datum/outfit/job/roguetown/heir/bookworm/pre_equip(mob/living/carbon/human/H)
 	..()
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		armor = /obj/item/clothing/suit/roguetown/armor/longcoat
@@ -137,6 +136,7 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 	H?.mind.adjust_spellpoints(9)
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	H.change_stat("strength", -1)
