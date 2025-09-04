@@ -512,20 +512,24 @@
 /datum/status_effect/debuff/climbing_lfwb
 	id = "climbing_lfwb"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
+	tick_interval = 10
 
 /datum/status_effect/debuff/climbing_lfwb/on_apply()
 	. = ..()
-//	var/mob/living/carbon/human/climber = owner
-//	climber.movement_type = FLYING
+	var/mob/living/climber = owner
+	climber.climbing = TRUE
 
-/datum/status_effect/debuff/climbing_lfwb/tick()
+/datum/status_effect/debuff/climbing_lfwb/tick() // do we wanna do this shit every single second? I guess we do boss
 	. = ..()
 	var/mob/living/carbon/human/climber = owner
-	var/baseline_stamina_cost = 12
+	var/baseline_stamina_cost = 35 // have to disable stamina regen while on wall bruh in energystamina.dm
 	var/climb_gear_bonus = 1
+	if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
+		climb_gear_bonus = 2
 	var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
-	var/stamina_cost_final = baseline_stamina_cost - climbing_skill
-	climber.stamina_add(stamina_cost_final) // every 1 second (or tick_inverval) we remove (10 - climbing_skill) stamina
+	var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1) // each END is 10 stam, each athletics is 5 stam
+	to_chat(climber, span_warningbig("[stamina_cost_final] REMOVED!"))
+	climber.stamina_add(stamina_cost_final) // every tick interval this much stamina is deducted
 	var/turf/tile_under_climber = climber.loc
 	var/list/branch_under_climber = list()
 	for(var/obj/structure/flora/newbranch/branch in climber.loc)
@@ -541,12 +545,12 @@
 		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 		tile_under_climber.zFall(climber)
 
-/*
+
 /datum/status_effect/debuff/climbing_lfwb/on_remove()
 	. = ..()
-	var/mob/living/carbon/human/climber = owner
-	climber.movement_type = GROUND
-*/
+	var/mob/living/climber = owner
+	climber.climbing = FALSE
+
 /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
 	name = "Climbing..."
 	desc = ""

@@ -138,13 +138,19 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 			var/pulling = user.pulling
 			var/mob/living/carbon/human/climber = user
+			var/baseline_stamina_cost = 20
+			var/climb_gear_bonus = 1
+			if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
+				climb_gear_bonus = 2
+			var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
+			var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1)
 			if(ismob(pulling))
 				user.pulling.forceMove(target)
 			var/climber_armor_class = climber.highest_ac_worn()
 			if((climber_armor_class <= ARMOR_CLASS_LIGHT) && !(ismob(pulling))) // if our armour is not light or none OR we are pulling someone we eat shit and die and can't climb vertically at all, except for 'vaulting' aka we got a sold turf we can walk on in front of us
 				user.movement_type = FLYING
-				climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
-			L.stamina_add(10)
+				climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // might wanna apply it to the others too idk!
+			L.stamina_add(stamina_cost_final)
 			user.forceMove(target)
 			user.movement_type = GROUND
 			user.start_pulling(pulling,supress_message = TRUE)
