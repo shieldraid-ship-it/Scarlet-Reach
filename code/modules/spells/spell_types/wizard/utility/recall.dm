@@ -52,6 +52,7 @@
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(3, marked_location)
 		smoke.start()
+		H.remove_status_effect(/datum/status_effect/buff/recalling)
 		start_recharge()
 	else
 		H.remove_status_effect(/datum/status_effect/buff/recalling)
