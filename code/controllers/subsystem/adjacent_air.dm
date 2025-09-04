@@ -136,6 +136,11 @@ SUBSYSTEM_DEF(adjacent_air)
 	if(isturf(T))
 		T.air_update_turf(1)
 	air_update_turf(1)
+
+///////////////////////////////////////////
+///STATUS EFFECT FLYING BASED CLIMBING///
+////////////////////////////////////////
+
 /*
 /turf/proc/randysandy_climb(mob/user, turf/climb_target) // lfwb
 	var/mob/living/carbon/human/climber = user
@@ -160,6 +165,11 @@ SUBSYSTEM_DEF(adjacent_air)
 				climber.apply_damage(5, BURN, BODY_ZONE_CHEST, forced = TRUE)
 				to_chat(climber, span_warningbig("The water seeps into my pores. I am crumbling!"))
 */
+
+/////////////////////////////////////////////////////////////////////////////////
+///LIFEWEB-LIKE CLIMBING, DRAG AND DROP URSELF ONTO AN OPENSPACE TURF CHUDDIE///
+///////////////////////////////////////////////////////////////////////////////
+
 /turf/open/transparent/openspace/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
 	if(user == O && isliving(O))
@@ -175,6 +185,12 @@ SUBSYSTEM_DEF(adjacent_air)
 /turf/open/transparent/openspace/proc/wallpress(mob/living/user) // only cardinals, correct chat
 	var/turf/climb_target = src
 	var/mob/living/carbon/human/climber = user
+	if(climber.movement_type == FLYING) // if you fly then fuck off
+		return
+	var/pulling = climber.pulling
+	if(ismob(pulling)) // if you are grabbing someone then fuck off, could forceMove() both grabber and the grabee for fun doe
+		climber.visible_message(span_info("I can't get a good grip while dragging someone."))
+		return
 	var/wall2wall_dir
 	var/list/adjacent_wall_list = get_adjacent_turfs(climb_target) // get and add to the list turfs centered around climb_target (turf we drag mob to) in CARDINAL (NORTH, SOUTH, WEST, EAST) directions
 	var/list/adjacent_wall_list_final = list()
@@ -189,7 +205,7 @@ SUBSYSTEM_DEF(adjacent_air)
 	else
 		climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
 		climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
-		climber.stamina_add(10) // eat some of climber's stamina when we move onto the next wall
+		climber.stamina_add(10) // eat some of climber's stamina when we move onto the next tile
 		climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff
 		climber.forceMove(climb_target) // while our MOVEMENT TYPE is FLYING, we move onto next tile and can't fall cos of the flying
 		climber.movement_type = GROUND // if we move and it's an empty space tile, we fall. otherwise we either just walk into a wall along which we climb and don't fall, or walk onto a solid turf, like... floor or water

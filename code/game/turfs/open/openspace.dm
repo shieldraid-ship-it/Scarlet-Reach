@@ -137,11 +137,14 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 			var/pulling = user.pulling
+			var/mob/living/carbon/human/climber = user
 			if(ismob(pulling))
 				user.pulling.forceMove(target)
-			user.movement_type = FLYING
+			var/climber_armor_class = climber.highest_ac_worn()
+			if((climber_armor_class <= ARMOR_CLASS_LIGHT) && !(ismob(pulling))) // if our armour is not light or none OR we are pulling someone we eat shit and die and can't climb vertically at all, except for 'vaulting' aka we got a sold turf we can walk on in front of us
+				user.movement_type = FLYING
+				climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 			L.stamina_add(10)
-			L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 			user.forceMove(target)
 			user.movement_type = GROUND
 			user.start_pulling(pulling,supress_message = TRUE)

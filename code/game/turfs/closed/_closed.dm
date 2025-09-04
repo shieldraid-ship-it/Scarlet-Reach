@@ -24,7 +24,7 @@
 			wallpress(L)
 			return
 
-/turf/closed/proc/wallpress(mob/living/user) // shift user on climb
+/turf/closed/proc/wallpress(mob/living/user)
 	if(user.wallpressed)
 		return
 	if(user.is_shifted)
@@ -170,11 +170,14 @@
 			user.visible_message(span_warning("[user] starts to climb [src]."), span_warning("I start to climb [src]..."))
 			if(do_after(L, used_time, target = src))
 				var/pulling = user.pulling
+				var/mob/living/carbon/human/climber = user
 				if(ismob(pulling))
 					user.pulling.forceMove(target)
-				user.movement_type = FLYING
+				var/climber_armor_class = climber.highest_ac_worn()
+				if((climber_armor_class <= ARMOR_CLASS_LIGHT) && !(ismob(pulling))) // if our armour is not light or none OR we are pulling someone we eat shit and die and can't climb vertically at all, except for 'vaulting' aka we got a sold turf we can walk on in front of us
+					user.movement_type = FLYING
+					L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 				L.stamina_add(10)
-				L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 				user.forceMove(target)
 				user.movement_type = GROUND
 				user.start_pulling(pulling,supress_message = TRUE)
