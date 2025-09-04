@@ -33,6 +33,7 @@
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/fishing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)
 
 	H.change_stat("strength", 3)
 	H.change_stat("endurance", 2)
