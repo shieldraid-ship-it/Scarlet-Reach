@@ -134,7 +134,7 @@
 
 /datum/customizer/organ/tail/tiefling
 	customizer_choices = list(/datum/customizer_choice/organ/tail/tiefling)
-	allows_disabling = FALSE
+	allows_disabling = TRUE
 
 /datum/customizer/organ/tail/dullahan
 	customizer_choices = list(/datum/customizer_choice/organ/tail/dullahan)
@@ -203,6 +203,10 @@
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
+		/datum/sprite_accessory/tail/owl,
+		/datum/sprite_accessory/tail/forked_long,
+		/datum/sprite_accessory/tail/haven,
+		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/pinecone
 		)
 	allows_accessory_color_customization = TRUE
@@ -214,8 +218,9 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/tail/tiefling,
 		/datum/sprite_accessory/tail/tiefling/heart,
+		/datum/sprite_accessory/tail/tiefling/spade
 		)
-	allows_accessory_color_customization = FALSE
+	allows_accessory_color_customization = TRUE
 
 /datum/customizer/organ/tail/demihuman
 	customizer_choices = list(/datum/customizer_choice/organ/tail/demihuman)
@@ -282,6 +287,10 @@
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
+		/datum/sprite_accessory/tail/owl,
+		/datum/sprite_accessory/tail/forked_long,
+		/datum/sprite_accessory/tail/haven,
+		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/pinecone
 		)
 
@@ -351,5 +360,9 @@
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
+		/datum/sprite_accessory/tail/owl,
+		/datum/sprite_accessory/tail/forked_long,
+		/datum/sprite_accessory/tail/haven,
+		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/pinecone
 		)

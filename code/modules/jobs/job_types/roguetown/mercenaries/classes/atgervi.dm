@@ -9,18 +9,19 @@
 	classes = list("Varangian" = "You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians.",
 					"Shaman" = "You are a Shaman of the Fjall, The Northern Empty. Savage combatants who commune with the Ecclesical Beast gods through ritualistic violence, rather than idle prayer.")
 
+/datum/outfit/job/roguetown/mercenary/atgervi
+	allowed_patrons = ALL_INHUMEN_PATRONS
+
 /datum/outfit/job/roguetown/mercenary/atgervi/pre_equip(mob/living/carbon/human/H)
 	..()
-	if (!(istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/graggar) || istype(H.patron, /datum/patron/inhumen/baotha)))
-		to_chat(H, span_warning("My former deity has abandoned me.. Graggar is my new master."))
-		H.set_patron(/datum/patron/inhumen/graggar)
+
 	// CLASS ARCHETYPES
 	H.adjust_blindness(-3)
 	var/classes = list("Varangian","Shaman")
 	var/classchoice = input("Choose your archetypes", "Available archetypes") as anything in classes
 
 	switch(classchoice)
-		if("Varangian")
+		if("Varangian") // The warrior-vikings, wearing medium armor and using axes, bows, and swords. Can be played solo, but is better with a Shaman.
 			H.set_blindness(0)
 			to_chat(H, span_warning("You are a Varangian of the Gronn Highlands. Warrior-Traders whose exploits into the Raneshen Empire will be forever remembered by historians."))
 			H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
@@ -60,27 +61,25 @@
 			beltl = /obj/item/flashlight/flare/torch
 
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
-			C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = FALSE, devotion_limit = CLERIC_REQ_2)	//Capped to T1 miracles.
+			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)	//Capped to T1 miracles.
 
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)	
 			H.cmode_music = 'sound/music/combat_vagarian.ogg'
-		if("Shaman")
+		if("Shaman") // Shaman is supposed to be a mix of a Cleric and a Barbarian. They are meant to be played alongside a Varangian, but can also be played alone. You will struggle against more than 1 person.
 			H.set_blindness(0)
 			to_chat(H, span_warning("You are a Shaman of the Fjall, The Northern Empty. Savage combatants who commune with the Ecclesical Beast gods through ritualistic violence, rather than idle prayer."))
 			H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)
-			H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
 			H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/evil/inhumenblade)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 			H.change_stat("strength", 3) 
 			H.change_stat("endurance", 2)
 			H.change_stat("constitution", 2)
@@ -107,7 +106,6 @@
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC) //No weapons. Just beating them to death as God intended.
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC) //Their entire purpose is to rip people apart with their hands and teeth. I don't think they'd be too preturbed to see someone lose a limb.
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) //Either no armor, or light armor. So dodge expert.
-			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			H.cmode_music = 'sound/music/combat_shaman2.ogg'
 
 	H.grant_language(/datum/language/gronnic)
