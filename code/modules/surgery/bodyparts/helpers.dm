@@ -290,9 +290,6 @@
 	T.tail_color = color
 	T.attach_limb(src)
 
-	if(shoes)
-		dropItemToGround(shoes)
-
 	// make sure we apply our clipmasks
 	regenerate_icons()
 	set_resting(FALSE)
