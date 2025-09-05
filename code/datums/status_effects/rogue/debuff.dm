@@ -258,7 +258,7 @@
 
 /datum/status_effect/debuff/submissive/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier("SUBMISSIVE", multiplicative_slowdown = 4) // lfwb climbing
+	owner.add_movespeed_modifier("SUBMISSIVE", multiplicative_slowdown = 4)
 
 /datum/status_effect/debuff/submissive/on_remove()
 	. = ..()
@@ -531,20 +531,18 @@
 	if(climbing_skill == 0) // cant divide by 0 ugh?
 		climbing_skill = 1
 	var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1) // each END is 10 stam, each athletics is 5 stam
-	to_chat(climber, span_warningbig("[stamina_cost_final] REMOVED!"))
+//	to_chat(climber, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
 	climber.stamina_add(stamina_cost_final) // every tick interval this much stamina is deducted
 	var/turf/tile_under_climber = climber.loc
 	var/list/branch_under_climber = list()
 	for(var/obj/structure/flora/newbranch/branch in climber.loc)
 		branch_under_climber += branch
 	if(!istype(tile_under_climber, /turf/open/transparent/openspace))// if we aren't on open space turf, remove debuff (aka our feet are on solid shi or water)
-		to_chat(climber, span_warningbig("Floor tiles!"))// debug msg
 		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 	if(branch_under_climber.len) // branches dont remove open space turf, so we have to check for it separately
-		to_chat(climber, span_warningbig("Branches!"))// debug msg
 		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 	else if(climber.stamina >= climber.max_stamina) // if we run out of green bar stamina, we fall
-		to_chat(climber, span_warningbig("I can't hold onto the ledge for any longer!"))
+		to_chat(climber, span_dead("I can't hold onto the ledge for any longer!"))
 		climber.remove_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 		tile_under_climber.zFall(climber)
 

@@ -133,6 +133,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		if(user.m_intent != MOVE_INTENT_SNEAK)
 			playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
 		user.visible_message(span_warning("[user] starts to climb down."), span_warning("I start to climb down."))
+		var/climber2wall_dir = get_dir(src, L)
 		if(do_after(L, (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30), target = src))
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
@@ -155,7 +156,21 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			user.forceMove(target)
 			user.movement_type = GROUND
 			if(istype(user.loc, /turf/open/transparent/openspace)) // basically only apply this slop after we moved. if we are hovering on the openspace turf, then good, we are doing an 'active climb' instead of the usual vaulting action
-				climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // might wanna apply it to the others too idk!
+				climber.wallpressed = climber2wall_dir
+				switch(climber2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
+					if(NORTH)
+						climber.setDir(NORTH)
+						climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+					if(SOUTH)
+						climber.setDir(SOUTH)
+						climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+					if(EAST)
+						climber.setDir(EAST)
+						climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+					if(WEST)
+						climber.setDir(WEST)
+						climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+				L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
 			user.start_pulling(pulling,supress_message = TRUE)
 
 /turf/open/transparent/openspace/attack_ghost(mob/dead/observer/user)
