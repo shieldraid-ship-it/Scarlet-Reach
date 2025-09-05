@@ -184,10 +184,11 @@
 				var/climber_armor_class = climber.highest_ac_worn()
 				if((climber_armor_class <= ARMOR_CLASS_LIGHT) && !(ismob(pulling))) // if our armour is not light or none OR we are pulling someone we eat shit and die and can't climb vertically at all, except for 'vaulting' aka we got a sold turf we can walk on in front of us
 					user.movement_type = FLYING
-					L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // might wanna apply it to the others too idk!
 				L.stamina_add(stamina_cost_final)
 				user.forceMove(target)
 				user.movement_type = GROUND
+				if(istype(user.loc, /turf/open/transparent/openspace)) // basically only apply this slop after we moved. if we are hovering on the openspace turf, then good, we are doing an 'active climb' instead of the usual vaulting action
+					L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // might wanna apply it to the others too idk!
 				user.start_pulling(pulling,supress_message = TRUE)
 				if(user.m_intent != MOVE_INTENT_SNEAK)
 					playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
