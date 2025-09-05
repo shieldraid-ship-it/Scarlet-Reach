@@ -308,7 +308,11 @@
 			btm.emote("painmoan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
-		btm.apply_status_effect(/datum/status_effect/facial/internal)
+		var/datum/status_effect/facial/internal/creampie = btm.has_status_effect(/datum/status_effect/facial/internal)
+		if(!creampie)
+			btm.apply_status_effect(/datum/status_effect/facial/internal)
+		else
+			creampie.refresh_cum()
 	knot_exit(keep_top_status, keep_btm_status)
 
 /datum/sex_controller/proc/knot_exit(var/keep_top_status = FALSE, var/keep_btm_status = FALSE)

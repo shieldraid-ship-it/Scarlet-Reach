@@ -171,8 +171,12 @@
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
-	if(splashed_user && !splashed_user.sexcon.knotted_status)
-		splashed_user.apply_status_effect(/datum/status_effect/facial)
+	if(splashed_user)
+		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+		if(!facial)
+			splashed_user.apply_status_effect(/datum/status_effect/facial)
+		else
+			facial.refresh_cum()
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null)
@@ -184,10 +188,12 @@
 	if(user != target)
 		knot_try()
 	if(splashed_user && !splashed_user.sexcon.knotted_status)
-		if(!oral)
-			splashed_user.apply_status_effect(/datum/status_effect/facial/internal)
+		var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
+		var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
+		if(!splashed_type)
+			splashed_user.apply_status_effect(status_type)
 		else
-			splashed_user.apply_status_effect(/datum/status_effect/facial)
+			splashed_type.refresh_cum()
 	after_ejaculation()
 	if(!oral)
 		after_intimate_climax()
@@ -195,20 +201,29 @@
 /datum/status_effect/facial
 	id = "facial"
 	alert_type = null // don't show an alert on screen
-	duration = 12 MINUTES // wear off eventually or until character washes themselves
+	tick_interval = 12 MINUTES // use this time as our dry count down
+	var/has_dried_up = FALSE // used as our dry status
 
 /datum/status_effect/facial/internal
 	id = "creampie"
 	alert_type = null // don't show an alert on screen
-	duration = 7 MINUTES // wear off eventually or until character washes themselves
+	tick_interval = 7 MINUTES // use this time as our dry count down
 
 /datum/status_effect/facial/on_apply()
 	RegisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT),PROC_REF(clean_up))
+	has_dried_up = FALSE
 	return ..()
 
 /datum/status_effect/facial/on_remove()
 	UnregisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT))
 	return ..()
+
+/datum/status_effect/facial/tick()
+	has_dried_up = TRUE
+
+/datum/status_effect/facial/proc/refresh_cum()
+	has_dried_up = FALSE
+	tick_interval = world.time + initial(tick_interval)
 
 ///Callback to remove pearl necklace
 /datum/status_effect/facial/proc/clean_up(datum/source, strength)
@@ -446,7 +461,11 @@
 				if(prob(3))
 					ejaculate()
 					if(splashed_user)
-						splashed_user.apply_status_effect(/datum/status_effect/facial)
+						var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+						if(!facial)
+							splashed_user.apply_status_effect(/datum/status_effect/facial)
+						else
+							facial.refresh_cum()
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -455,7 +474,11 @@
 		return FALSE
 	ejaculate()
 	if(splashed_user)
-		splashed_user.apply_status_effect(/datum/status_effect/facial)
+		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+		if(!facial)
+			splashed_user.apply_status_effect(/datum/status_effect/facial)
+		else
+			facial.refresh_cum()
 
 /datum/sex_controller/proc/can_use_penis()
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))
