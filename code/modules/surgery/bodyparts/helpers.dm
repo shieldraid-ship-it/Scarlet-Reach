@@ -297,10 +297,9 @@
 	regenerate_icons()
 	set_resting(FALSE)
 
-/mob/living/carbon/proc/de_Lamia()
+/mob/living/carbon/proc/de_Lamia()//gives you your legs back, only used when changing species
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = X
-		// drop taur tails too
 		if(O.body_zone == BODY_ZONE_LAMIAN_TAIL)
 			O.drop_limb(1)
 			qdel(O)
