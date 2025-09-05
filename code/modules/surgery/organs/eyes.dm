@@ -183,11 +183,11 @@
 /obj/item/organ/eyes/night_vision/wild_goblin/on_life()
 	. = ..()
 	if (!isgoblinp(owner))
-		if (prob(10))
+		if (prob(50))
 			owner.adjustToxLoss(5)
-			applyOrganDamage(5)
+			applyOrganDamage(10)
 			owner.blur_eyes(3)
-			if(prob(50))
+			if(prob(20))
 				to_chat(owner, span_red("My eyes burn and my body aches."))
 
 /obj/item/organ/eyes/night_vision/mushroom
