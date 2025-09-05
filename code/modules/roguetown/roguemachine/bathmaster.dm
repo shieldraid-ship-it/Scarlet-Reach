@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(BMtreasury)
 			for(var/obj/item/item in closet)
 				amt_to_generate += add_to_vault(item)	
 
-	brassface.budget += round(amt_to_generate) // goes directly into BRASSFACE rather than into any account.
+	brassface.budget += round(amt_to_generate, 1) // goes directly into BRASSFACE rather than into any account.
 	send_ooc_note("Income from smuggling hoard to the BRASSFACE: +[amt_to_generate]", job = "Nightmaster")
 
 
