@@ -198,7 +198,7 @@ SUBSYSTEM_DEF(adjacent_air)
 			var/list/adjacent_wall_list = get_adjacent_turfs(climb_target) // get and add to the list turfs centered around climb_target (turf we drag mob to) in CARDINAL (NORTH, SOUTH, WEST, EAST) directions
 			var/list/adjacent_wall_list_final = list()
 			var/turf/wall_for_message
-			var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
+			var/climbing_skill = max(climber.get_skill_level(/datum/skill/misc/climbing), SKILL_LEVEL_NOVICE)
 			var/adjacent_wall_diff
 			var/climber_armor_class
 			var/baseline_stamina_cost = 15

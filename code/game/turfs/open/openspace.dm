@@ -143,9 +143,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			var/climb_gear_bonus = 1
 			if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
 				climb_gear_bonus = 2
-			var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
-			if(climbing_skill == 0)
-				climbing_skill = 1
+			var/climbing_skill = max(climber.get_skill_level(/datum/skill/misc/climbing), SKILL_LEVEL_NOVICE)
 			var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1)
 			if(ismob(pulling))
 				user.pulling.forceMove(target)
