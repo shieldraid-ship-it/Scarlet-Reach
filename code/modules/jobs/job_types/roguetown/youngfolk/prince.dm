@@ -26,7 +26,6 @@
 
 
 
-
 /datum/job/roguetown/prince/after_spawn(mob/living/H, mob/M, latejoin)
 	. = ..()
 	if(ishuman(H))
