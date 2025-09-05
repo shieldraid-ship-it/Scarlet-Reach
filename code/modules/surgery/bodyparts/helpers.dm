@@ -307,3 +307,5 @@
 	var/obj/item/bodypart/l_leg/L = new()
 	L.attach_limb(src)
 	R.attach_limb(src)
+	regenerate_icons()
+	set_resting(FALSE)
