@@ -171,6 +171,19 @@
 				return
 		knot_remove(forceful_removal = TRUE)
 		return
+	if(top.loc.z != btm.loc.z) // we're not on the same sector
+		var/diff_in_z = top.loc.z - btm.loc.z
+		var/turf/T
+		switch(diff_in_z)
+			if(1) // bottom is below top, check above bottom
+				T = get_step_multiz(btm, UP)
+			if(-1) // bottom is above top, check above top
+				T = get_step_multiz(top, UP)
+			else // sector difference is too great, force a disconnect
+				T = null
+		if(!T || !istype(T, /turf/open/transparent/openspace))
+			knot_remove(forceful_removal = TRUE)
+			return
 	btm.face_atom(top)
 	top.set_pull_offsets(btm, GRAB_AGGRESSIVE)
 	if(!top.IsStun()) // randomly stun our top so they cannot simply drag without any penality (combat mode doubles the chances)
@@ -224,6 +237,19 @@
 				return
 		knot_remove(forceful_removal = TRUE)
 		return
+	if(top.loc.z != btm.loc.z) // we're not on the same sector
+		var/diff_in_z = top.loc.z - btm.loc.z
+		var/turf/T
+		switch(diff_in_z)
+			if(1) // bottom is below top, check above bottom
+				T = get_step_multiz(btm, UP)
+			if(-1) // bottom is above top, check above top
+				T = get_step_multiz(top, UP)
+			else // sector difference is too great, force a disconnect
+				T = null
+		if(!T || !istype(T, /turf/open/transparent/openspace))
+			knot_remove(forceful_removal = TRUE)
+			return
 	top.set_pull_offsets(btm, GRAB_AGGRESSIVE)
 	if(btm.mobility_flags & MOBILITY_STAND)
 		if(btm.m_intent == MOVE_INTENT_RUN) // running only makes this worse, darling
