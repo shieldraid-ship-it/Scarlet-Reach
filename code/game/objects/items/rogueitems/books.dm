@@ -265,10 +265,12 @@
 
 /obj/item/book/rogue/law
 	name = "Tome of Justice"
-	desc = "The Tome of Laws, as passed from the Holy See to its many Ten-worshipping communities."
+	desc = "The Tome of Laws, as passed from the Holy See to its many Ten-worshipping communities. Its heft physicalizes a compelling maxim: the application of law should not be taken lightly."
 	icon_state ="lawtome_0"
 	base_icon_state = "lawtome"
 	bookfile = "law_2.json"
+	possible_item_intents = list(/datum/intent/mace/smash/wood)
+	force = 15
 
 /obj/item/book/rogue/cooking
 	name = "Tastes Fit For The Lord"
