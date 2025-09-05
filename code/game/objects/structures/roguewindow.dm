@@ -20,6 +20,11 @@
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
+	var/repairable = TRUE
+	var/obj/item/repair_cost_first = /obj/item/grown/log/tree/small
+	var/obj/item/repair_cost_second = /obj/item/natural/glass
+	var/repair_skill = /datum/skill/craft/carpentry
+	var/repair_state = 0
 
 /obj/structure/roguewindow/Initialize()
 	update_icon()
@@ -42,6 +47,53 @@
 		return
 	icon_state = "[base_state]"
 
+/obj/structure/roguewindow/proc/repairwindow(obj/item/I, mob/user)
+	if(brokenstate)				
+		switch(repair_state)
+			if(0)					
+				if(istype(I, repair_cost_first))
+					user.visible_message(span_notice("[user] starts repairing [src]."), \
+					span_notice("I start repairing [src]."))
+					playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+					if(do_after(user, (300 / user.get_skill_level(repair_skill)), target = src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
+						qdel(I)
+						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+						repair_state = 1
+						var/obj/cast_repair_cost_second = repair_cost_second
+						to_chat(user, span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish the job."))				
+			if(1)
+				if(istype(I, repair_cost_second))
+					user.visible_message(span_notice("[user] starts repairing [src]."), \
+					span_notice("I start repairing [src]."))
+					playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+					if(do_after(user, (300 / user.get_skill_level(repair_skill)), target = src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.	
+						qdel(I)	
+						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)	
+						icon_state = "[base_state]"
+						density = TRUE
+						climbable = FALSE
+						brokenstate = FALSE
+						obj_broken = FALSE
+						opacity = initial(opacity)
+						obj_integrity = max_integrity
+						repair_state = 0
+						user.visible_message(span_notice("[user] repaired [src]."), \
+						span_notice("I repaired [src]."))
+	else
+		if(obj_integrity < max_integrity && istype(I, repair_cost_first))
+			to_chat(user, span_warning("[obj_integrity]"))
+			user.visible_message(span_notice("[user] starts repairing [src]."), \
+			span_notice("I start repairing [src]."))
+			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+			if(do_after(user, (300 / user.get_skill_level(repair_skill)), target = src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
+				qdel(I)
+				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
+				obj_integrity = obj_integrity + (max_integrity/2)
+				if(obj_integrity > max_integrity)
+					obj_integrity = max_integrity
+				user.visible_message(span_notice("[user] repaired [src]."), \
+				span_notice("I repaired [src]."))		
+
 /obj/structure/roguewindow/openclose/OnCrafted(dirin)
 	dirin = turn(dirin, 180)
 	lockdir = dirin
@@ -51,8 +103,9 @@
 	icon_state = null
 	base_state = null
 	opacity = TRUE
-	max_integrity = 50 
+	max_integrity = 50
 	integrity_failure = 0.5
+	repair_cost_first = /obj/item/natural/glass
 
 /obj/structure/roguewindow/stained/silver
 	icon_state = "stained-silver"
@@ -88,6 +141,7 @@
 	base_state = "reinforcedwindow"
 	max_integrity = 500
 	integrity_failure = 0.1
+	repair_cost_first = /obj/item/ingot/iron
 
 /obj/structure/roguewindow/openclose/reinforced/OnCrafted(dirin)
 	dir = turn(dirin, 180)
@@ -117,17 +171,20 @@
 	name = "harem window"
 	icon_state = "harem1-solid"
 	base_state = "harem1-solid"
+	repair_cost_first = /obj/item/natural/glass
 
 /obj/structure/roguewindow/harem2
 	name = "harem window"
 	icon_state = "harem2-solid"
 	base_state = "harem2-solid"
 	opacity = TRUE
+	repair_cost_first = /obj/item/natural/glass
 
 /obj/structure/roguewindow/harem3
 	name = "harem window"
 	icon_state = "harem3-solid"
 	base_state = "harem3-solid"
+	repair_cost_first = /obj/item/natural/glass
 
 /obj/structure/roguewindow/openclose/Initialize()
 	lockdir = dir
@@ -238,7 +295,10 @@
 	return ..()
 
 /obj/structure/roguewindow/attackby(obj/item/W, mob/user, params)
-	return ..()
+	if(repairable && (user.get_skill_level(repair_skill) > 0) && ((istype(W, repair_cost_first)) || (istype(W, repair_cost_second)))) // At least 1 skill level needed
+		repairwindow(W, user)
+	else
+		return ..()
 
 /obj/structure/roguewindow/attack_paw(mob/living/user)
 	attack_hand(user)
@@ -269,3 +329,15 @@
 		opacity = FALSE
 	update_icon()
 	..()
+
+/obj/structure/roguewindow/examine(mob/user)	
+	. = ..()
+	if(repairable)
+		var/obj/cast_repair_cost_first = repair_cost_first
+		var/obj/cast_repair_cost_second = repair_cost_second
+		if((repair_state == 0) && (obj_integrity < max_integrity))
+			. += span_notice("A [initial(cast_repair_cost_first.name)] can be used to repair it.")
+			if(brokenstate)
+				. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
+		if(repair_state == 1)
+			. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
