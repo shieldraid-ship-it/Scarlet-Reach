@@ -177,6 +177,8 @@
 		switch(diff_in_z)
 			if(1) // bottom is below top, check above bottom
 				T = get_step_multiz(btm, UP)
+				if(btm.mobility_flags & MOBILITY_STAND) // the bottom is hanging by the knot, knock them down
+					btm.Knockdown(10)
 			if(-1) // bottom is above top, check above top
 				T = get_step_multiz(top, UP)
 			else // sector difference is too great, force a disconnect
@@ -243,6 +245,8 @@
 		switch(diff_in_z)
 			if(1) // bottom is below top, check above bottom
 				T = get_step_multiz(btm, UP)
+				if(btm.mobility_flags & MOBILITY_STAND) // the bottom is hanging by the knot, knock them down
+					btm.Knockdown(10)
 			if(-1) // bottom is above top, check above top
 				T = get_step_multiz(top, UP)
 			else // sector difference is too great, force a disconnect
