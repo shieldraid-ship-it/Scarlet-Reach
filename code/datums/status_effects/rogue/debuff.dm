@@ -518,6 +518,7 @@
 	. = ..()
 	var/mob/living/climber = owner
 	climber.climbing = TRUE
+	climber.put_in_hands(new /obj/item/clothing/wall_grab, TRUE, FALSE, TRUE) // gotta have new before /obj/... , otherwise its gonna die
 
 /datum/status_effect/debuff/climbing_lfwb/tick() // do we wanna do this shit every single second? I guess we do boss
 	. = ..()
@@ -527,6 +528,8 @@
 	if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
 		climb_gear_bonus = 2
 	var/climbing_skill = climber.get_skill_level(/datum/skill/misc/climbing)
+	if(climbing_skill == 0) // cant divide by 0 ugh?
+		climbing_skill = 1
 	var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1) // each END is 10 stam, each athletics is 5 stam
 	to_chat(climber, span_warningbig("[stamina_cost_final] REMOVED!"))
 	climber.stamina_add(stamina_cost_final) // every tick interval this much stamina is deducted
@@ -550,6 +553,11 @@
 	. = ..()
 	var/mob/living/climber = owner
 	climber.climbing = FALSE
+	if(climber.is_holding_item_of_type(/obj/item/clothing/wall_grab)) // the slop slops itself holy shit
+		for(var/obj/item/clothing/wall_grab/I in climber.held_items)
+			if(istype(I, /obj/item/clothing/wall_grab))
+				qdel(I)
+				return
 
 /atom/movable/screen/alert/status_effect/debuff/climbing_lfwb
 	name = "Climbing..."
