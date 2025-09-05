@@ -63,8 +63,8 @@
 
 	if(force > SEX_FORCE_MID) // if using force above default
 		if(force >= SEX_FORCE_EXTREME) // damage if set to max force
-			var/damage = target.sexcon.knotted_part&SEX_PART_JAWS ? 10 : 30 // base damage value
-			var/body_zone = target.sexcon.knotted_part&SEX_PART_JAWS ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
+			var/damage = action.target_sex_part&SEX_PART_JAWS ? 10 : 30 // base damage value
+			var/body_zone = action.target_sex_part&SEX_PART_JAWS ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 			var/obj/item/bodypart/affecting = target.get_bodypart(body_zone)
 			if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 				target.apply_damage(damage, BRUTE, body_zone)
