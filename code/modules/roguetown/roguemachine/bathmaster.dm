@@ -186,7 +186,7 @@
 
 /obj/structure/roguemachine/bathvend/Destroy()
 	set_light(0)
-	QDEL_NULL(SSBMtreasury.brassface) // Clear our reference from the bath treasury subsystem.
+	SSBMtreasury.brassface = null // Clear our reference from the bath treasury subsystem.
 	return ..()
 
 /obj/structure/roguemachine/bathvend/Initialize()
