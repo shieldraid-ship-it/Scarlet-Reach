@@ -55,10 +55,12 @@
 	user.sexcon.knotted_status = KNOTTED_AS_TOP
 	user.sexcon.tugging_knot_blocked = FALSE
 	user.sexcon.knotted_part = action.user_sex_part
+	user.sexcon.knotted_part_partner = action.target_sex_part // we store the action bitflags so we can later apply damage based on area, and exclusive status unique to each orifice
 	target.sexcon.knotted_owner = user
 	target.sexcon.knotted_recipient = target
 	target.sexcon.knotted_status = KNOTTED_AS_BTM
 	target.sexcon.knotted_part = action.target_sex_part|target_knotted_part // add existing knotted parts flags to new knotted orifice flags
+	target.sexcon.knotted_part_partner = action.user_sex_part
 	log_combat(user, target, "Started knot tugging")
 
 	if(force > SEX_FORCE_MID) // if using force above default
@@ -204,7 +206,7 @@
 			btm.Stun(15)
 		else if(prob(3))
 			btm.emote("painmoan")
-		else if(btm.sexcon.knotted_part&SEX_PART_JAWS && btm.getOxyLoss() < 50)
+		else if(top.sexcon.knotted_part_partner&SEX_PART_JAWS && btm.getOxyLoss() < 50) // if the current top knotted them orally
 			btm.adjustOxyLoss(1)
 
 /datum/sex_controller/proc/knot_movement_btm()
@@ -266,7 +268,7 @@
 			btm.emote("groan")
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
-			if(btm.sexcon.knotted_part&SEX_PART_JAWS && btm.getOxyLoss() < 50)
+			if(top.sexcon.knotted_part_partner&SEX_PART_JAWS && btm.getOxyLoss() < 50) // if the current top knotted them orally
 				btm.adjustOxyLoss(3)
 		else if(prob(4))
 			btm.emote("painmoan")
@@ -284,14 +286,14 @@
 	var/mob/living/carbon/human/btm = knotted_recipient
 	if(ishuman(btm) && !QDELETED(btm) && ishuman(top) && !QDELETED(top))
 		if(forceful_removal)
-			var/damage = btm.sexcon.knotted_part&SEX_PART_JAWS ? 10 : 30 // base damage value
+			var/damage = top.sexcon.knotted_part_partner&SEX_PART_JAWS ? 10 : 30 // base damage value
 			if (top.sexcon.arousal > MAX_AROUSAL / 3) // considered still hard, let it rip like a beyblade
 				damage *= 2
 				btm.Knockdown(10)
 				if(notify && !keep_btm_status && !btm.has_status_effect(/datum/status_effect/knot_gaped)) // apply gaped status if extra forceful pull (only if we're not reknotting target)
 					btm.apply_status_effect(/datum/status_effect/knot_gaped)
 			if(top.sexcon.force >= SEX_FORCE_EXTREME) // only apply damage if top force is set to max
-				var/body_zone = btm.sexcon.knotted_part&SEX_PART_JAWS ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
+				var/body_zone = top.sexcon.knotted_part_partner&SEX_PART_JAWS ? BODY_ZONE_HEAD : BODY_ZONE_CHEST
 				var/obj/item/bodypart/affecting = btm.get_bodypart(body_zone)
 				if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 					btm.apply_damage(damage, BRUTE, body_zone)
@@ -308,11 +310,18 @@
 			btm.emote("painmoan", forced = TRUE)
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
-		var/datum/status_effect/facial/internal/creampie = btm.has_status_effect(/datum/status_effect/facial/internal)
-		if(!creampie)
-			btm.apply_status_effect(/datum/status_effect/facial/internal)
-		else
-			creampie.refresh_cum()
+		if(top.sexcon.knotted_part_partner&SEX_PART_CUNT|SEX_PART_ANUS) // use top's knotted_part_partner var to check what effect we need to apply, as bottom may be double knotted or more
+			var/datum/status_effect/facial/internal/creampie = btm.has_status_effect(/datum/status_effect/facial/internal)
+			if(!creampie)
+				btm.apply_status_effect(/datum/status_effect/facial/internal)
+			else
+				creampie.refresh_cum()
+		if(top.sexcon.knotted_part_partner&SEX_PART_JAWS)
+			var/datum/status_effect/facial/facial = btm.has_status_effect(/datum/status_effect/facial)
+			if(!facial)
+				btm.apply_status_effect(/datum/status_effect/facial)
+			else
+				facial.refresh_cum()
 	knot_exit(keep_top_status, keep_btm_status)
 
 /datum/sex_controller/proc/knot_exit(var/keep_top_status = FALSE, var/keep_btm_status = FALSE)
@@ -326,6 +335,7 @@
 		top.sexcon.knotted_recipient = null
 		top.sexcon.knotted_status = KNOTTED_NULL
 		top.sexcon.knotted_part = SEX_PART_NULL
+		top.sexcon.knotted_part_partner = SEX_PART_NULL
 		log_combat(top, top, "Stopped knot tugging")
 	if(istype(btm) && btm.sexcon.knotted_status)
 		if(!keep_btm_status) // only keep the status if we're reapplying the knot
@@ -335,6 +345,7 @@
 		btm.sexcon.knotted_recipient = null
 		btm.sexcon.knotted_status = KNOTTED_NULL
 		btm.sexcon.knotted_part = SEX_PART_NULL
+		btm.sexcon.knotted_part_partner = SEX_PART_NULL
 		log_combat(btm, btm, "Stopped knot tugging")
 	if(knotted_status) // this should never trigger, but if it does clear up the invalid state
 		if(src.user)
@@ -345,6 +356,7 @@
 		knotted_recipient = null
 		knotted_status = KNOTTED_NULL
 		knotted_part = SEX_PART_NULL
+		knotted_part_partner = SEX_PART_NULL
 
 /mob/living/carbon/human/werewolf_transform() // needed to ensure that we safely remove the tie before transitioning
 	if(src.sexcon.knotted_status)
