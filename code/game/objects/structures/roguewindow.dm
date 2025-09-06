@@ -20,7 +20,6 @@
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
-	var/repairable = TRUE
 	var/list/repair_costs = list(/obj/item/grown/log/tree/small, /obj/item/natural/glass)
 	var/repair_skill = /datum/skill/craft/carpentry
 	var/repair_state = 0
@@ -294,7 +293,7 @@
 	return ..()
 
 /obj/structure/roguewindow/attackby(obj/item/W, mob/user, params)
-	if(repairable && (user.get_skill_level(repair_skill) > 0) && (istype(W, repair_costs[1]) || istype(W, repair_costs[2]))) // At least 1 skill level needed
+	if(user.get_skill_level(repair_skill) > 0 && (istype(W, repair_costs[1]) || istype(W, repair_costs[2]))) // At least 1 skill level needed
 		repairwindow(W, user)
 	else
 		return ..()
@@ -331,12 +330,11 @@
 
 /obj/structure/roguewindow/examine(mob/user)	
 	. = ..()
-	if(repairable)
-		var/obj/cast_repair_cost_first = repair_costs[1]
-		var/obj/cast_repair_cost_second = repair_costs[2]
-		if((repair_state == 0) && (obj_integrity < max_integrity))
-			. += span_notice("A [initial(cast_repair_cost_first.name)] can be used to repair it.")
-			if(brokenstate)
-				. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
-		if(repair_state == 1)
+	var/obj/cast_repair_cost_first = repair_costs[1]
+	var/obj/cast_repair_cost_second = repair_costs[2]
+	if((repair_state == 0) && (obj_integrity < max_integrity))
+		. += span_notice("A [initial(cast_repair_cost_first.name)] can be used to repair it.")
+		if(brokenstate)
 			. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
+	if(repair_state == 1)
+		. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
