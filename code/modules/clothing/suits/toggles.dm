@@ -141,6 +141,8 @@
 	user.update_fov_angles()
 	// A hood should not physically exist in the world.
 	// Destroy() handles notifying the linked cloak.
+	if(QDELETED(src))
+		return
 	qdel(src)
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
