@@ -50,7 +50,7 @@
 
 
 	var/should_update = FALSE
-	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
+	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "ears", "ear color one", "ear color two", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
 	var/chosen = input(user, "Change what?", "Appearance") as null|anything in choices
 
 	if(!chosen)
@@ -616,6 +616,34 @@
 					should_update = TRUE
 			else
 				to_chat(user, span_warning("You don't have a tail!"))
+
+		if("ears")
+			var/list/valid_ears = list("none")
+			for(var/ears_path in subtypesof(/datum/sprite_accessory/ears))
+				var/datum/sprite_accessory/ears/ears = new ears_path()
+				valid_ears[ear.name] = ear_path
+
+			var/new_style = input(user, "Choose your ears", "Ear Customization") as null|anything in valid_ears
+			if(new_style)
+				if(new_style == "none")
+					var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+					if(ears)
+						ears.Remove(H)
+						qdel(ears)
+						H.update_body()
+						should_update = TRUE
+				else
+					var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+					if(!ears)
+						ears = new /obj/item/organ/tail/anthro()
+						ears.Insert(H, TRUE, FALSE)
+					ears.accessory_type = valid_ears[new_style]
+					var/datum/sprite_accessory/ears/ears_type = SPRITE_ACCESSORY(ears.accessory_type)
+					ears.accessory_colors = ears_type.get_default_colors(list())
+					H.update_body()
+					should_update = TRUE
+
+
 
 	if(should_update)
 		H.update_hair()
