@@ -200,9 +200,7 @@ SUBSYSTEM_DEF(adjacent_air)
 			var/turf/wall_for_message
 			var/climbing_skill = max(climber.get_skill_level(/datum/skill/misc/climbing), SKILL_LEVEL_NOVICE)
 			var/adjacent_wall_diff
-			var/climber_armor_class
-			var/baseline_stamina_cost = 15
-			var/climb_gear_bonus = 1
+			var/climb_gear_bonus = 1 // bonus is defined here, we might use it for calculations still, like giving you +1 effective skill for climbing purposes, but rn it it's only used to halve your stamina costs
 			for(var/turf/closed/adjacent_wall in adjacent_wall_list) // we add any turf that is a wall, aka /turf/closed/...
 				adjacent_wall_diff = adjacent_wall.climbdiff
 				if(!(climbing_skill == 6))
@@ -214,32 +212,43 @@ SUBSYSTEM_DEF(adjacent_air)
 			if(!adjacent_wall_list_final.len) // if there are no /turf/closed WALLS or none of the WALLS have wallclimb set to TRUE, then the list will be empty so we can't climb there
 				to_chat(climber, span_warningbig("I can't climb there!"))
 			else
-				climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
-				climber_armor_class = climber.highest_ac_worn()
-				if(!(climber_armor_class <= ARMOR_CLASS_LIGHT))
-					climber.visible_message(span_danger("The armor weighs me down!"))
-				else
-					climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
-				if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
-					climb_gear_bonus = 2
-				var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1)
-				climber.stamina_add(stamina_cost_final) // eat some of climber's stamina when we move onto the next tile
-				climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff or branches
-				climber.forceMove(climb_target) // while our MOVEMENT TYPE is FLYING, we move onto next tile and can't fall cos of the flying
-				climber.movement_type = GROUND // if we move and it's an empty space tile, we fall. otherwise we either just walk into a wall along which we climb and don't fall, or walk onto a solid turf, like... floor or water
-				climber.update_wallpress_slowdown()
-				climber.wallpressed = wall2wall_dir // we set our wallpressed flag to TRUE and regain blue bar somewhat, might wanna remove dat idk
-				switch(wall2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
-					if(NORTH)
-						climber.setDir(NORTH)
-						climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
-					if(SOUTH)
-						climber.setDir(SOUTH)
-						climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
-//						climber.visible_message(span_info("SOUTH")) // debug msg
-					if(EAST)
-						climber.setDir(EAST)
-						climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
-					if(WEST)
-						climber.setDir(WEST)
-						climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
+				var/list/cloth_wipe_sfx = list('sound/foley/cloth_wipe (1).ogg',
+				'sound/foley/cloth_wipe (2).ogg',
+				'sound/foley/cloth_wipe (3).ogg'
+				)
+				var/sfx_vol = (100 - (climbing_skill * 10))
+				var/climb_along_delay = round(max(20 - (climbing_skill * 2) - (climber.STASPD/3), 5), 1)
+				var/climber_armor_class
+				var/baseline_stamina_cost = 15
+				if(do_after(climber, climb_along_delay, wall_for_message))
+					climber.visible_message(span_info("[climber] climbs along [wall_for_message]..."))
+					playsound(climber, pick(cloth_wipe_sfx), sfx_vol, TRUE)
+					climber_armor_class = climber.highest_ac_worn()
+					if(!(climber_armor_class <= ARMOR_CLASS_LIGHT))
+						climber.visible_message(span_danger("The armor weighs me down!")) // if you can actually shuffle along the wall but wearing heavy armor, you get a grip on it... but fall, as a little treat
+					else
+						climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
+					if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
+						climb_gear_bonus = 2
+					var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1)
+					climber.stamina_add(stamina_cost_final) // eat some of climber's stamina when we move onto the next tile
+					climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff or branches
+					climber.forceMove(climb_target) // while our MOVEMENT TYPE is FLYING, we move onto next tile and can't fall cos of the flying
+					climber.movement_type = GROUND // if we move and it's an empty space tile, we fall. otherwise we either just walk into a wall along which we climb and don't fall, or walk onto a solid turf, like... floor or water
+					playsound(climber, 'sound/foley/climb.ogg', sfx_vol)
+					climber.update_wallpress_slowdown()
+					climber.wallpressed = wall2wall_dir // we set our wallpressed flag to TRUE and regain blue bar somewhat, might wanna remove dat idk
+					switch(wall2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
+						if(NORTH)
+							climber.setDir(NORTH)
+							climber.set_mob_offsets("wall_press", _x = 0, _y = 20)
+						if(SOUTH)
+							climber.setDir(SOUTH)
+							climber.set_mob_offsets("wall_press", _x = 0, _y = -10)
+	//						climber.visible_message(span_info("SOUTH")) // debug msg
+						if(EAST)
+							climber.setDir(EAST)
+							climber.set_mob_offsets("wall_press", _x = 12, _y = 0)
+						if(WEST)
+							climber.setDir(WEST)
+							climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
