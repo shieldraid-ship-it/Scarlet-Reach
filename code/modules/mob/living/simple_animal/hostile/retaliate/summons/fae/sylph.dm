@@ -47,18 +47,13 @@
 	ranged_message = "throws icy magick"
 	var/shroom_cd = 0
 	var/summon_cd = 0
+	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/create_shrooms)
 
 /obj/projectile/magic/frostbolt/greater
 	name = "greater frostbolt"
 	damage = 25
 	range = 6
 	speed = 6 //higher is slower
-
-/mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/Initialize()
-	. = ..()
-	var/obj/effect/proc_holder/spell/invoked/create_shrooms/knees = new /obj/effect/proc_holder/spell/invoked/create_shrooms(src)
-	AddSpell(knees)
-
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the fiend
 	return

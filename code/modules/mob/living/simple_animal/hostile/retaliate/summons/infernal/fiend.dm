@@ -49,11 +49,8 @@
 	ranged_message = "throws fire"
 	// var/flame_cd = 0 -- CBA porting in meteor storm just for NPC so keeping it out for now
 	var/summon_cd = 0
+	inherent_spells = list(/obj/effect/proc_holder/spell/self/call_infernals)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/Initialize()
-	. = ..()
-	var/obj/effect/proc_holder/spell/self/call_infernals/helpme = new /obj/effect/proc_holder/spell/self/call_infernals(src)
-	AddSpell(helpme)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/death(gibbed)
 	..()
