@@ -1914,7 +1914,10 @@
 				marked = TRUE
 				if(M.m_intent == MOVE_INTENT_SNEAK || M.mob_timers[MT_INVISIBILITY] > world.time)
 					emote("huh")
-					to_chat(M, span_danger("[src] sees me! I'm found!"))
+					if(!M.thicc_sneaking)
+						to_chat(M, span_danger("[src] sees me! I'm found!"))
+					else
+						to_chat(M, span_danger("[src] sees me! The clap of my asscheeks gave me away!"))
 					M.mob_timers[MT_INVISIBILITY] = world.time
 					M.mob_timers[MT_FOUNDSNEAK] = world.time
 					M.update_sneak_invis(reset = TRUE)
