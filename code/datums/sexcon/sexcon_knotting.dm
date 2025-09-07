@@ -23,7 +23,7 @@
 		return
 	if(!user.sexcon.current_action)
 		return
-	if(!target.client.prefs.sexable)
+	if(!target.client?.prefs?.sexable)
 		return
 	var/datum/sex_action/action = SEX_ACTION(user.sexcon.current_action)
 	if(!action.knot_on_finish) // the current action does not support knot climaxing, abort
