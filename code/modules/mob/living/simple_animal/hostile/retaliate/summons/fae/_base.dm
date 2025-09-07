@@ -3,6 +3,7 @@
 	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	faction += "plants"
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/Life()
 	..()
