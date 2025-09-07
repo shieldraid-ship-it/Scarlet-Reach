@@ -65,19 +65,21 @@
 	spill_embedded_objects()
 	qdel(src)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/AttackingTarget()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/AttackingTarget(atom/movable/target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_PREATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
 	if(!target)
 		return
-	yeet(target)
+	if(!target.anchored)
+		yeet(target)
 	if(!QDELETED(target))
 		return target.attack_animal(src)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/proc/yeet(target)
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/proc/yeet(atom/movable/target)
 	var/atom/throw_target = get_edge_target_turf(src, get_dir(src, target)) //ill be real I got no idea why this worked.
-	var/mob/living/L = target
-	L.throw_at(throw_target, 7, 4)
-	L.adjustBruteLoss(20)
+	target.throw_at(throw_target, 7, 4)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustBruteLoss(20)

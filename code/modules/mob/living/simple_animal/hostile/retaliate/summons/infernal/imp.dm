@@ -24,6 +24,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	simple_detect_bonus = 20
 	ranged = TRUE
+	ranged_cooldown = 40
 	projectiletype = /obj/projectile/magic/firebolt
 	retreat_distance = 4
 	minimum_distance = 3
