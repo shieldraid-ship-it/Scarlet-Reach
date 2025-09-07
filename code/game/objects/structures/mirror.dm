@@ -50,7 +50,7 @@
 
 
 	var/should_update = FALSE
-	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "horns, "ears", "ear color one", "ear color two", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
+	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "horns", "ears", "ear color one", "ear color two", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
 	var/chosen = input(user, "Change what?", "Appearance") as null|anything in choices
 
 	if(!chosen)
