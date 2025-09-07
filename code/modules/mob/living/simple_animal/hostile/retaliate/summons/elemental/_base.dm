@@ -2,6 +2,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	weather_immunities += "lava"
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/Life()
 	..()

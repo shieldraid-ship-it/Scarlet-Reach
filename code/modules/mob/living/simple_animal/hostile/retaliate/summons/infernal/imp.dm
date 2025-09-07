@@ -27,7 +27,7 @@
 	retreat_distance = 4
 	minimum_distance = 3
 	food_type = list()
-	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	movement_type = FLYING
 	pooptype = null
 	STACON = 7
 	STASTR = 6
