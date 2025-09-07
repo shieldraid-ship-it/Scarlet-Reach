@@ -85,7 +85,7 @@
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/construct = 0
 
-/obj/item/proc/attack(mob/living/M, mob/living/user)
+/obj/item/proc/attack(mob/living/M, mob/living/user, var/second_run = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
 		return FALSE
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
@@ -198,7 +198,9 @@
 							span_boldwarning("I'm disarmed by [user]!"))
 			return
 
+	var/successful_hit = FALSE
 	if(M.attacked_by(src, user))
+		successful_hit = TRUE
 		if(user.used_intent == cached_intent)
 			var/tempsound = user.used_intent.hitsound
 			if(tempsound)
@@ -209,6 +211,31 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
+	if(successful_hit && !second_run && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
+		var/obj/item/offh = user.get_inactive_held_item()
+		if(!offh)
+			return
+		var/obj/item/mainh = user.get_active_held_item()
+		if(!mainh || !istype(mainh, offh))
+			return
+		if(!iscarbon(user))
+			return
+		var/bakstr = user.STASTR
+		var/bakzonetarget = user.zone_selected
+		user.STASTR = (user.STASTR+1)/3
+		if(user.mobility_flags & MOBILITY_STAND)
+			user.select_zone(pick(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		else
+			user.select_zone(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		if(user.client?.prefs.showrolls)
+			to_chat(user, span_info("I try getting in a second attack!"))
+		attack(M, user, TRUE)
+		user.STASTR = bakstr
+		if(user.zone_selected == bakzonetarget)
+			return
+		user.select_zone(bakzonetarget) // restore original target location and refresh our HUD zone selector
+		if(user?.hud_used?.zone_select)
+			user.hud_used.zone_select.update_icon()
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
