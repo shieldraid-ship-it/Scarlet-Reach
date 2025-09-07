@@ -60,7 +60,7 @@
 	target.sexcon.knotted_recipient = target
 	target.sexcon.knotted_status = KNOTTED_AS_BTM
 	target.sexcon.knotted_part = action.target_sex_part|target_knotted_part // add existing knotted parts flags to new knotted orifice flags
-	target.sexcon.knotted_part_partner = action.user_sex_part
+	target.sexcon.knotted_part_partner = action.target_sex_part // since user_sex_part is always set to SEX_PART_COCK, we'll save a copy of target_sex_part to use as a check for muffled speech
 	log_combat(user, target, "Started knot tugging")
 
 	if(force > SEX_FORCE_MID) // if using force above default
@@ -367,6 +367,26 @@
 	if(src.sexcon.knotted_status)
 		src.sexcon.knot_remove()
 	return ..()
+
+/mob/living/carbon/can_speak_vocal() // do not allow bottom to speak while knotted orally (at least until they're double knotted or it has been removed)
+	. = ..()
+	if(. && iscarbon(src))
+		var/mob/living/carbon/H = src
+		return !(H.sexcon.knotted_status == KNOTTED_AS_BTM && H.sexcon.knotted_part_partner&SEX_PART_JAWS)
+	return .
+
+/datum/emote/is_emote_muffled(mob/living/carbon/H) // do not allow bottom to emote while knotted orally (at least until they're double knotted or it has been removed)
+	. = ..()
+	if(!.)
+		return FALSE
+	return !(H.sexcon.knotted_status == KNOTTED_AS_BTM && H.sexcon.knotted_part_partner&SEX_PART_JAWS)
+
+/datum/emote/select_message_type(mob/user, intentional) // always use the muffled message while bottom is knotted orally (at least until they're double knotted or it has been removed)
+	. = ..()
+	if(message_muffled && iscarbon(user))
+		var/mob/living/carbon/H = user
+		if(H.sexcon.knotted_status == KNOTTED_AS_BTM && H.sexcon.knotted_part_partner&SEX_PART_JAWS)
+			. = message_muffled
 
 /datum/status_effect/knot_tied
 	id = "knot_tied"
