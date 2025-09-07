@@ -222,7 +222,7 @@
 			return
 		var/bakstr = user.STASTR
 		var/bakzonetarget = user.zone_selected
-		user.STASTR = (user.STASTR+1)/3
+		user.STASTR = 1+((user.STASTR+1)/3)
 		if(user.mobility_flags & MOBILITY_STAND)
 			user.select_zone(pick(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		else
