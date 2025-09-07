@@ -50,6 +50,10 @@
 	// var/flame_cd = 0 -- CBA porting in meteor storm just for NPC so keeping it out for now
 	var/summon_cd = 0
 
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/Initialize()
+	. = ..()
+	var/obj/effect/proc_holder/spell/self/call_infernals/helpme = new /obj/effect/proc_holder/spell/self/call_infernals(src)
+	AddSpell(helpme)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/death(gibbed)
 	..()
@@ -74,7 +78,7 @@
 	// 	create_meteors(targetted)
 	// 	src.flame_cd = world.time
 
-	if(world.time >= src.summon_cd + 200) // Adjusted from 250 to give them a bit more strength in summoning instead to compensate for no meteors
+	if(world.time >= src.summon_cd + 200 && !mind) // Adjusted from 250 to give them a bit more strength in summoning instead to compensate for no meteors
 		callforbackup()
 
 		src.summon_cd = world.time
@@ -99,8 +103,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/proc/callforbackup()
 	var/list/spawnLists = list(/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp,
-	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp, 
-	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound, 
+	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp,
+	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 	/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound)
 	var/reinforcement_count = 3
 	src.visible_message(span_notice("[src] summons reinforcements from the infernal abyss."))
@@ -119,3 +123,20 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the fiend
 	return
+
+/obj/effect/proc_holder/spell/self/call_infernals
+	name = "Call Infernals"
+	recharge_time = 20 SECONDS
+	sound = list('sound/magic/whiteflame.ogg')
+	overlay_state = "burning"
+
+/obj/effect/proc_holder/spell/self/call_infernals/cast(list/targets, mob/living/user = usr)
+	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend))
+		var/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/demonguy = user
+		if(world.time <= demonguy.summon_cd + 200)//shouldn't ever happen cuz the spell cd is the same as summon_cd but I'd rather it check with the internal cd just in case
+			to_chat(user,span_warning("Too soon!"))
+			revert_cast()
+			return FALSE
+		demonguy.callforbackup()
+		demonguy.say("To me, my minions!")
+		demonguy.summon_cd = world.time
