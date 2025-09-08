@@ -45,6 +45,7 @@
 	dodgetime = 0
 	aggressive = 1
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/colossus_stomp)
+	ranged_message = "launches earth"
 
 	STACON = 20
 	STAEND = 20

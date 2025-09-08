@@ -1,6 +1,6 @@
 // Magical resources for the Ratwood ported Mage Gameplay Loop system
 // Chose to not use /natural typepath because it didn't make much sense and this
-// Let me use another .dmi 
+// Let me use another .dmi
 // Since the enchanting / summoning system is not here yet, sellprice has been adjusted.
 /obj/item/magic
 	name = "magic resource"
@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	grid_width = 32
 	grid_height = 32
+	var/tier = 0 //used for determining potency for mob healing
 
 // MELD
 /obj/item/magic/melded
@@ -46,7 +47,7 @@
 	icon_state = "wessence"
 	desc = "A melding of arcane fusion and voidstone. It pulses erratically, power coiled tightly within and dangerous. Many would be afraid of going near this, let alone holding it."
 	sellprice = 100
-	
+
 //mapfetchable items
 /obj/item/magic/obsidian
 	name = "obsidian fragment"
@@ -92,10 +93,10 @@
 
 /obj/item/magic/voidstone
 	name = "voidstone"
-	icon_state = "wessence"
+	icon_state = "voidstone"
 	desc = "A piece of blackstone, it feels off to stare at it for long."
 	resistance_flags = FLAMMABLE
-	w_class = WEIGHT_CLASS_SMALL	
+	w_class = WEIGHT_CLASS_SMALL
 
 // INFERNAL
 /obj/item/magic/infernalash//T1 mage summon loot
@@ -105,6 +106,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 10
+    tier = 1
 
 /obj/item/magic/hellhoundfang//T2 mage summon loot
     name = "hellhound fang"
@@ -113,6 +115,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 20
+    tier = 2
 
 /obj/item/magic/infernalcore// T3 mage summon loot
     name = "infernal core"
@@ -121,6 +124,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 50
+    tier = 3
 
 /obj/item/magic/abyssalflame//T4 mage summon loot
     name = "abyssal flame"
@@ -129,6 +133,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 250
+    tier = 4
 
 //FAIRY
 /obj/item/magic/fairydust	//T1 mage summon loot
@@ -138,6 +143,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 20
+    tier = 1
 
 /obj/item/magic/iridescentscale	//T2 mage summon loot
     name = "iridescent scales"
@@ -146,6 +152,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 30
+    tier = 2
 
 /obj/item/magic/heartwoodcore	//T3 mage summon loot
     name = "heartwood core"
@@ -154,6 +161,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 50
+    tier = 3
 
 /obj/item/magic/sylvanessence	//T4 mage summon loot
     name = "sylvan essence"
@@ -162,6 +170,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 250
+    tier = 4
 
 //ELEMENTAL
 /obj/item/magic/elementalmote
@@ -171,6 +180,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 15
+    tier = 1
 
 /obj/item/magic/elementalshard
     name = "elemental shard"
@@ -179,6 +189,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 30
+    tier = 2
 
 /obj/item/magic/elementalfragment
     name = "elemental fragment"
@@ -187,6 +198,7 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 100
+    tier = 3
 
 /obj/item/magic/elementalrelic
     name = "elemental relic"
@@ -195,3 +207,4 @@
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
     sellprice = 250
+    tier = 4
