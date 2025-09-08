@@ -69,7 +69,7 @@
 	damfactor = 1.1
 	clickcd = CLICK_CD_MELEE
 	swingdelay = 8
-	intent_intdamage_factor = 1.8
+	intent_intdamage_factor = 1.5
 	icon_state = "insmash"
 	item_d_type = "blunt"
 /// INTENT DATUMS	^
@@ -278,7 +278,7 @@
 	associated_skill = /datum/skill/combat/unarmed
 	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
 	throwforce = 12
-	wdefense = 4
+	wdefense = 0
 	wbalance = WBALANCE_SWIFT
 	thrown_bclass = BCLASS_CUT
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -352,17 +352,17 @@
 	slot_flags = ITEM_SLOT_HIP
 	parrysound = list('sound/combat/parry/pugilism/unarmparry (1).ogg','sound/combat/parry/pugilism/unarmparry (2).ogg','sound/combat/parry/pugilism/unarmparry (3).ogg')
 	sharpness = IS_BLUNT
-	max_integrity = 300
+	max_integrity = 250
 	swingsound = list('sound/combat/wooshes/punch/punchwoosh (1).ogg','sound/combat/wooshes/punch/punchwoosh (2).ogg','sound/combat/wooshes/punch/punchwoosh (3).ogg')
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
-	wdefense = 8
+	wdefense = 7
 	wbalance = WBALANCE_HEAVY
 	blade_dulling = DULLING_SHAFT_WOOD
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 	grid_width = 64
-	grid_height = 32
+	grid_height = 64
 	intdamage_factor = 1.2
 
 /obj/item/rogueweapon/knuckles/getonmobprop(tag)
@@ -391,12 +391,12 @@
 	swingsound = list('sound/combat/wooshes/punch/punchwoosh (1).ogg','sound/combat/wooshes/punch/punchwoosh (2).ogg','sound/combat/wooshes/punch/punchwoosh (3).ogg')
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
-	wdefense = 10	//literally no clue how else to balance these
+	wdefense = 8	//literally no clue how else to balance these
 	wbalance = WBALANCE_HEAVY
 	blade_dulling = DULLING_SHAFT_WOOD
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/bronze
-	intdamage_factor = 1.30
+	intdamage_factor = 1.2
 
 /obj/item/rogueweapon/knuckles/aknuckles
 	name = "decrepit knuckles"
