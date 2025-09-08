@@ -145,7 +145,7 @@
 	set_holdable(list(
 		/obj/item/magic/infernal/ash,
 		/obj/item/magic/infernal/fang,
-		/obj/item/magic/infernal/ash,
+		/obj/item/magic/infernal/core,
 		/obj/item/magic/infernal/flame,
 		/obj/item/magic/fae/dust,
 		/obj/item/magic/fae/scale,

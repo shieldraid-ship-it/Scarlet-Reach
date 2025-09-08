@@ -54,9 +54,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/attackby(obj/item/I, mob/living/carbon/human/user, params)
-	if(istype(I, /obj/item/magic/))
+	if(istype(I, /obj/item/magic))
 		var/obj/item/magic/magicmaterial = I
-		if(istype(magicmaterial, /obj/item/magic/fae/))
+		if(istype(magicmaterial, /obj/item/magic/fae))
 			if(health == maxHealth)
 				to_chat(user, "[src] is already healthy!")
 				return

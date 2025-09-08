@@ -56,7 +56,7 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/attackby(obj/item/I, mob/living/carbon/human/user, params)
-	if(istype(I, /obj/item/magic/))
+	if(istype(I, /obj/item/magic))
 		var/obj/item/magic/magicmaterial = I
 		if(istype(magicmaterial, /obj/item/magic/elemental))
 			if(health == maxHealth)

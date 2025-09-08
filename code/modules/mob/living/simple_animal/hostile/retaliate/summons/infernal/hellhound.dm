@@ -26,7 +26,6 @@
 	aggro_vision_range = 9
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	simple_detect_bonus = 20
-	ranged = TRUE
 	retreat_distance = 4
 	minimum_distance = 3
 	food_type = list()
