@@ -99,6 +99,10 @@
 /obj/item/magic/infernal
     w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/magic/infernal/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be used to heal Infernal summons.")
+
 /obj/item/magic/infernal/ash//T1 mage summon loot
     name = "infernal ash"
     icon_state = "infernalash"
@@ -133,6 +137,10 @@
     sellprice = 20
     tier = 1
 
+/obj/item/magic/fae/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be used to heal Fae summons.")
+
 /obj/item/magic/fae/dust	//T1 mage summon loot
     name = "fairy dust"
     icon_state = "fairy_dust"
@@ -165,6 +173,10 @@
 /obj/item/magic/elemental/
     resistance_flags = FIRE_PROOF
     w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/magic/elemental/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be used to heal Elemental summons.")
 
 /obj/item/magic/elemental/mote
     name = "elemental mote"
