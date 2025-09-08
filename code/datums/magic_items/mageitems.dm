@@ -424,8 +424,11 @@
 		return
 
 	var/mob/living/simple_animal/hostile/retaliate/rogue/target = captive
-	target.visible_message(span_warning("[src] is trying to bind [target.real_name]"))
-	if(do_after(user, 50, target = src) && binding == FALSE)
+	if(binding)
+		to_chat(user, span_notice("The shackles are already in use, hold on!"))
+		return FALSE
+	target.visible_message(span_warning("[src] is trying to bind [target.real_name]."))
+	if(do_after(user, 50, target = src))
 		if(!target.ckey) //player is not inside body or has refused, poll for candidates
 			to_chat(user, span_notice("You attempt to bind the targetted summon to this plane."))
 			binding = TRUE
@@ -439,30 +442,16 @@
 				target.visible_message(span_warning("[target.real_name]'s eyes light up with an intelligence as it awakens fully on this plane."), runechat_message = TRUE)
 				custom_name(user,target)
 				target.name = chosen_name
-				finish_binding(target)
+				binding = FALSE
 			//no candidates, raise as npc
 			else
-				to_chat(user, span_notice("The [captive] stares at you with mindless hate. The binding attempt failed to draw out its intelligence!"))
-				finish_binding(target)
+				to_chat(user, span_notice("[captive] stares at you with mindless hate. The binding attempt failed to draw out its intelligence!"))
+				binding = FALSE
 		else
 			target.visible_message(span_notice("This summon is already bound to this plane."))
 			return FALSE
 		return FALSE
 	return FALSE
-
-/obj/item/rope/chain/bindingshackles/proc/finish_binding(mob/living/simple_animal/hostile/retaliate/rogue/target)//clear out all the extra stuff that we need to do so the mob properly exists
-	binding = FALSE
-	animate(target, color = null,time = 5)
-	REMOVE_TRAIT(target, TRAIT_PACIFISM, TRAIT_GENERIC)	//I just took all this stuff from matrix code, same thing as activating the matrix basically
-	target.status_flags -= GODMODE
-	target.candodge = TRUE
-	target.binded = FALSE
-	target.move_resist = MOVE_RESIST_DEFAULT
-	target.SetParalyzed(0)
-	for(var/obj/effect/decal/cleanable/roguerune/arcyne/summoning/our_rune in get_turf(target))
-		our_rune.summoned_mob = null
-		our_rune.summoning = FALSE
-
 
 /mob/living/simple_animal/hostile/retaliate/rogue/proc/awaken_summon(mob/living/carbon/human/master, ckey)
 	if(!master)

@@ -91,12 +91,12 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/death(gibbed)
 	..()
 	var/turf/deathspot = get_turf(src)
-	new /obj/item/magic/sylvanessence(deathspot)
-	new /obj/item/magic/fairydust(deathspot)
-	new /obj/item/magic/fairydust(deathspot)
+	new /obj/item/magic/fae/essence(deathspot)
+	new /obj/item/magic/fae/dust(deathspot)
+	new /obj/item/magic/fae/dust(deathspot)
 	new /obj/item/magic/melded/t2(deathspot)
-	new /obj/item/magic/iridescentscale(deathspot)
-	new /obj/item/magic/heartwoodcore(deathspot)
+	new /obj/item/magic/fae/scale(deathspot)
+	new /obj/item/magic/fae/core(deathspot)
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)
@@ -114,6 +114,9 @@
 		var/mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/treeguy = user
 		if(world.time <= treeguy.shroom_cd + 200)//shouldn't ever happen cuz the spell cd is the same as summon_cd but I'd rather it check with the internal cd just in case
 			to_chat(user,span_warning("Too soon!"))
+			revert_cast()
+			return FALSE
+		if(treeguy.binded)
 			revert_cast()
 			return FALSE
 		treeguy.create_shroom(targets[1])

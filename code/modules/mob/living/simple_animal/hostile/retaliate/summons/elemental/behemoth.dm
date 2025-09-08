@@ -52,12 +52,12 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/death(gibbed)
 	..()
 	var/turf/deathspot = get_turf(src)
-	new /obj/item/magic/elementalfragment(deathspot)
-	new /obj/item/magic/elementalfragment(deathspot)
-	new /obj/item/magic/elementalshard(deathspot)
-	new /obj/item/magic/elementalshard(deathspot)
-	new /obj/item/magic/elementalmote(deathspot)
-	new /obj/item/magic/elementalmote(deathspot)
+	new /obj/item/magic/elemental/fragment(deathspot)
+	new /obj/item/magic/elemental/fragment(deathspot)
+	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/melded/t1(deathspot)
 	update_icon()
 	spill_embedded_objects()
@@ -96,7 +96,7 @@
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
-		if(world.time >= src.rock_cd + 200)
+		if(world.time >= src.rock_cd + 200 && !client)
 			quake(target)
 			src.rock_cd = world.time
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
@@ -132,7 +132,7 @@
 	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/rockguy = user
 		if(world.time >= rockguy.rock_cd + 20 SECONDS)
-			if(!rockguy.quake(targets[1]))
+			if(!rockguy.quake(targets[1]) || rockguy.binded)
 				revert_cast()
 				return
 			rockguy.rock_cd = world.time

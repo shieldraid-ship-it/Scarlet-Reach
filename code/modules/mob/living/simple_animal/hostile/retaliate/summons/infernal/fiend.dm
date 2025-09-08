@@ -55,11 +55,11 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/death(gibbed)
 	..()
 	var/turf/deathspot = get_turf(src)
-	new /obj/item/magic/abyssalflame(deathspot)
-	new /obj/item/magic/infernalcore(deathspot)
-	new /obj/item/magic/hellhoundfang(deathspot)
-	new /obj/item/magic/infernalash(deathspot)
-	new /obj/item/magic/infernalash(deathspot)
+	new /obj/item/magic/infernal/flame(deathspot)
+	new /obj/item/magic/infernal/core(deathspot)
+	new /obj/item/magic/infernal/fang(deathspot)
+	new /obj/item/magic/infernal/ash(deathspot)
+	new /obj/item/magic/infernal/ash(deathspot)
 	new /obj/item/magic/melded/t2(deathspot)
 	update_icon()
 	spill_embedded_objects()
@@ -132,6 +132,9 @@
 		var/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend/demonguy = user
 		if(world.time <= demonguy.summon_cd + 200)//shouldn't ever happen cuz the spell cd is the same as summon_cd but I'd rather it check with the internal cd just in case
 			to_chat(user,span_warning("Too soon!"))
+			revert_cast()
+			return FALSE
+		if(demonguy.binded)
 			revert_cast()
 			return FALSE
 		demonguy.callforbackup()

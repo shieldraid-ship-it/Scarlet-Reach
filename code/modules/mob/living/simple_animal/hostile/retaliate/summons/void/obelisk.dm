@@ -276,4 +276,7 @@
 			to_chat(user,span_warning("Too soon!"))
 			revert_cast()
 			return FALSE
+		if(obby.binded)
+			revert_cast()
+			return FALSE
 		obby.Activate(targets[1])

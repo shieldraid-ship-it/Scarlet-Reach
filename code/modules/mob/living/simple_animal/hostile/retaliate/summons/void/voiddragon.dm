@@ -163,6 +163,8 @@ It will also call down lightning strikes from the sky, and fling people with it'
 			to_chat(user,span_warning("Too soon!"))
 			revert_cast()
 			return FALSE
+		if(dragon.binded)
+			return FALSE
 		dragon.visible_message(span_colossus("[dragon] slams the ground, creating a shockwave!"))
 		dragon.dragon_slam(dragon,2,10,8)
 
@@ -179,6 +181,8 @@ It will also call down lightning strikes from the sky, and fling people with it'
 		if(world.time <= dragon.summon_cd)
 			to_chat(user,span_warning("Too soon!"))
 			revert_cast()
+			return FALSE
+		if(dragon.binded)
 			return FALSE
 		dragon.summon_obelisk()
 
@@ -211,7 +215,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 			revert_cast()
 			return FALSE
 		dragon.visible_message(span_colossus("[src] opens its maw, and lightning crackles beyond its teeth!"))
-		if(!dragon.chain_lightning(targets[1], dragon))
+		if(!dragon.chain_lightning(targets[1], dragon) || dragon.binded)
 			revert_cast()
 			return FALSE
 
@@ -223,7 +227,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	shake_camera(target, 2, 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/OpenFire()
-	if(swooping)
+	if(swooping || binded)
 		return
 
 	anger_modifier = clamp(max((maxHealth - health) / 50, enraged ? 15 : 0), 0, 20)
