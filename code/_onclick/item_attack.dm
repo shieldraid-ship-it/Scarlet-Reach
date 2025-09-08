@@ -199,11 +199,11 @@
 							span_boldwarning("I'm disarmed by [user]!"))
 			return
 
-	var/successful_hit = FALSE
+	var/do_double_hit = FALSE
 	if(M.attacked_by(src, user))
 		switch(user.used_intent.blade_class)
 			if(BCLASS_CUT,BCLASS_CHOP,BCLASS_STAB,BCLASS_PICK,BCLASS_PIERCE) // only these intents are allowed to double attack with dual wield trait
-				successful_hit = get_dist(get_turf(user), get_turf(M)) <= 1 // do not allow this for whips and other long range weapons
+				do_double_hit = get_dist(get_turf(user), get_turf(M)) <= 1 // do not allow this for whips and other long range weapons
 		if(user.used_intent == cached_intent)
 			var/tempsound = user.used_intent.hitsound
 			if(tempsound)
@@ -214,7 +214,7 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	if(successful_hit && !user.dual_attack_active && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
+	if(do_double_hit && !user.dual_attack_active && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
 		var/obj/item/offh = user.get_inactive_held_item()
 		if(!offh)
 			return
@@ -225,7 +225,7 @@
 			return
 		var/bakstr = user.STASTR
 		var/bakhandindex = user.active_hand_index
-		user.STASTR = (user.STASTR*0.8) // slightly weaken str for second attack
+		user.STASTR = round(user.STASTR*0.8) // slightly weaken str for second attack
 		user.active_hand_index = (user.active_hand_index % user.held_items.len)+1
 		if(user.client?.prefs.showrolls)
 			to_chat(user, span_info("I try getting in a second attack!"))
