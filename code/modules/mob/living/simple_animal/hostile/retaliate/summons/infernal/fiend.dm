@@ -45,7 +45,7 @@
 	aggressive = 1
 	ranged = TRUE
 	rapid = TRUE
-	projectiletype = /obj/projectile/magic/aoe/fireball/rogue
+	projectiletype = /obj/projectile/magic/aoe/fireball/rogue/great
 	ranged_message = "throws fire"
 	// var/flame_cd = 0 -- CBA porting in meteor storm just for NPC so keeping it out for now
 	var/summon_cd = 0

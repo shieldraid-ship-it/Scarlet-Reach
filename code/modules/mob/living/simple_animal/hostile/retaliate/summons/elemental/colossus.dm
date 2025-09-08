@@ -44,6 +44,7 @@
 	pixel_x = -32
 	dodgetime = 0
 	aggressive = 1
+	inherent_spells = list(/obj/effect/proc_holder/spell/self/colossus_stomp)
 
 	STACON = 20
 	STAEND = 20
@@ -77,7 +78,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
-				if(world.time >= stomp_cd + 25 SECONDS)
+				if(world.time >= stomp_cd + 25 SECONDS && !client)//players get a spell
 					stomp(target)
 			else
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
@@ -105,17 +106,31 @@
 	spill_embedded_objects()
 	qdel(src)
 
+/obj/effect/proc_holder/spell/self/colossus_stomp
+	name = "Stomp"
+	recharge_time = 25 SECONDS
+	overlay_state = "bloodrage"
+	chargetime = 0
+
+/obj/effect/proc_holder/spell/self/colossus_stomp/cast(list/targets, mob/living/user = usr)
+	if(istype(user, /mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus))
+		var/mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/rockguy = user
+		if(world.time <= rockguy.stomp_cd + 25 SECONDS)
+			rockguy.stomp(rockguy)
+
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/colossus/proc/stomp(target)
 	for (var/mob/living/stomped in view(1, src))
 		new	/obj/effect/temp_visual/stomp(stomped)
 		var/atom/throw_target = get_edge_target_turf(src, get_dir(src, stomped)) //ill be real I got no idea why this worked.
 		var/mob/living/L = stomped
 		L.throw_at(throw_target, 7, 4)
-		L.adjustBruteLoss(20)
+		L.adjustBruteLoss(60)
+	visible_message(span_colossus("[src] stomps the ground!"))
+	playsound(src,'sound/misc/bamf.ogg', 600, TRUE, 10)
 	stomp_cd = world.time
 
 /obj/projectile/earthenchunk
-	name = "Elemental Chunk"
+	name = "elemental chunk"
 	icon_state = "rock"
 	damage = 30
 	damage_type = BRUTE
