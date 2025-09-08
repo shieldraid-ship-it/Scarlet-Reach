@@ -221,7 +221,7 @@
 		var/obj/item/mainh = user.get_active_held_item()
 		if(!mainh || !istype(mainh, offh))
 			return
-		if(!iscarbon(user))
+		if(!iscarbon(user) || user == M) // don't allow this to apply to yourself
 			return
 		var/bakstr = user.STASTR
 		var/bakhandindex = user.active_hand_index
