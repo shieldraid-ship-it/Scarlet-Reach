@@ -15,7 +15,7 @@
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/phys
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
-	beltl = /obj/item/storage/magebag
+	beltl = /obj/item/storage/magebag/starter
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	pants = /obj/item/clothing/under/roguetown/trou
@@ -55,7 +55,7 @@
 		H.change_stat("speed", -1)
 		H.change_stat("intelligence", 1)
 		H.change_stat("fortune", 1)
-		
+
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo,
 	  		/datum/patron/inhumen/matthios,
