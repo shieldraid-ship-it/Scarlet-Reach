@@ -391,7 +391,7 @@
 	swingsound = list('sound/combat/wooshes/punch/punchwoosh (1).ogg','sound/combat/wooshes/punch/punchwoosh (2).ogg','sound/combat/wooshes/punch/punchwoosh (3).ogg')
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
-	wdefense = 6	//literally no clue how else to balance these
+	wdefense = 7	//literally no clue how else to balance these
 	wbalance = WBALANCE_NORMAL
 	blade_dulling = DULLING_SHAFT_WOOD
 	anvilrepair = /datum/skill/craft/weaponsmithing
