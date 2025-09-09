@@ -7543,9 +7543,6 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/cave)
-"ckz" = (
-/turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave)
 "ckC" = (
 /obj/machinery/light/rogue/wallfire{
 	pixel_y = 32
@@ -21535,7 +21532,7 @@
 /area/rogue/outdoors/mountains/decap)
 "got" = (
 /turf/open/floor/rogue/greenstone/runed,
-/area/rogue/under/cave)
+/area/rogue/outdoors/bog)
 "goF" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobblerock,
@@ -48992,9 +48989,8 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/cave/orcdungeon)
 "ogu" = (
-/obj/structure/well/fountain/mana,
 /turf/open/floor/rogue/greenstone,
-/area/rogue/under/cave)
+/area/rogue/outdoors/bog)
 "ogw" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10;
@@ -81799,7 +81795,7 @@
 /area/rogue/outdoors/mountains/decap)
 "xFg" = (
 /obj/structure/well/fountain/mana,
-/turf/open/floor/rogue/dirt,
+/turf/open/floor/rogue/greenstone,
 /area/rogue/outdoors/bog)
 "xFh" = (
 /obj/structure/stone_tile/surrounding_tile/burnt{
@@ -331534,7 +331530,7 @@ vQH
 vQH
 tYx
 mrW
-eyN
+pZv
 sLh
 mrW
 tYx
@@ -331985,10 +331981,10 @@ vQH
 vhs
 vQH
 tYx
-mrW
-pZv
-sLh
-sLh
+eyN
+got
+ogu
+got
 mrW
 pZv
 tYx
@@ -332438,9 +332434,9 @@ vhs
 vhs
 tYx
 mrW
-mrW
+ogu
 xFg
-sLh
+ogu
 eyN
 mrW
 tYx
@@ -332890,9 +332886,9 @@ vhs
 vhs
 tYx
 ylq
-mrW
-mrW
-sLh
+got
+ogu
+got
 mrW
 tYx
 tYx
@@ -478781,9 +478777,9 @@ ixP
 ixP
 gsm
 gsm
-toJ
-toJ
-toJ
+qHj
+qHj
+qHj
 gsm
 gsm
 gsm
@@ -479232,11 +479228,11 @@ ixP
 ixP
 gsm
 gsm
-toJ
-got
-ckz
-got
-toJ
+qHj
+qHj
+qHj
+qHj
+qHj
 gsm
 gsm
 gsm
@@ -479683,12 +479679,12 @@ toJ
 toJ
 toJ
 toJ
-toJ
-toJ
-ckz
-ogu
-ckz
-toJ
+qHj
+qHj
+qHj
+qHj
+qHj
+qHj
 gsm
 gsm
 gsm
@@ -480137,10 +480133,10 @@ gsm
 tum
 gsm
 gsm
-got
-ckz
-got
-toJ
+qHj
+qHj
+qHj
+qHj
 gsm
 gsm
 gsm
@@ -480589,9 +480585,9 @@ gsm
 fDF
 qAI
 gsm
-toJ
-toJ
-toJ
+qHj
+qHj
+qHj
 gsm
 gsm
 gsm
