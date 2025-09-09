@@ -66,10 +66,10 @@
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.3
+	damfactor = 1.2
 	clickcd = CLICK_CD_MELEE
 	swingdelay = 8
-	intent_intdamage_factor = 1.3
+	intent_intdamage_factor = 1.2
 	icon_state = "insmash"
 	item_d_type = "blunt"
 /// INTENT DATUMS	^
@@ -278,7 +278,7 @@
 	associated_skill = /datum/skill/combat/unarmed
 	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
 	throwforce = 12
-	wdefense = 0
+	wdefense = 4
 	wbalance = WBALANCE_SWIFT
 	thrown_bclass = BCLASS_CUT
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -363,7 +363,7 @@
 	smeltresult = /obj/item/ingot/steel
 	grid_width = 64
 	grid_height = 64
-	intdamage_factor = 1.2
+	intdamage_factor = 1.1
 
 /obj/item/rogueweapon/knuckles/getonmobprop(tag)
 	. = ..()
@@ -396,7 +396,7 @@
 	blade_dulling = DULLING_SHAFT_WOOD
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/bronze
-	intdamage_factor = 1.2
+	intdamage_factor = 1.1
 
 /obj/item/rogueweapon/knuckles/aknuckles
 	name = "decrepit knuckles"
