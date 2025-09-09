@@ -357,7 +357,7 @@
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
 	wdefense = 7
-	wbalance = WBALANCE_HEAVY
+	wbalance = WBALANCE_NORMAL
 	blade_dulling = DULLING_SHAFT_WOOD
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
@@ -392,7 +392,7 @@
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
 	wdefense = 6	//literally no clue how else to balance these
-	wbalance = WBALANCE_HEAVY
+	wbalance = WBALANCE_NORMAL
 	blade_dulling = DULLING_SHAFT_WOOD
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/bronze
