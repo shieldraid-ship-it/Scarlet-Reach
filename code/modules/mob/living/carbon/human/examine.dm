@@ -146,6 +146,8 @@
 				. += span_phobia("A disgraced member of the nobility...")
 			else
 				. += span_notice("A disgraced noble.")
+		if(HAS_TRAIT(src, TRAIT_DEADITE))
+			. += span_userdanger("DEADITE!")
 
 		//For tennite schism god-event
 		if(length(GLOB.tennite_schisms))

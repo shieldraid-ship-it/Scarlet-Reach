@@ -521,10 +521,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Amulet of Eora"
 	path = /obj/item/clothing/neck/roguetown/psicross/eora
 
-/datum/loadout_item/psicross/xylix
-	name = "Amulet of Xylix"
-	path = /obj/item/clothing/neck/roguetown/psicross/xylix
-
 /datum/loadout_item/psicross/naledi
 	name = "Naledian Psy-Bracelet"
 	path = /obj/item/clothing/neck/roguetown/psicross/naledi
