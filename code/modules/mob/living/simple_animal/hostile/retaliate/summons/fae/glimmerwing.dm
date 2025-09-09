@@ -44,6 +44,7 @@
 	dodgetime = 40
 	aggressive = 1
 	var/drug_cd
+	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/lesser_heal/free)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/glimmerwing/Initialize()
 	. = ..()

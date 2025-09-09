@@ -1,9 +1,16 @@
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/
+	obj_damage = 75
+	speak_emote = list("whispers")
+
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	LAZYADD(favored_structures, /obj/structure/vine)
+	LAZYADD(favored_structures, /obj/structure/glowshroom/dendorite)
 	faction += "plants"
+	set_patron(/datum/patron/divine/dendor)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/Life()
 	..()

@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal
-
+	obj_damage = 75
+	speak_emote = list("roars")
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/Initialize()
 	. = ..()

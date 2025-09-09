@@ -1,3 +1,7 @@
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/
+	obj_damage = 75
+	speak_emote = list("crackles")
+
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)

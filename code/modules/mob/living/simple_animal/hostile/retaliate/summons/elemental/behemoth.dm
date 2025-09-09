@@ -24,7 +24,7 @@
 	melee_damage_upper = 80
 	vision_range = 7
 	aggro_vision_range = 9
-	environment_smash = ENVIRONMENT_SMASH_NONE
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	simple_detect_bonus = 20
 	retreat_distance = 0
 	minimum_distance = 0
@@ -40,6 +40,7 @@
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
 	dodgetime = 30
 	aggressive = 1
+	obj_damage = 150
 
 	STACON = 17
 	STAEND = 17

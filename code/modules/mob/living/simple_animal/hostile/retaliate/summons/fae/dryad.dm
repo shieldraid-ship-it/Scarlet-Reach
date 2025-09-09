@@ -45,7 +45,7 @@
 //	stat_attack = UNCONSCIOUS
 	ranged = FALSE
 	var/vine_cd
-	inherent_spells = list(/obj/effect/proc_holder/spell/self/create_vines)
+	inherent_spells = list(/obj/effect/proc_holder/spell/self/create_vines, /obj/effect/proc_holder/spell/invoked/lesser_heal/free)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the watcher
@@ -95,7 +95,8 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/proc/vine()
 	visible_message(span_boldwarning("Vines spread out from [src]!"))
 	for(var/turf/turf as anything in RANGE_TURFS(3,src.loc))
-		new /obj/structure/vine(turf)
+		if(!locate(/obj/structure/vine) in turf)
+			new /obj/structure/vine(turf)
 		for(var/mob/living/carbon/human/H in turf.contents)
 			to_chat(H,span_danger("I'm tangled up in the vines!"))
 			H.Immobilize(50)

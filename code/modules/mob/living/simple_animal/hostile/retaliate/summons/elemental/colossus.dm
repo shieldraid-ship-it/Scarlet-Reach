@@ -23,7 +23,7 @@
 	melee_damage_upper = 70
 	vision_range = 7
 	aggro_vision_range = 9
-	environment_smash = ENVIRONMENT_SMASH_NONE
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	simple_detect_bonus = 20
 	retreat_distance = 0
 	minimum_distance = 0
@@ -46,6 +46,7 @@
 	aggressive = 1
 	inherent_spells = list(/obj/effect/proc_holder/spell/self/colossus_stomp)
 	ranged_message = "launches earth"
+	obj_damage = 200
 
 	STACON = 20
 	STAEND = 20
