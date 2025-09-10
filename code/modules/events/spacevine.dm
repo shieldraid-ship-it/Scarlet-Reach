@@ -212,7 +212,7 @@
 // SPACE VINES (Note that this code is very similar to Biomass code)
 /obj/structure/vine
 	name = "weepvine"
-	desc = "Nasty, dead-looking gray tendrils of plantmass. Some believe that the name belies their nature as Dendor's tears for the humens that refuse to embrace nature, others believe it comes from the nasty thorns that cause flesh to weep red tears."
+	desc = "Nasty, dead-looking gray tendrils of plantmass. Some believe that the name belies their nature as Dendor's tears for those that refuse to embrace nature, others believe it comes from the nasty thorns that cause their flesh to weep red tears."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
 	anchored = TRUE
