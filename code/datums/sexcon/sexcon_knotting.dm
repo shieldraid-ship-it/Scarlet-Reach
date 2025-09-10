@@ -168,9 +168,8 @@
 				break
 		btm.sexcon.tugging_knot = FALSE
 	if(dist > 1) // if we couldn't move them closer, force the knot out
-		if(dist > 10) // teleported or something else
-			if(knot_movement_mods_remove_his_knot_ty(top, btm))
-				return
+		if(dist > 10 && knot_movement_mods_remove_his_knot_ty(top, btm)) // teleported or something else
+			return
 		knot_remove(forceful_removal = TRUE)
 		return
 	if(top.loc.z != btm.loc.z) // we're not on the same sector
@@ -236,9 +235,8 @@
 				break
 		btm.sexcon.tugging_knot = FALSE
 	if(dist > 2)
-		if(dist > 10) // teleported or something else
-			if(knot_movement_mods_remove_his_knot_ty(top, btm))
-				return
+		if(dist > 10 && knot_movement_mods_remove_his_knot_ty(top, btm)) // teleported or something else
+			return
 		knot_remove(forceful_removal = TRUE)
 		return
 	if(top.loc.z != btm.loc.z) // we're not on the same sector
