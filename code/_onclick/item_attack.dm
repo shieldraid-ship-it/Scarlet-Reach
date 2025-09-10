@@ -214,9 +214,11 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	if(user.dual_attack_active && do_double_hit && user.client?.prefs.showrolls)
-		to_chat(user, span_notice("Success!"))
-	else if(do_double_hit && !user.dual_attack_active && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
+	if(user.dual_attack_active) // we did our second hit, return
+		if(user.client?.prefs.showrolls && do_double_hit)
+			to_chat(user, span_notice("Success!"))
+		return
+	if(do_double_hit && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
 		var/obj/item/offh = user.get_inactive_held_item()
 		if(!offh)
 			return
