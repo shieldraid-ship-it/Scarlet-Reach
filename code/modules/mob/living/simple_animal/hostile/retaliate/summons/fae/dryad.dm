@@ -45,7 +45,7 @@
 //	stat_attack = UNCONSCIOUS
 	ranged = FALSE
 	var/vine_cd
-	inherent_spells = list(/obj/effect/proc_holder/spell/self/create_vines, /obj/effect/proc_holder/spell/invoked/lesser_heal/free)
+	inherent_spells = list(/obj/effect/proc_holder/spell/self/create_vines)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the watcher
