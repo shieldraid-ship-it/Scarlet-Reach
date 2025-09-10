@@ -79,13 +79,16 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/proc/create_shroom(atom/target)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Kneestingers pop out from the ground around [target]!"))
+	target.visible_message(span_boldwarning("Kneestingers pop out from the ground around [target]! More fae creatures follow!"))
 	var/turf/target_turf = target // need to handle it this way so player sylphs can target turfs with this spell
 	if(isliving(target))
 		target_turf = target.loc
+	new /mob/living/simple_animal/hostile/retaliate/rogue/fae/glimmerwing(target_turf)
 	for(var/turf/turf as anything in RANGE_TURFS(3,target_turf))
 		if(prob(30))
 			new /obj/structure/glowshroom/dendorite(turf)
+			if(prob(20))
+				new /mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite(turf)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/death(gibbed)
