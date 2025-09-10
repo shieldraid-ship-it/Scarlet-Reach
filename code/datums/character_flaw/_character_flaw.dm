@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Sleepless"=/datum/charflaw/sleepless,
 	"Mute"=/datum/charflaw/mute,
 	"Critical Weakness"=/datum/charflaw/critweakness,
+	"Foreigner"=/datum/charflaw/foreigner,
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"No Flaw (3 TRIUMPHS)"=/datum/charflaw/noflaw,
 	))
@@ -502,3 +503,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/critweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+
+/datum/charflaw/foreigner	
+	name = "Foreigner"
+	desc = "You never learned Common. You cannot understand or speak it."
+
+/datum/charflaw/foreigner/on_mob_creation(mob/user)
+	user.remove_language(/datum/language/common)
