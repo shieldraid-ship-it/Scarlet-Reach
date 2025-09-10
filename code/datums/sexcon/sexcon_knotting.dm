@@ -17,16 +17,16 @@
 		target.sexcon.knot_remove()
 
 /datum/sex_controller/proc/knot_try()
+	if(!user.sexcon.current_action)
+		return
+	var/datum/sex_action/action = SEX_ACTION(user.sexcon.current_action)
+	if(!action.knot_on_finish) // the current action does not support knot climaxing, abort
+		return
 	if(!user.sexcon.can_use_penis())
 		return
 	if(!user.sexcon.knot_penis_type()) // don't have that dog in 'em
 		return
-	if(!user.sexcon.current_action)
-		return
 	if(!target.client?.prefs?.sexable)
-		return
-	var/datum/sex_action/action = SEX_ACTION(user.sexcon.current_action)
-	if(!action.knot_on_finish) // the current action does not support knot climaxing, abort
 		return
 	if(user.sexcon.considered_limp())
 		if(!user.sexcon.knotted_status)
