@@ -5,6 +5,11 @@
 #define MAX_POP_FOR_STORYTELLER_VOTE 25
 ///the duration into the round for which roundstart events are still valid to run
 #define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
+/// Width of a popup window that opens when user presses (?) and contains storyteller description
+#define DESC_POPUP_WIDTH 400
+/// Height of a popup window that opens when user presses (?) and contains storyteller description
+#define DESC_POPUP_HEIGHT 250
+
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
@@ -676,9 +681,9 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/pick_from = list()
 	for(var/datum/storyteller/storyboy in get_valid_storytellers())
 		if(storyboy.always_votable)
-			final_choices[storyboy.name] = 0
+			final_choices["<b>[storyboy.name]</b><a href='?src=[REF(src)];storyboy_details=[storyboy.type]'>(?)</a>"] = 0
 		else
-			pick_from[storyboy.name] = storyboy.weight //might be able to refactor this to be slightly better due to get_valid_storytellers returning a weighted list
+			pick_from["<b>[storyboy.name]</b><a href='?src=[REF(src)];storyboy_details=[storyboy.type]'>(?)</a>"] = storyboy.weight //might be able to refactor this to be slightly better due to get_valid_storytellers returning a weighted list
 
 	var/added_storytellers = 0
 	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
@@ -946,6 +951,18 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/Topic(href, href_list)
 	. = ..()
 	var/mob/user = usr
+	if(href_list["storyboy_details"])
+		var/datum/storyteller/storyboy = storytellers[text2path(href_list["storyboy_details"])]
+		if(!istype(storyboy))
+			return
+
+		var/datum/browser/popup = new(user, "storyboy_details", "[storyboy.name] - Storyteller Details")
+		popup.width = DESC_POPUP_WIDTH
+		popup.height = DESC_POPUP_HEIGHT
+		popup.set_content(storyboy.vote_desc)
+		popup.open()
+		return
+
 	if(!check_rights(R_ADMIN))
 		return
 	switch(href_list["panel"])
@@ -1349,3 +1366,5 @@ SUBSYSTEM_DEF(gamemode)
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
 #undef ROUNDSTART_VALID_TIMEFRAME
+#undef DESC_POPUP_WIDTH
+#undef DESC_POPUP_HEIGHT
