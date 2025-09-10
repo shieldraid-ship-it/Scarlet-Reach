@@ -47,7 +47,7 @@
 	ranged_message = "throws icy magick"
 	var/shroom_cd = 0
 	var/summon_cd = 0
-	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/create_shrooms, /obj/effect/proc_holder/spell/invoked/lesser_heal/free)
+	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/create_shrooms)
 
 /obj/projectile/magic/frostbolt/greater
 	name = "greater frostbolt"
