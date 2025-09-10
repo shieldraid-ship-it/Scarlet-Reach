@@ -696,12 +696,16 @@ SUBSYSTEM_DEF(gamemode)
 		return storyboy.desc
 
 
-/datum/controller/subsystem/gamemode/proc/storyteller_vote_result(winner_name)
+/datum/controller/subsystem/gamemode/proc/storyteller_vote_result(html_contaminated)
 	for(var/storyteller_type in storytellers)
 		var/datum/storyteller/storyboy = storytellers[storyteller_type]
-		if(storyboy.name == winner_name)
-			selected_storyteller = storyteller_type
+		if(findtext(html_contaminated, storyboy.name))
+			selected_storyteller = storyboy.type
 			break
+
+	var/datum/storyteller/storytypecasted = selected_storyteller
+	to_chat(world, span_notice("<b>Storyteller is [initial(storytypecasted.name)]!</b>"))
+	to_chat(world, span_notice("[initial(storytypecasted.vote_desc)]"))
 
 ///return a weighted list of all storytellers that are currently valid to roll, if return_types is set then we will return types instead of instances
 /datum/controller/subsystem/gamemode/proc/get_valid_storytellers(return_types = FALSE)
