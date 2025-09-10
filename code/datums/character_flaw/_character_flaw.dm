@@ -510,7 +510,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/foreigner/on_mob_creation(mob/user)
 	user.remove_language(/datum/language/common)
-	if(!user.get_random_understood_language) // give them a random langauge if they dont understand any
+	if(!user.get_random_understood_language()) // give them a random langauge if they dont understand any
 		var/static/list/selectable_languages = list(
 			/datum/language/elvish,
 			/datum/language/dwarvish,
