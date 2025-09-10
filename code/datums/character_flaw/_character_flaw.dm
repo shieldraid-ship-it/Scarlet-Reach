@@ -526,4 +526,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			/datum/language/aavnic,
 			/datum/language/abyssal
 		)
-		user.grant_language(pick(selectable_languages))
+		var/datum/language/new_language = pick(selectable_languages)
+		user.grant_language(new_language)
+		src.desc += " In your past, you learned the language [initial(new_language.name)]."
