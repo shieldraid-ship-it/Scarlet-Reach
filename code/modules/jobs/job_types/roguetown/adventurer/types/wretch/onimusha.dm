@@ -1,9 +1,66 @@
-/datum/advclass/wretch/onimusha/swordhunter
+/datum/advclass/wretch/onimusha
+	name = "Onimusha"
+	tutorial = "You are a fiend of the Kazengunese mountains, a warrior who has cast aside their humenity and seeks to emulate the beasts of Graggar and Dendor."
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = RACES_ALL_KINDS
+	outfit = /datum/outfit/job/roguetown/wretch/berserker
+	maximum_possible_slots = 1
+	category_tags = list(CTAG_WRETCH)
+	cmode_music = 'sound/music/combat_berserker.ogg'
+	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN, TRAIT_STRENGTH_UNCAPPED)
+	subclass_stats = list(
+		STATKEY_STR = 4, //9 weighted stats, compared to Berserker's 8, but their highest weapon skill is Journeyman.
+		STATKEY_CON = 3,
+		STATKEY_END = 2,
+		STATKEY_INT = -2,
+		STATKEY_PER = -1,
+		STATKEY_FOR = -1
+	)
+
+	subclass_skills = list(
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, //All weapon skills are Journeyman here for a reason. Don't touch them.
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+	)
+
+/datum/outfit/job/roguetown/wretch/onimusha/pre_equip(mob/living/carbon/human/H)
+	H.set_patron(/datum/patron/inhumen/graggar)
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/beastskull
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full
+	cloak = /obj/item/clothing/cloak/darkcloak/minotaur
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	gloves = /obj/item/clothing/gloves/roguetown/plate
+	backr = /obj/item/storage/backpack/rogue/satchel
+	belt = /obj/item/storage/belt/rogue/leather/battleskirt/faulds
+	neck = /obj/item/clothing/neck/roguetown/leather
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+	r_hand = /obj/item/rogueweapon/mace/goden/steel/tetsubo //Big boy.
+	backpack_contents = list(
+		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/rope/chain = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+	)
+
+/datum/advclass/wretch/swordhunter
 	name = "Sword Hunter"
 	tutorial = "Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection, all in worship of Matiosu."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS //TD?
-	outfit = /datum/outfit/job/roguetown/wretch/onimusha/swordhunter
+	outfit = /datum/outfit/job/roguetown/wretch/swordhunter
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 1 //Very strong and also supposed to be unique, so one slot.
 	cmode_music = 'sound/music/combat_swordhunter.ogg'
@@ -26,7 +83,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,	
 	)
 
-/datum/outfit/job/roguetown/wretch/onimusha/swordhunter/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/wretch/swordhunter/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection in worship of Matiosu."))
 	H.set_patron(/datum/patron/inhumen/matthios)

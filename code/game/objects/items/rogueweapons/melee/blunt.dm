@@ -24,6 +24,9 @@
 	icon_state = "insmash"
 	item_d_type = "blunt"
 
+/datum/intent/mace/smash/tetsubo
+	reach = 2
+
 /datum/intent/mace/smash/flataxe
 	damfactor = 1.2
 	clickcd = 10
@@ -421,6 +424,19 @@
 	desc = "The tenets of ravoxian duels are enscribed upon the head of this maul."
 	icon_state = "ravoxhammer"
 	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+
+/obj/item/rogueweapon/mace/goden/steel/tetsubo
+	name = "tetsubo"
+	desc = "A heavier variant of the kanabo, fitted with a steel sleeve bearing menacing spikes and favored by Ogrun Warlords. Requires immense strength to use, but hits like a raging bull."
+	icon_state = "tetsubo"
+	force = 20
+	force_wielded = 40 //Minotaur greataxe, but for blunt weapons
+	possible_item_intents = list(/datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash/tetsubo)
+	sharpness = IS_SHARP
+	icon = 'icons/roguetown/weapons/64.dmi'
+	minstr = 15
+	slot_flags = ITEM_SLOT_BACK
 
 
 /obj/item/rogueweapon/mace/goden/psymace
