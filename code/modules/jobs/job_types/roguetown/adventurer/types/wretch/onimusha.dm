@@ -1,12 +1,12 @@
-/datum/advclass/wretch/onimusha/bladethief
-	name = "Blade Thief"
+/datum/advclass/wretch/onimusha/swordhunter
+	name = "Sword Hunter"
 	tutorial = "Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection, all in worship of Matiosu."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS //TD?
-	outfit = /datum/outfit/job/roguetown/wretch/onimusha/bladethief
+	outfit = /datum/outfit/job/roguetown/wretch/onimusha/swordhunter
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 1 //Very strong and also supposed to be unique, so one slot.
-	cmode_music = 'sound/music/combat_bladethief.ogg'
+	cmode_music = 'sound/music/combat_swordhunter.ogg'
 
 	subclass_languages = list(/datum/language/kazengunese)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -26,7 +26,7 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,	
 	)
 
-/datum/outfit/job/roguetown/wretch/onimusha/bladethief/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/wretch/onimusha/swordhunter/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection in worship of Matiosu."))
 	H.set_patron(/datum/patron/inhumen/matthios)
