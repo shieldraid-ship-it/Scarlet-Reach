@@ -219,10 +219,6 @@
 			to_chat(user, span_notice("Success!"))
 		return
 	if(do_double_hit && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
-		if(prob(25))
-			if(user.client?.prefs.showrolls)
-				to_chat(user, span_info("I couldn't get in a second second attack!"))
-			return
 		var/obj/item/offh = user.get_inactive_held_item()
 		if(!offh)
 			return
@@ -230,6 +226,8 @@
 		if(!mainh || !istype(mainh, offh))
 			return
 		if(!iscarbon(user) || user == M) // don't allow this to apply to yourself
+			return
+		if(prob(25))
 			return
 		var/bakstr = user.STASTR
 		var/bakhandindex = user.active_hand_index
