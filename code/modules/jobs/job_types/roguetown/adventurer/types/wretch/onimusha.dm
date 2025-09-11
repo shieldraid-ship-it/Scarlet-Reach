@@ -1,9 +1,9 @@
 /datum/advclass/wretch/onimusha/bladethief
 	name = "Blade Thief"
-	tutorial = "Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection in worship of Matthios."
+	tutorial = "Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection, all in worship of Matiosu."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS //TD?
-	outfit = /datum/outfit/job/roguetown/wretch/ronin
+	outfit = /datum/outfit/job/roguetown/wretch/onimusha/bladethief
 	category_tags = list(CTAG_WRETCH)
 	cmode_music = 'sound/music/combat_vaquero.ogg' //TD
 
@@ -27,7 +27,8 @@
 
 /datum/outfit/job/roguetown/wretch/onimusha/bladethief/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection in worship of Matthios."))
+	to_chat(H, span_warning("Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection in worship of Matiosu."))
+	H.set_patron(/datum/patron/inhumen/matthios)
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/kazengunese
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
 	armor = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
@@ -38,7 +39,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 	neck = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-	mask = /obj/item/clothing/mask/rogue/facemask/steel/hound
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full/kitsune
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -47,18 +48,32 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 
-	var/weapons = list("Rapier","Dagger", "Whip")
-	var/weapon_choice = input("Pick your steel.", "TAKE UP ARMS") as anything in weapons
+	var/weapons = list("Rapier","Shashka", "Liuyedao", "Shamshir", "Fechtfeders", "Kriegsmesser", "Zweihander", "Dual Gladius")
+	var/weapon_choice = input("Pick your stolen steel.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
-	switch(weapon_choice)
+	switch(weapon_choice) //A large selection of exotic starter options, as per the class gimmick.
 		if("Rapier")
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			l_hand = /obj/item/rogueweapon/sword/rapier
-		if("Dagger")
-			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-			beltl = /obj/item/rogueweapon/scabbard/sheath
-			l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/special // Why were they spawning with an elven dagger in the first place??? Please LMK.
-		if ("Whip")
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-			beltl = /obj/item/rogueweapon/whip
+		if("Shashka")
+			beltl = /obj/item/rogueweapon/scabbard/sword
+			l_hand = /obj/item/rogueweapon/sword/sabre/steppesman 
+		if ("Liuyedao")
+			beltl = /obj/item/rogueweapon/scabbard/sword/kazengun
+			l_hand = /obj/item/rogueweapon/sword/sabre/mulyeog
+		if ("Shamshir")
+			beltl = /obj/item/rogueweapon/scabbard/sword
+			l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
+		if ("Fechtfeders")
+			beltl = /obj/item/rogueweapon/scabbard/sword
+			l_hand = /obj/item/rogueweapon/sword/long/frei
+		if ("Kriegsmesser")
+			beltl = /obj/item/rogueweapon/scabbard/sword
+			l_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+		if ("Zweihander")
+			l_hand = /obj/item/rogueweapon/greatsword/zwei
+		if ("Dual Gladius")
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+			beltl = /obj/item/rogueweapon/sword/iron/short/gladius
+			l_hand = /obj/item/rogueweapon/sword/iron/short/gladius
 	wretch_select_bounty(H)
