@@ -506,9 +506,23 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/foreigner	
 	name = "Foreigner"
-	desc = "You never learned Common. You cannot understand or speak it."
+	desc = "You never learned Imperial. You cannot understand or speak it."
 
-/datum/charflaw/foreigner/on_mob_creation(mob/user)
+/datum/charflaw/foreigner/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user 
+	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+	if(J && (J.department_flag & (NOBLEMEN | GARRISON | CHURCHMEN | INQUISITION | YEOMEN)))
+		to_chat(user, span_boldwarning("Your profession requires you to speak the local language. Your 'Foreigner' flaw has been replaced with a different one."))
+		var/list/flaw_choices = GLOB.character_flaws.Copy()
+		flaw_choices -= "Foreigner"
+		flaw_choices -= "Random or No Flaw"
+		flaw_choices -= "No Flaw (3 TRIUMPHS)"
+		var/new_flaw_name = pick(flaw_choices)
+		var/new_flaw_type = GLOB.character_flaws[new_flaw_name]
+		H.charflaw = new new_flaw_type()
+		H.charflaw.on_mob_creation(H)
+		return
+	
 	user.remove_language(/datum/language/common)
 	if(!user.get_random_understood_language()) // give them a random langauge if they dont understand any
 		var/static/list/selectable_languages = list(
