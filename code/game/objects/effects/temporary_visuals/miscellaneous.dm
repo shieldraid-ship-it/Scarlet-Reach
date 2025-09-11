@@ -467,31 +467,13 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
-/obj/effect/temp_visual/recall_smoke
+/obj/effect/temp_visual/recall_smoke //effects from casting the Recall spell, meant to make it more obvious that you're doing it
 	name = "recall smoke"
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = "steam_cloud_1"
 	duration = 20
 	plane = GAME_PLANE_UPPER
 	layer = ABOVE_ALL_MOB_LAYER
-
-/atom/movable/screen/alert/status_effect/buff/recalling
-	name = "Recalling"
-	desc = "Im in the middle of casting recall."
-	icon_state = "buff"
-
-/datum/status_effect/buff/recalling
-	id = "recalling"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/recalling
-	var/effect_color
-	var/datum/stressevent/stress_to_apply
-	var/pulse = 0
-	var/ticks_to_apply = 5
-
-/datum/status_effect/buff/recalling/tick()
-	var/obj/effect/temp_visual/recall_smoke/M = new /obj/effect/temp_visual/recall_smoke(get_turf(owner))
-	M.color = effect_color
-	pulse += 1
 
 /obj/effect/temp_visual/recall_smoke/Initialize(mapload, set_color)
 	if(set_color)
