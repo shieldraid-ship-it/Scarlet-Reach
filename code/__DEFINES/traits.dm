@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STRONGBITE = span_info("Stronger bites, critical bite attacks."),
 	TRAIT_NOBLE = span_blue("I'm of noble blood."),
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),
-	TRAIT_EMPATH = span_info("I can notice when people are in pain."),
+	TRAIT_EMPATH = span_info("I can notice when people are in pain, and I feel peace when they're happy."),
 	TRAIT_BREADY = span_info("Defensive stance does not passively fatigue me."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
