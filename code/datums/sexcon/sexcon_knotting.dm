@@ -47,7 +47,8 @@
 	if(user.sexcon.knotted_status)
 		var/top_still_topping = user.sexcon.knotted_status == KNOTTED_AS_TOP // top just reknotted a different character, don't retrigger the same status (this fixes a weird perma stat debuff if we try to remove/apply the same effect in the same tick)
 		user.sexcon.knot_remove(keep_top_status = top_still_topping)
-	if((target.compliance || user.patron && istype(user.patron, /datum/patron/inhumen/baotha)) && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // as requested, if the top is of the baotha faith, or the target has compliance mode on
+	var/we_got_baothad = user.patron && istype(user.patron, /datum/patron/inhumen/baotha)
+	if((target.compliance || we_got_baothad) && !target.has_status_effect(/datum/status_effect/knot_fucked_stupid)) // as requested, if the top is of the baotha faith, or the target has compliance mode on
 		target.apply_status_effect(/datum/status_effect/knot_fucked_stupid)
 
 	user.sexcon.knotted_owner = user
@@ -83,6 +84,8 @@
 				to_chat(target, span_userdanger("You have been triple-knotted!"))
 			else
 				to_chat(target, span_userdanger("You have been double-knotted!"))
+		if(we_got_baothad)
+			to_chat(target, span_userdanger("Baotha magick infuses within, you can't think straight!"))
 	if(!target.has_status_effect(/datum/status_effect/knot_tied)) // only apply status if we don't have it already
 		target.apply_status_effect(/datum/status_effect/knot_tied)
 	if(!user.has_status_effect(/datum/status_effect/knotted)) // only apply status if we don't have it already
