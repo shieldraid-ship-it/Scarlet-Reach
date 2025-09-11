@@ -5,7 +5,7 @@
 	icon_state = "warden"
 	icon_living = "warden"
 	icon_dead = "vvd"
-	summon_primer = "You are an warden, a moderate elemental. Elementals such as yourself guard your plane from intrusion zealously. Now you've been pulled from your home into a new world, that is decidedly less peaceful then your carefully guarded plane. How you react to these events, only time can tell."
+	summon_primer = "You are a warden, a moderate elemental. Elementals such as yourself guard your plane from intrusion zealously. Now you've been pulled from your home into a new world, that is decidedly less peaceful than your carefully guarded plane. How you react to these events, only time can tell."
 	summon_tier = 2
 	gender = MALE
 	emote_hear = null
@@ -53,14 +53,14 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/death(gibbed)
 	..()
 	var/turf/deathspot = get_turf(src)
-	new /obj/item/magic/elementalshard(deathspot)
-	new /obj/item/magic/elementalshard(deathspot)
-	new /obj/item/magic/elementalshard(deathspot)
-	new /obj/item/magic/elementalshard(deathspot)
-	new /obj/item/magic/elementalmote(deathspot)
-	new /obj/item/magic/elementalmote(deathspot)
-	new /obj/item/magic/elementalmote(deathspot)
-	new /obj/item/magic/elementalmote(deathspot)
+	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/shard(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
+	new /obj/item/magic/elemental/mote(deathspot)
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)
@@ -72,12 +72,17 @@
 	in_melee = TRUE
 	if(!target)
 		return
+	if(isstructure(target))
+		var/obj/structure/S = target
+		if(S.anchored)
+			return target.attack_animal(src)
 	yeet(target)
 	if(!QDELETED(target))
 		return target.attack_animal(src)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/proc/yeet(target)
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/warden/proc/yeet(atom/movable/target)
 	var/atom/throw_target = get_edge_target_turf(src, get_dir(src, target)) //ill be real I got no idea why this worked.
-	var/mob/living/L = target
-	L.throw_at(throw_target, 7, 4)
-	L.adjustBruteLoss(20)
+	target.throw_at(throw_target, 7, 4)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustBruteLoss(20)

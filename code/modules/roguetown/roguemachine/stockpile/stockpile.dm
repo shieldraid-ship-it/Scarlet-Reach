@@ -23,7 +23,7 @@
 
 /obj/structure/roguemachine/stockpile/examine(mob/user)
 	. = ..()
-	. += span_info("Right click to sell everything on your turf into the stockpile.")
+	. += span_info("Right click to sell everything in front of the stockpile.")
 
 /obj/structure/roguemachine/stockpile/Topic(href, href_list)
 	. = ..()
@@ -161,9 +161,9 @@
 		if(istype(P, /obj/item/roguecoin/aalloy))
 			return
 
-		if(istype(P, /obj/item/roguecoin/inqcoin))	
+		if(istype(P, /obj/item/roguecoin/inqcoin))
 			return
-	
+
 		if(istype(P, /obj/item/roguecoin))
 			withdraw_tab.insert_coins(P)
 			return attack_hand(user)
@@ -172,7 +172,7 @@
 
 /obj/structure/roguemachine/stockpile/attack_right(mob/user)
 	if(ishuman(user))
-		for(var/obj/I in get_turf(user))
+		for(var/obj/I in get_turf(src))
 			attemptsell(I, user, FALSE, FALSE)
 		say("Bulk selling in progress...")
 		playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)

@@ -251,8 +251,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Storm"
 	desc = "A Holy Rune of Abyssor. You sense your mind getting pulled into the drawn spiral."
 	icon_state = "abyssor_chalky" // mortosasye
-//	var/stormrites = list("Rite of the Crystal Spire")
-var/abyssorrites = list("Rite of the Abyssal Call")
+	var/stormrites = list("Rite of the Abyssal Call")
 
 /obj/structure/ritualcircle/abyssor_alt // For future use with more malicious rituals, for example.
 	name = "Rune of Stirring"
@@ -269,7 +268,7 @@ var/abyssorrites = list("Rite of the Abyssal Call")
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
-	var/riteselection = input(user, "Rituals of the Storm", src) as null|anything in abyssorrites
+	var/riteselection = input(user, "Rituals of the Storm", src) as null|anything in stormrites
 	switch(riteselection)
 		if("Rite of the Abyssal Call")
 			if(do_after(user, 50))
@@ -336,6 +335,9 @@ var/abyssorrites = list("Rite of the Abyssal Call")
 						spawn(120)
 							icon_state = "necra_chalky"
 		if("Vow to the Undermaiden")
+			if(user.construct)//golems can't benefit from miracles so they can't do this
+				to_chat(user,span_warning("My body is already cold and lifeless. I have nothing to pledge."))
+				return
 			loc.visible_message(span_warning("[user] sways before the rune, they open their mouth, though no words come out..."))
 			playsound(user, 'sound/vo/mobs/ghost/whisper (3).ogg', 100, FALSE, -1)
 			if(do_after(user, 60))
@@ -661,7 +663,7 @@ var/abyssorrites = list("Rite of the Abyssal Call")
 		loc.visible_message(span_cult("THE RITE REJECTS ONE ALREADY OF THE CABAL"))
 		return
 	if(target.already_converted_once)
-		loc.visible_message(span_cult("BLOODY NIMROD!!"))
+		loc.visible_message(span_cult("BLOODY FOOL!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return
 	var/prompt = alert(target, "SUBMISSION OR DEATH",, "SUBMISSION", "DEATH")
@@ -828,7 +830,7 @@ var/abyssorrites = list("Rite of the Abyssal Call")
 		loc.visible_message(span_cult("THE RITE REJECTS ONE WITH GREED IN THEIR HEART ALREADY PRESENT!!"))
 		return
 	if(target.already_converted_once)
-		loc.visible_message(span_cult("BLOODY NIMROD!!"))
+		loc.visible_message(span_cult("BLOODY FOOL!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return
 	var/prompt = alert(target, "GOOD DEAL?",, "GOOD DEAL!", "NO DEAL!")
@@ -998,7 +1000,7 @@ var/abyssorrites = list("Rite of the Abyssal Call")
 		loc.visible_message(span_cult("THE RITE REJECTS ONE WITH SLAUGHTER IN THEIR HEART!!"))
 		return
 	if(target.already_converted_once)
-		loc.visible_message(span_cult("BLOODY NIMROD!!"))
+		loc.visible_message(span_cult("BLOODY FOOL!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return 
 	var/prompt = alert(target, "CULL AND HUNT!",, "KILL KILL KILL!!", "I DEFY YOU!!")
@@ -1101,7 +1103,7 @@ var/abyssorrites = list("Rite of the Abyssal Call")
 		loc.visible_message(span_cult("THE RITE REJECTS ONE ALREADY DEPRAVED ENOUGH!!"))
 		return
 	if(target.already_converted_once)
-		loc.visible_message(span_cult("BLOODY NIMROD!!"))
+		loc.visible_message(span_cult("BLOODY FOOL!!"))
 		target.apply_damage(150, BRUTE, BODY_ZONE_HEAD)
 		return 
 	var/prompt = alert(target, "LEASH OF SUBMISSION OR LASH OF DEFIANCE?",, "LEASH", "LASH")

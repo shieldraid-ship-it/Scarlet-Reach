@@ -6,7 +6,6 @@
 	total_positions = 4
 	spawn_positions = 4
 	allowed_races = RACES_ALL_KINDS
-	allowed_patrons = NON_PSYDON_PATRONS
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	advclass_cat_rolls = list(CTAG_WAPPRENTICE = 20)
 
@@ -28,7 +27,7 @@
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/keyring/mageapprentice
-	beltl = /obj/item/storage/magebag
+	beltl = /obj/item/storage/magebag/starter
 	backr = /obj/item/rogueweapon/woodstaff
 	shoes = /obj/item/clothing/shoes/roguetown/gladiator // FANCY SANDALS
 
