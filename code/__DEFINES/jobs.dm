@@ -373,9 +373,11 @@
 	/datum/job/roguetown/loudmouth,\
 	/datum/job/roguetown/archivist,\
 	/datum/job/roguetown/barkeep,\
+	/datum/job/roguetown/guildsmaster,\
 	/datum/job/roguetown/guildsman,\
 	/datum/job/roguetown/tailor,\
 	/datum/job/roguetown/merchant,\
+	/datum/job/roguetown/scribe
 
 #define WANDERER_ROLES \
 	/datum/job/roguetown/pilgrim,\
@@ -389,7 +391,9 @@
 	/datum/job/roguetown/warden,\
 	/datum/job/roguetown/sergeant,\
 	/datum/job/roguetown/dungeoneer,\
+	/datum/job/roguetown/gatemaster,\
 	/datum/job/roguetown/manorguard,\
+	/datum/job/roguetown/sheriff,\
 	/datum/job/roguetown/squire,\
 	/datum/job/roguetown/guardsman
 
