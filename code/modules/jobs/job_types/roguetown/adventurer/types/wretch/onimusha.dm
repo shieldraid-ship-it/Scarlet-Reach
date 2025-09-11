@@ -5,14 +5,15 @@
 	allowed_races = RACES_ALL_KINDS //TD?
 	outfit = /datum/outfit/job/roguetown/wretch/onimusha/bladethief
 	category_tags = list(CTAG_WRETCH)
-	cmode_music = 'sound/music/combat_vaquero.ogg' //TD
+	maximum_possible_slots = 1 //Very strong and also supposed to be unique, so one slot.
+	cmode_music = 'sound/music/combat_bladethief.ogg'
 
 	subclass_languages = list(/datum/language/kazengunese)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	//Bad stats for a wretch, instead they get some really good traits and skills.
 	subclass_stats = list(
 		STATKEY_SPD = 2,
-		STATKEY_INT = 2,
+		STATKEY_INT = 1,
 		STATKEY_STR = 1
 	)
 
