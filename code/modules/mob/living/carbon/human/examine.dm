@@ -721,8 +721,12 @@
 						msg += "[m1] not stressed."
 					if(-19 to -10)
 						msg += "[m1] somewhat at peace."
+						if(user != src)
+							user.add_stress(/datum/stressevent/empath_happy)
 					if(-20 to INFINITY)
 						msg += "[m1] at peace inside."
+						if(user != src)
+							user.add_stress(/datum/stressevent/empath_superhappy)
 			else if(stress > 10)
 				msg += "[m3] stress all over [m2] face."
 
