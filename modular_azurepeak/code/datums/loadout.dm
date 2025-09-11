@@ -283,6 +283,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe
 
+/datum/loadout_item/spellcasterrobe
+	name = "Spellcaster Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe
+
 /datum/loadout_item/formalsilks
 	name = "Formal Silks"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
