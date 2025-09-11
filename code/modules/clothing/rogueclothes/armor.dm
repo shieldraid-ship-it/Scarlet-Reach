@@ -1546,6 +1546,19 @@
 	armor = list("blunt" = 50, "slash" = 90, "stab" = 60, "piercing" = 30, "fire" = 0, "acid" = 0)
 	max_integrity = 200
 
+/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/outlaw
+	color = "#ff0000"
+
+/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper
+	name = "eastern ceremonial robe"
+	desc = "A simple eastern robe, traditionally worn by Kazengunese priests. This one is reinforced with cured leather inlays."
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
+	allowed_race = CLOTHED_RACES_TYPES
+	color = "#414143"
+	icon_state = "shrinekeeper"
+	item_state = "shrinekeeper"
+
+
 //craftable variation of eastsuit, essentially requiring the presence of a tailor with relevant materials
 //still weak against blunt
 

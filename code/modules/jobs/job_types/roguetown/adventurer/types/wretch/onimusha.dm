@@ -3,7 +3,7 @@
 	tutorial = "You are a fiend of the Kazengunese mountains, a warrior who has cast aside their humenity and seeks to emulate the beasts of Graggar and Dendor."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/wretch/berserker
+	outfit = /datum/outfit/job/roguetown/wretch/onimusha
 	maximum_possible_slots = 1
 	category_tags = list(CTAG_WRETCH)
 	cmode_music = 'sound/music/combat_berserker.ogg'
@@ -89,7 +89,7 @@
 	H.set_patron(/datum/patron/inhumen/matthios)
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/kazengunese
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
-	armor = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
+	armor = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/outlaw
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
 	backl = /obj/item/storage/backpack/rogue/satchel/short
 	belt = /obj/item/storage/belt/rogue/leather/cloth/bandit
@@ -134,4 +134,66 @@
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 			beltl = /obj/item/rogueweapon/sword/iron/short/gladius
 			l_hand = /obj/item/rogueweapon/sword/iron/short/gladius
+	wretch_select_bounty(H)
+
+/datum/advclass/wretch/sohei
+	name = "Disgraced Custodian"
+	tutorial = "Once, you proudly defended a quiet place of worship. Now, you've turned your back on faith and duty, living the lyfe of a would-be Kazengite warlord."
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = RACES_FEARED_UP //No naga.
+	outfit = /datum/outfit/job/roguetown/wretch/sohei
+	category_tags = list(CTAG_WRETCH)
+	maximum_possible_slots = 1
+	cmode_music = 'sound/music/combat_sohei.ogg'
+
+	subclass_languages = list(/datum/language/kazengunese)
+	traits_applied = list(TRAIT_NOPAINSTUN) //Inherits this from the Custodian adv, still light armor only.
+	subclass_stats = list(
+		STATKEY_END = 2,
+		STATKEY_PER = 1,
+		STATKEY_SPD = 2, 
+		STATKEY_STR = 1,
+	)
+
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_MASTER, //Main draw of the class, Freelancer skill spread.
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,	//Wrestling is a swordsman's luxury.
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+	)
+
+/datum/outfit/job/roguetown/wretch/sohei/pre_equip(mob/living/carbon/human/H)
+	..()
+	to_chat(H, span_warning("Once, you proudly defended a quiet place of worship. Now, you've turned your back on faith and duty, living the lyfe of a would-be Kazengite warlord."))
+	head = /obj/item/clothing/head/roguetown/mentorhat
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
+	shirt = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper
+	backl = /obj/item/storage/backpack/rogue/satchel/short
+	belt = /obj/item/storage/belt/rogue/leather/sash
+	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+	shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/full/iron
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
+	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	backpack_contents = list(
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
+		/obj/item/rope/chain = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		)
+
+	var/weapons = list("Naginata", )
+	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+	H.set_blindness(0)
+	switch(weapon_choice) //A large selection of exotic starter options, as per the class gimmick.
+		if("Naginata")
+			l_hand = /obj/item/rogueweapon/spear/naginata
+		if("Quarterstaff")
+			l_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/steel
+		//if("Jumonji yari")
+		//	l_hand = /obj/item/rogueweapon/spear/boar/kazengun
+		// Kazengunese boar spear variant is planned, but I know it'll conflict with another PR at the moment so I am not pushing it yet.
 	wretch_select_bounty(H)
