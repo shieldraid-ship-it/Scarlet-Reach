@@ -221,6 +221,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Leather Cloak"
 	path = /obj/item/clothing/cloak/eastcloak2
 
+/datum/loadout_item/ladyshort_cloak
+	name = "Ladylike Shortcloak"
+	path = /obj/item/clothing/cloak/lordcloak/ladycloak
+
+/datum/loadout_item/forester_snow_cloak
+	name = "Snow Cloak"
+	path = /obj/item/clothing/cloak/forrestercloak/snow
+
 //SHOES
 /datum/loadout_item/darkboots
 	name = "Dark Boots"
@@ -274,10 +282,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/robe
 	name = "Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe
-
-/datum/loadout_item/spellcasterrobe
-	name = "Spellcaster Robe"
-	path = /obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe
 
 /datum/loadout_item/formalsilks
 	name = "Formal Silks"
