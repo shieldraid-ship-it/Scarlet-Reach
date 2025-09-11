@@ -29,21 +29,33 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	
-	if(!HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
-		to_chat(H, span_warning("You look into the mirror but see only your normal reflection."))
-		return
-	
+
 	if(obj_broken || !Adjacent(user))
 		return
 
+	if(!HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
+		to_chat(H, span_warning("You look into the mirror but see only your normal reflection."))
+		if(HAS_TRAIT(user, TRAIT_BEAUTIFUL))
+			H.add_stress(/datum/stressevent/beautiful)
+			to_chat(H, span_smallgreen("I look great!"))
+			// Apply Xylix buff when examining someone with the beautiful trait
+			if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
+				H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
+				to_chat(H, span_info("My beauty brings a smile to my face, and fortune to my steps!"))
+		if(HAS_TRAIT(H, TRAIT_UNSEEMLY))
+			to_chat(H, span_warning("Another reminder of my own horrid visage."))
+			H.add_stress(/datum/stressevent/unseemly)
+		return
+
+
+
 	var/should_update = FALSE
-	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
+	var/list/choices = list("hairstyle", "facial hairstyle", "accessory", "face detail", "horns", "ears", "ear color one", "ear color two", "tail", "tail color one", "tail color two", "hair color", "facial hair color", "eye color", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "testicles", "breasts", "vagina", "breast size", "penis size", "testicle size")
 	var/chosen = input(user, "Change what?", "Appearance") as null|anything in choices
-	
+
 	if(!chosen)
 		return
-		
+
 	switch(chosen)
 		if("hairstyle")
 			var/datum/customizer_choice/bodypart_feature/hair/head/humanoid/hair_choice = CUSTOMIZER_CHOICE(/datum/customizer_choice/bodypart_feature/hair/head/humanoid)
@@ -51,7 +63,7 @@
 			for(var/hair_type in hair_choice.sprite_accessories)
 				var/datum/sprite_accessory/hair/head/hair = new hair_type()
 				valid_hairstyles[hair.name] = hair_type
-			
+
 			var/new_style = input(user, "Choose your hairstyle", "Hair Styling") as null|anything in valid_hairstyles
 			if(new_style)
 				var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
@@ -60,11 +72,11 @@
 					for(var/datum/bodypart_feature/hair/head/hair_feature in head.bodypart_features)
 						current_hair = hair_feature
 						break
-					
+
 					if(current_hair)
 						var/datum/customizer_entry/hair/hair_entry = new()
 						hair_entry.hair_color = current_hair.hair_color
-						
+
 						if(istype(current_hair, /datum/bodypart_feature/hair/head))
 							hair_entry.natural_gradient = current_hair.natural_gradient
 							hair_entry.natural_color = current_hair.natural_color
@@ -72,12 +84,12 @@
 								hair_entry.dye_gradient = current_hair.hair_dye_gradient
 							if(hasvar(current_hair, "hair_dye_color"))
 								hair_entry.dye_color = current_hair.hair_dye_color
-						
+
 						var/datum/bodypart_feature/hair/head/new_hair = new()
 						new_hair.set_accessory_type(valid_hairstyles[new_style], hair_entry.hair_color, H)
-						
+
 						hair_choice.customize_feature(new_hair, H, null, hair_entry)
-						
+
 						head.remove_bodypart_feature(current_hair)
 						head.add_bodypart_feature(new_hair)
 						H.update_hair()
@@ -604,6 +616,98 @@
 					should_update = TRUE
 			else
 				to_chat(user, span_warning("You don't have a tail!"))
+		if("ears")
+			var/list/valid_ears = list("none")
+			for(var/ears_path in subtypesof(/datum/sprite_accessory/ears))
+				var/datum/sprite_accessory/ears/ears = new ears_path()
+				valid_ears[ears.name] = ears_path
+
+			var/new_style = input(user, "Choose your ears", "Ears Customization") as null|anything in valid_ears
+			if(new_style)
+				if(new_style == "none")
+					var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+					if(ears)
+						ears.Remove(H)
+						qdel(ears)
+						H.update_body()
+						should_update = TRUE
+				else
+					var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+					if(!ears)
+						ears = new /obj/item/organ/ears()
+						ears.Insert(H, TRUE, FALSE)
+					ears.accessory_type = valid_ears[new_style]
+					var/datum/sprite_accessory/ears/ears_type = SPRITE_ACCESSORY(ears.accessory_type)
+					ears.accessory_colors = ears_type.get_default_colors(list())
+					H.update_body()
+					should_update = TRUE
+
+		if("ear color one")
+			var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				var/new_color = color_pick_sanitized(user, "Choose your primary ear color", "Ear Color One", "#FFFFFF")
+				if(new_color)
+					ears.Remove(H)
+					var/list/colors = list()
+					if(ears.accessory_colors)
+						colors = color_string_to_list(ears.accessory_colors)
+					if(!length(colors))
+						colors = list("#FFFFFF", "#FFFFFF") // Default colors if none set
+					colors[1] = sanitize_hexcolor(new_color, 6, TRUE)
+					ears.accessory_colors = color_list_to_string(colors)
+					ears.Insert(H, TRUE, FALSE)
+					H.dna.features["ears_color"] = colors[1]  // Update DNA features
+					H.update_body()
+					should_update = TRUE
+			else
+				to_chat(user, span_warning("You don't have ears!"))
+
+		if("ear color two")
+			var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				var/new_color = color_pick_sanitized(user, "Choose your secondary ear color", "Ear Color Two", "#FFFFFF")
+				if(new_color)
+					ears.Remove(H)
+					var/list/colors = list()
+					if(ears.accessory_colors)
+						colors = color_string_to_list(ears.accessory_colors)
+					if(!length(colors))
+						colors = list("#FFFFFF", "#FFFFFF") // Default colors if none set
+					colors[2] = sanitize_hexcolor(new_color, 6, TRUE)
+					ears.accessory_colors = color_list_to_string(colors)
+					ears.Insert(H, TRUE, FALSE)
+					H.dna.features["ears_color2"] = colors[2]  // Update DNA features
+					H.update_body()
+					should_update = TRUE
+			else
+				to_chat(user, span_warning("You don't have a ears!"))
+				
+		if("horns")
+			var/list/valid_horns = list("none")
+			for(var/horns_path in subtypesof(/datum/sprite_accessory/horns))
+				var/datum/sprite_accessory/horns/horns = new horns_path()
+				valid_horns[horns.name] = horns_path
+
+			var/new_style = input(user, "Choose your horns", "Horns Customization") as null|anything in valid_horns
+			if(new_style)
+				if(new_style == "none")
+					var/obj/item/organ/horns/horns = H.getorganslot(ORGAN_SLOT_HORNS)
+					if(horns)
+						horns.Remove(H)
+						qdel(horns)
+						H.update_body()
+						should_update = TRUE
+				else
+					var/obj/item/organ/horns/horns = H.getorganslot(ORGAN_SLOT_HORNS)
+					if(!horns)
+						horns = new /obj/item/organ/horns()
+						horns.Insert(H, TRUE, FALSE)
+					horns.accessory_type = valid_horns[new_style]
+					var/datum/sprite_accessory/horns/horns_type = SPRITE_ACCESSORY(horns.accessory_type)
+					horns.accessory_colors = horns_type.get_default_colors(list())
+					H.update_body()
+					should_update = TRUE
+
 
 	if(should_update)
 		H.update_hair()
@@ -831,3 +935,32 @@
 
 /obj/structure/mirror/magic/proc/curse(mob/living/user)
 	return
+
+/obj/item/handmirror
+	name = "hand mirror"
+	desc = "Mirror, mirror, in my hand, who's the fairest in the land?"
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "handmirror"
+	grid_width = 32
+	grid_height = 64
+	dropshrink = 0.8
+
+/obj/item/handmirror/attack_self(mob/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+
+	if(HAS_TRAIT(H, TRAIT_MIRROR_MAGIC))
+		to_chat(H, span_notice("This mirror isn't large enough for me to use mirror magic."))
+	to_chat(H, span_warning("You look into [src] but see only your normal reflection."))
+	if(HAS_TRAIT(user, TRAIT_BEAUTIFUL))
+		H.add_stress(/datum/stressevent/beautiful)
+		H.visible_message(span_notice("[H] admires [H.p_their()] reflection in [src]."), span_smallgreen("I look great!"))
+		// Apply Xylix buff when examining someone with the beautiful trait
+		if(HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
+			H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
+			to_chat(H, span_info("My beauty brings a smile to my face, and fortune to my steps!"))
+	if(HAS_TRAIT(H, TRAIT_UNSEEMLY))
+		to_chat(H, span_warning("Another reminder of my own horrid visage."))
+		H.add_stress(/datum/stressevent/unseemly)

@@ -59,6 +59,8 @@
 #define CLICK_CD_EXHAUSTED 60
 #define CLICK_CD_TRACKING 30
 #define CLICK_CD_SLEUTH 10
+#define CLICK_CD_HEAVY 16
+#define CLICK_CD_CHARGED 14
 #define CLICK_CD_MELEE 12
 #define CLICK_CD_FAST 8
 #define CLICK_CD_INTENTCAP 6
@@ -177,6 +179,7 @@
 
 #define MACE_SMASH			/datum/intent/mace/smash
 #define MACE_STRIKE			/datum/intent/mace/strike
+#define AXE_SMASH			/datum/intent/mace/smash/flataxe
 
 #define DAGGER_CUT			/datum/intent/dagger/cut
 #define DAGGER_THRUST		/datum/intent/dagger/thrust

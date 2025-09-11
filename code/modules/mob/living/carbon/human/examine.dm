@@ -8,13 +8,13 @@
 			user.add_stress(/datum/stressevent/parastr)
 	if(HAS_TRAIT(user, TRAIT_JESTERPHOBIA) && job == "Jester")
 		user.add_stress(/datum/stressevent/jesterphobia)
-	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL))
+	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL) && user != src)//it doesn't really make sense that you can examine your own face
 		user.add_stress(/datum/stressevent/beautiful)
 		// Apply Xylix buff when examining someone with the beautiful trait
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
-	if(HAS_TRAIT(src, TRAIT_UNSEEMLY))
+	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
 
@@ -56,14 +56,16 @@
 		"Unknown Man",
 		"Unknown Woman",
 	)
-	if(get_visible_name() in unknown_names)
+	if(get_face_name() != real_name)
 		obscure_name = TRUE
 
 	if(observer_privilege)
 		obscure_name = FALSE
 
-	if(obscure_name)
-		. = list(span_info("ø ------------ ø\nThis is <EM>Unknown</EM>."))
+	if(name in unknown_names)
+		. = list(span_info("ø ------------ ø\nThis is <EM>[name]</EM>."))
+	else if(obscure_name)
+		. = list(span_info("ø ------------ ø\nThis is an unknown <EM>[name]</EM>."))
 	else
 		on_examine_face(user)
 		var/used_name = name
@@ -113,11 +115,11 @@
 
 		// Leashed pet status effect message
 		if(has_status_effect(/datum/status_effect/leash_pet))
-			. += span_warning("A leash is hooked to their collar. They are being led like a pet.")
+			. += span_warning("A leash is hooked to [p_their()] collar. [m1] being led like a pet.")
 
 		// Knotted effect message
 		if(has_status_effect(/datum/status_effect/knot_tied))
-			. += span_warning("A knot is locked inside them. They're being pulled around like a pet.")
+			. += span_warning("A knot is locked inside [p_them()]. [m1] being pulled around like a pet.")
 
 		// Facial/Creampie effect message
 		var/facial = has_status_effect(/datum/status_effect/facial)
@@ -875,7 +877,7 @@
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 		//tiny picture when you are not examining closer, shouldnt take too much space.
 	var/list/lines
-	if((get_visible_name() in unknown_names) && !observer_privilege)
+	if((get_face_name() != real_name) && !observer_privilege)
 		lines = build_cool_description_unknown(get_mob_descriptors(obscure_name, user), src)
 	else
 		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)
