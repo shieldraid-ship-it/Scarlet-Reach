@@ -778,10 +778,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tavern)
 "ame" = (
-/obj/structure/table/wood{
-	dir = 6;
-	icon_state = "largetable"
-	},
+/obj/structure/table/wood/large_table/south_east,
 /obj/item/candle/candlestick/gold/lit{
 	pixel_x = 3;
 	pixel_y = 23
@@ -792,7 +789,8 @@
 	pixel_y = -1
 	},
 /obj/item/clothing/suit/roguetown/shirt/tunic{
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 0
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/physician)
@@ -3329,9 +3327,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "aXg" = (
-/obj/structure/table/wood{
-	icon_state = "longtable"
-	},
+/obj/structure/table/wood/long_table,
 /obj/item/storage/belt/rogue/surgery_bag/full{
 	pixel_y = 10
 	},
@@ -3339,6 +3335,7 @@
 /obj/item/clothing/cloak/apron/cook{
 	name = "barber's apron"
 	},
+/obj/item/reagent_containers/glass/bottle/frankenbrew,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/physician)
 "aXo" = (
@@ -12837,10 +12834,7 @@
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/mountains)
 "dOI" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable_mid"
-	},
+/obj/structure/table/wood/long_table/mid/alt,
 /obj/structure/bars{
 	icon_state = "barsbent";
 	layer = 2.81
@@ -16551,10 +16545,7 @@
 /turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/outdoors/town/roofs)
 "eRd" = (
-/obj/structure/table/wood{
-	dir = 10;
-	icon_state = "largetable"
-	},
+/obj/structure/table/wood/large_table/south_west,
 /obj/structure/fluff/walldeco/med6{
 	pixel_y = 32
 	},
@@ -22774,10 +22765,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell)
 "gGr" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable"
-	},
+/obj/structure/table/wood/long_table/right,
 /obj/structure/fluff/walldeco/med{
 	pixel_y = 32
 	},
@@ -24169,10 +24157,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bog)
 "hbC" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable"
-	},
+/obj/structure/table/wood/long_table/right,
 /obj/structure/bars{
 	icon_state = "barsbent";
 	layer = 2.81
@@ -29040,9 +29025,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "itt" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Physician"
-	},
+/obj/structure/roguemachine/scomm,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/physician)
 "itv" = (
@@ -40492,9 +40475,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/outdoors/mountains/decap/stepbelow)
 "lLd" = (
-/obj/structure/table/wood{
-	icon_state = "longtable"
-	},
+/obj/structure/table/wood/long_table,
 /obj/item/paper,
 /obj/item/paper{
 	pixel_x = 4;
@@ -42512,10 +42493,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/mountains/decap)
 "mqz" = (
-/obj/structure/table/wood{
-	dir = 6;
-	icon_state = "largetable"
-	},
+/obj/structure/table/wood/large_table/south_east,
 /obj/item/storage/belt/rogue/surgery_bag/full{
 	pixel_y = 10
 	},
@@ -52762,10 +52740,7 @@
 /turf/closed/wall/mineral/rogue/decowood/vert,
 /area/rogue/indoors/town)
 "por" = (
-/obj/structure/table/wood{
-	dir = 10;
-	icon_state = "largetable"
-	},
+/obj/structure/table/wood/large_table/south_west,
 /obj/item/natural/bundle/fibers/full{
 	pixel_x = 8;
 	pixel_y = 7
@@ -55493,6 +55468,7 @@
 "qcR" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/bucket{
+	pixel_x = 0;
 	pixel_y = 20
 	},
 /obj/item/soap{
@@ -56274,6 +56250,10 @@
 /obj/machinery/gear_painter,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
+"qoq" = (
+/obj/structure/chair/frankenstein,
+/turf/open/floor/rogue/church,
+/area/rogue/indoors/town/physician)
 "qor" = (
 /obj/structure/table/wood/crafted,
 /obj/item/grown/log/tree/stick,
@@ -63938,6 +63918,7 @@
 /obj/structure/fermentation_keg/water,
 /obj/structure/lever/wall{
 	pixel_x = 10;
+	pixel_y = 0;
 	redstone_id = "Physician"
 	},
 /turf/open/floor/rogue/wood,
@@ -389339,7 +389320,7 @@ mYW
 efz
 sGj
 gGr
-eMg
+qoq
 dMF
 sGj
 kYW
