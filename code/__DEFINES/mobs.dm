@@ -567,14 +567,14 @@
 #define LIZARD_SKIN_ABYSSAL "255b80"
 
 //TABAXI FUR COLOR
-#define SAFFRONCOAT "de7642"
-#define ASHPELT "a8aa97"
-#define STORMHIDE "677881"
-#define EMBERPELT "da672a"
-#define SANDSTALK "6d4530"
-#define DAPPLEHIDE "c69b83"
-#define UMBERMANE "3b2e27"
-#define NIGHTPELT "271f1a"
+#define ORANGE_FUR "de7642"
+#define LIGHTGREY_FUR "a8aa97"
+#define DARKGREY_FUR "677881"
+#define LIGHTORANGE_FUR "da672a"
+#define LIGHTBROWN_FUR "6d4530"
+#define WHITEBROWN_FUR "c69b83"
+#define DARKBROWN_FUR "3b2e27"
+#define BLACK_FUR "271f1a"
 
 //GOLEM MATERIALS
 #define GOLEM_BRASS "dfbd6c"
