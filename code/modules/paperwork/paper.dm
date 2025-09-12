@@ -145,7 +145,8 @@
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	if(!mailer)
-		. += "<a href='?src=[REF(src)];read=1'>Read</a> (<a href='?src=[REF(src)];Help=1'>Help</a>)"
+		if(info)
+			. += "<a href='?src=[REF(src)];read=1'>Read</a>"
 	else
 		. += "It's from [mailer], addressed to [mailedto].</a>"
 
@@ -169,24 +170,11 @@
 			body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
 		dat += info
 		dat += "<br>"
-		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
 		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
+		user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 		onclose(user, "reading", src)
 	else
 		return span_warning("I'm too far away to read it.")
-
-/*
-	if(in_range(user, src) || isobserver(user))
-		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR></BODY></HTML>", "window=paper[md5(name)]")
-			onclose(user, "paper[md5(name)]")
-		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR></BODY></HTML>", "window=paper[md5(name)]")
-			onclose(user, "paper[md5(name)]")
-	else
-		return "<span class='warning'>You're too far away to read it.</span>"
-*/
 
 /obj/item/paper/proc/format_browse(t, mob/user)
 	user << browse_rsc('html/book.png')
@@ -194,9 +182,8 @@
 			<html><head><style type=\"text/css\">
 			body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
 	dat += "[t]<br>"
-	dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
 	dat += "</body></html>"
-	user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
+	user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=1;border=0")
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -459,31 +446,34 @@
 	if(!P.can_be_package_wrapped())
 		return ..()
 
-	to_chat(user, span_info("I start to wrap [P] in [src]..."))
-	if(do_after(user, 30, 0, target = src))
-		if(user.is_holding(P))
-			if(!user.dropItemToGround(P))
+	if(!istype(src, /obj/item/paper/inqslip))
+		to_chat(user, span_info("I start to wrap [P] in [src]..."))
+		if(do_after(user, 30, 0, target = src))
+			if(user.is_holding(P))
+				if(!user.dropItemToGround(P))
+					return
+			else if(!isturf(P.loc))
 				return
-		else if(!isturf(P.loc))
-			return
-		var/obj/item/smallDelivery/D = new /obj/item/smallDelivery(get_turf(P.loc))
-		if(user.Adjacent(D))
-			D.add_fingerprint(user)
-			P.add_fingerprint(user)
-			user.put_in_hands(D)
-		P.forceMove(D)
-		var/size = round(P.w_class)
-		D.name = "[weightclass2text(size)] package"
-		D.w_class = size
-		size = min(size, 5)
-		D.grid_height = P.grid_height
-		D.grid_width = P.grid_width
-		D.icon_state = "deliverypackage[size]"
-		D.note = src
-		forceMove(D)
+			var/obj/item/smallDelivery/D = new /obj/item/smallDelivery(get_turf(P.loc))
+			if(user.Adjacent(D))
+				D.add_fingerprint(user)
+				P.add_fingerprint(user)
+				user.put_in_hands(D)
+			P.forceMove(D)
+			var/size = round(P.w_class)
+			D.name = "[weightclass2text(size)] package"
+			D.w_class = size
+			size = min(size, 5)
+			D.grid_height = P.grid_height
+			D.grid_width = P.grid_width
+			D.icon_state = "deliverypackage[size]"
+			D.note = src
+			forceMove(D)
 
-	add_fingerprint(user)
-	return ..()
+		add_fingerprint(user)
+		return ..()
+	else
+		return ..()	
 
 /obj/item/paper/fire_act(added, maxstacks)
 	..()
@@ -607,4 +597,7 @@
 	return 1
 
 /obj/item/smallDelivery/can_be_package_wrapped()
+	return 0
+
+/obj/item/inqarticles/indexer/can_be_package_wrapped()
 	return 0

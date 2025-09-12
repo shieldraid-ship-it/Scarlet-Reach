@@ -1,6 +1,7 @@
 /datum/sex_action/masturbate_penis_other
 	name = "Jerk them off"
 	check_same_tile = FALSE
+	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/masturbate_penis_other/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -27,7 +28,7 @@
 
 	user.sexcon.perform_sex_action(target, 2, 0, TRUE)
 
-	target.sexcon.handle_passive_ejaculation()
+	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/masturbate_penis_other/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] stops jerking [target]'s off."))

@@ -55,6 +55,7 @@
 		if(/datum/patron/divine/malum)
 			recipient.mind?.special_items["Malum Psycross"] = /obj/item/clothing/neck/roguetown/psicross/malum
 		if(/datum/patron/old_god)
+			ADD_TRAIT(recipient, TRAIT_PSYDONITE, TRAIT_GENERIC)
 			recipient.mind?.special_items["Psydon Psycross"] = /obj/item/clothing/neck/roguetown/psicross
 
 /datum/virtue/combat/duelist
@@ -159,6 +160,8 @@
 
 /datum/virtue/combat/rotcured/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.update_body() // applies the rot skin tone stuff
+	recipient.dna.species.soundpack_m = new /datum/voicepack/male/rotman()
+	recipient.dna.species.soundpack_f = new /datum/voicepack/female/rotman()
 
 /datum/virtue/combat/dualwielder
 	name = "Dual Wielder"

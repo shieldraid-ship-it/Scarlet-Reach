@@ -11,34 +11,6 @@
 	abstract_type = /datum/crafting_recipe/roguetown/survival/
 	skillcraft = /datum/skill/craft/crafting
 
-/datum/crafting_recipe/roguetown/structure/noose
-	name = "noose"
-	result = /obj/structure/noose
-	reqs = list(/obj/item/rope = 1)
-	craftdiff = 0
-	verbage = "tie"
-	craftsound = 'sound/foley/noose_idle.ogg'
-	ontile = TRUE
-/datum/crafting_recipe/roguetown/structure/noose/TurfCheck(mob/user, turf/T)
-	var/turf/checking = get_step_multiz(T, UP)
-	if(!checking)
-		return FALSE
-	if(!isopenturf(checking))
-		return FALSE
-	if(istype(checking,/turf/open/transparent/openspace))
-		return FALSE
-	return TRUE
-
-/datum/crafting_recipe/roguetown/structure/gallows
-	name = "gallows"
-	result = /obj/structure/noose/gallows
-	reqs = list(/obj/item/rope = 1, /obj/item/grown/log/tree/small = 2)
-	skillcraft = "/datum/skill/craft/carpentry"
-	craftdiff = 1
-	verbage = "constructs"
-	craftsound = 'sound/foley/Building-01.ogg'
-	ontile = TRUE
-
 /datum/crafting_recipe/roguetown/survival/tneedle
 	name = "sewing needle"
 	result = /obj/item/needle/thorn
@@ -457,13 +429,22 @@
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 2
 
+/datum/crafting_recipe/roguetown/survival/handmirror
+	name = "hand mirror"
+	result = /obj/item/handmirror
+	reqs = list(
+		/obj/item/natural/glass = 1,
+		/obj/item/grown/log/tree/stick = 1,
+		)
+	craftdiff = 2
+
 // Improvised surgey tools. They go here for now (TM)
 /datum/crafting_recipe/roguetown/survival/improvisedsaw
 	name = "improvised surgery saw (1 fiber + 1 stone + 1 stick)"
 	result = /obj/item/rogueweapon/surgery/saw/improv
 	reqs = list(
-		/obj/item/natural/fibers = 1, 
-		/obj/item/natural/stone = 1, 
+		/obj/item/natural/fibers = 1,
+		/obj/item/natural/stone = 1,
 		/obj/item/grown/log/tree/stick = 1,
 		)
 	craftdiff = 1
@@ -490,7 +471,7 @@
 // I don't want ration paper to be too expensive, making wrapped food underused
 // So instead, ration paper is a very cheap recipe with parchment and tallow (instead of full fat) that makes 2 wrapper
 // However, it is heavily skillgated by cooking skill. At Craftdiff 4, only Innkeep / Cook can make it easily off the bat.
-// Servant w/ high int can also make it, but it is a bit harder. Or just be middle aged / old instead lol 
+// Servant w/ high int can also make it, but it is a bit harder. Or just be middle aged / old instead lol
 // For 1 fat, 1 log (48 reagents), you get 4 tallow + 6 piece of paper yielding 12 ration wrappers with 1 tallow leftover.
 /datum/crafting_recipe/roguetown/survival/ration_wrapper
 	name = "ration wrapping paper (x2)"
@@ -504,3 +485,16 @@
 		)
 	skillcraft = /datum/skill/craft/cooking
 	craftdiff = 4
+
+
+/datum/crafting_recipe/roguetown/survival/cheele
+	name = "cheele (1x)"
+	result = list(
+		/obj/item/natural/worms/leech/cheele
+		)
+	reqs = list(
+		/obj/item/reagent_containers/lux = 1,
+		/obj/item/natural/worms/leech = 1,
+		)
+	skillcraft = /datum/skill/misc/medicine
+	craftdiff = SKILL_LEVEL_EXPERT

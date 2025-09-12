@@ -124,7 +124,7 @@
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
 		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
-		if(istype(M,/mob/living/simple_animal/hostile/retaliate)) 
+		if(istype(M,/mob/living/simple_animal/hostile/retaliate))
 			if(!M:aggressive)
 				mob_swap = TRUE
 		if(!they_can_move) //we have to physically move them
@@ -173,7 +173,8 @@
 			var/sprint_distance = sprinted_tiles
 			var/instafail = FALSE
 			toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-
+			if(HAS_TRAIT(src, TRAIT_PACIFISM)) // No Con-Checking if you're a pacifist. You aren't MEAN!!!
+				return FALSE
 			var/mob/living/L = M
 
 			var/self_points = FLOOR((STACON + STASTR)/2, 1)
@@ -483,6 +484,13 @@
 		O.update_hands(src)
 		update_grab_intents()
 
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(M.mind)
+			if(M.cmode && M.stat == CONSCIOUS && !M.restrained(ignore_grab = TRUE))
+				if(M.get_skill_level(/datum/skill/combat/wrestling) > 4 || src.get_skill_level(/datum/skill/combat/wrestling) < 5) //Grabber skill less than Master OR grabbed skill at Master or above.
+					M.resist_grab(freeresist = TRUE) //Automatically attempt to break a passive grab if defender's combat mode is on. Anti-grabspam measure.
+
 /mob/living/proc/send_pull_message(mob/living/target)
 	target.visible_message(span_warning("[src] grabs [target]."), \
 					span_warning("[src] grabs me."), span_hear("I hear shuffling."), null, src)
@@ -562,6 +570,11 @@
 			var/mob/living/M = pulling
 			M.reset_offsets("pulledby")
 			reset_pull_offsets(pulling)
+			if(HAS_TRAIT(M, TRAIT_GARROTED))
+				var/obj/item/inqarticles/garrote/gcord = src.get_active_held_item()
+				if(!gcord)
+					gcord = src.get_inactive_held_item()
+				gcord.wipeslate(src)
 
 		if(forced) //if false, called by the grab item itself, no reason to drop it again
 			if(istype(get_active_held_item(), /obj/item/grabbing))
@@ -612,7 +625,7 @@
 		return
 	if (InCritical() || health <= 0 || (blood_volume < BLOOD_VOLUME_SURVIVE))
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
-		
+
 		if(istype(src.loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && lying && client)
 			GLOB.scarlet_round_stats[STATS_PEOPLE_DROWNED]++
 
@@ -1010,14 +1023,13 @@
 	if(!can_resist() || surrendering)
 		return
 
-	changeNext_move(CLICK_CD_RESIST)
-
 	if(atkswinging)
 		stop_attack(FALSE)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(pulledby)
+		changeNext_move(8)
 		var/mob/living/P
 		if(isliving(pulledby))
 			P = pulledby
@@ -1032,27 +1044,26 @@
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
+		changeNext_move(CLICK_CD_RESIST)
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
+		changeNext_move(CLICK_CD_RESIST)
 		var/obj/C = loc
 		C.container_resist(src)
 
 	else if(mobility_flags & MOBILITY_MOVE)
-		if(on_fire)
+		if(on_fire && last_special <= world.time)
 			resist_fire() //stop, drop, and roll
+			changeNext_move(CLICK_CD_RESIST)
 		else if(has_status_effect(/datum/status_effect/leash_pet))
 			if(istype(src, /mob/living/carbon))
 				src:resist_leash()
+				changeNext_move(CLICK_CD_RESIST)
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
-
-	else if(mobility_flags & MOBILITY_MOVE)
-		if(on_fire)
-			resist_fire() //stop, drop, and roll
-		else if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
+			changeNext_move(CLICK_CD_RESIST)
 
 /mob/living/proc/submit(var/instant = FALSE)
 	set name = "Yield"
@@ -1127,8 +1138,12 @@
 /mob/proc/resist_grab(moving_resist)
 	return TRUE //returning 0 means we successfully broke free
 
-/mob/living/resist_grab(moving_resist)
+/mob/living/resist_grab(moving_resist, freeresist = FALSE)
 	. = TRUE
+
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		to_chat(src, span_warning("My body is paralyzed!"))
+		return FALSE
 
 	var/wrestling_diff = 0
 	var/resist_chance = 55
@@ -1152,10 +1167,20 @@
 	else if(!cmode && L.cmode)
 		combat_modifier -= 0.3
 	if(agg_grab)
-		combat_modifier -= 0.3
+		if(!HAS_TRAIT(src, TRAIT_GARROTED))
+			combat_modifier -= 0.3
+		else
+			if(HAS_TRAIT(L, TRAIT_BLACKBAGGER))
+				combat_modifier -= 0.3
+	for(var/obj/item/grabbing/G in grabbedby)
+		if(G.chokehold == TRUE)
+			combat_modifier -= 0.15
 
 	resist_chance += max((wrestling_diff * 10), -20)
-	resist_chance += (STACON - (agg_grab ? L.STASTR : L.STAEND)) * 5
+	if(HAS_TRAIT(src, TRAIT_GARROTED))
+		resist_chance += (STACON - L.STASPD) * 5
+	else
+		resist_chance += (STACON - (agg_grab ? L.STASTR : L.STAEND)) * 5
 	resist_chance *= combat_modifier
 	resist_chance = clamp(resist_chance, 5, 95)
 
@@ -1164,44 +1189,53 @@
 
 	if(moving_resist && client) //we resisted by trying to move
 		client.move_delay = world.time + 20
-	stamina_add(rand(5,15))
+	if(!freeresist)
+		stamina_add(rand(5,15))
 
 	if(!prob(resist_chance))
 		var/rchance = ""
 		if(client?.prefs.showrolls)
 			rchance = " ([resist_chance]%)"
-		visible_message(span_warning("[src] struggles to break free from [L]'s grip!"), \
+		if(HAS_TRAIT(src, TRAIT_GARROTED))
+			var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
+			if(!gcord)
+				gcord = L.get_inactive_held_item()
+			to_chat(pulledby, span_warning("[src] struggles against the [gcord]!"))
+			gcord.take_damage(25)
+		if(!HAS_TRAIT(src, TRAIT_GARROTED))
+			visible_message(span_warning("[src] struggles to break free from [L]'s grip!"), \
 						span_warning("I struggle against [L]'s grip![rchance]"), null, null, L)
+		else
+			var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
+			if(!gcord)
+				gcord = L.get_inactive_held_item()
+			visible_message(span_warning("[src] struggles to break free from [L]'s [gcord]!"), \
+						span_warning("I struggle against [L]'s [gcord]![rchance]"), null, null, L)
 		playsound(src.loc, 'sound/combat/grabstruggle.ogg', 50, TRUE, -1)
-		to_chat(pulledby, span_warning("[src] struggles against my grip!"))
+		if(!HAS_TRAIT(src, TRAIT_GARROTED))
+			to_chat(pulledby, span_warning("[src] struggles against my grip!"))
 		return FALSE
-
-	visible_message(span_warning("[src] breaks free of [L]'s grip!"), \
-					span_notice("I break free of [L]'s grip!"), null, null, L)
-	to_chat(L, span_danger("[src] breaks free of my grip!"))
+	if(!HAS_TRAIT(src, TRAIT_GARROTED))
+		visible_message(span_warning("[src] breaks free of [L]'s grip!"), \
+						span_notice("I break free of [L]'s grip!"), null, null, L)
+		to_chat(L, span_danger("[src] breaks free of my grip!"))
+	else
+		var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
+		if(!gcord)
+			gcord = L.get_inactive_held_item()
+		visible_message(span_warning("[src] breaks free of [L]'s [gcord]!"), \
+						span_notice("I break free of [L]'s [gcord]!"), null, null, L)
+		to_chat(L, span_danger("[src] breaks free from my [gcord]!"))
+	if(HAS_TRAIT(src, TRAIT_GARROTED))
+		var/obj/item/inqarticles/garrote/gcord = L.get_active_held_item()
+		if(!gcord)
+			gcord = L.get_inactive_held_item()
+		gcord.take_damage(gcord.max_integrity)
+		gcord.wipeslate(src)
 	log_combat(L, src, "broke grab")
 	L.changeNext_move(agg_grab ? CLICK_CD_GRABBING : CLICK_CD_GRABBING + 1 SECONDS)
 	playsound(src.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
-
 	L.stop_pulling()
-
-	// Repeatedly force the intent to grab on both server and client for 5 ticks after all cleanup
-	if(iscarbon(L))
-		var/mob/living/carbon/C = L
-		spawn(1)
-			for(var/i = 1, i <= 5, i++)
-				// Find the index of grab intent in the possible intents list
-				var/grab_index = 0
-				for(var/j = 1, j <= C.possible_a_intents.len, j++)
-					if(istype(C.possible_a_intents[j], INTENT_GRAB))
-						grab_index = j
-						break
-				if(grab_index > 0)
-					C.rog_intent_change(grab_index)
-					if(C.client)
-						C.client.mob.rog_intent_change(grab_index)
-				sleep(1)
-
 	return TRUE
 
 /mob/living/proc/resist_buckle()
@@ -1284,7 +1318,7 @@
 
 	if(!who.Adjacent(src))
 		return
-		
+
 	who.visible_message(span_warning("[src] tries to remove [who]'s [what.name]."), \
 					span_danger("[src] tries to remove my [what.name]."), null, null, src)
 	to_chat(src, span_danger("I try to remove [who]'s [what.name]..."))
@@ -1483,6 +1517,8 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
+	if("lava" in weather_immunities)//immune to lava = immune to burning
+		return FALSE
 	if((fire_stacks > 0 || divine_fire_stacks > 0) && !on_fire)
 		if(HAS_TRAIT(src, TRAIT_NOFIRE) && prob(90)) // Nofire is described as nonflammable, not immune. 90% chance of avoiding ignite
 			return
@@ -1880,7 +1916,10 @@
 				marked = TRUE
 				if(M.m_intent == MOVE_INTENT_SNEAK || M.mob_timers[MT_INVISIBILITY] > world.time)
 					emote("huh")
-					to_chat(M, span_danger("[src] sees me! I'm found!"))
+					if(!M.thicc_sneaking)
+						to_chat(M, span_danger("[src] sees me! I'm found!"))
+					else
+						to_chat(M, span_danger("[src] sees me! The clap of my asscheeks gave me away!"))
 					M.mob_timers[MT_INVISIBILITY] = world.time
 					M.mob_timers[MT_FOUNDSNEAK] = world.time
 					M.update_sneak_invis(reset = TRUE)

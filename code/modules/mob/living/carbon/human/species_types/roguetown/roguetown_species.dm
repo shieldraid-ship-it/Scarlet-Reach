@@ -11,6 +11,8 @@
 			return strings("french_replacement.json", type, convert_HTML = TRUE)
 		if("Grenzelhoft accent")
 			return strings("german_replacement.json", type, convert_HTML = TRUE)
+		if("North Etruscan accent")
+			return strings("italian_replacement.json", type, convert_HTML = TRUE)
 		if("Hammerhold accent")
 			return strings("Anglish.json", type, convert_HTML = TRUE)
 		if("Assimar accent")
@@ -43,6 +45,8 @@
 			return strings("russian_replacement.json", type, convert_HTML = TRUE)
 		if("Pirate accent")
 			return strings("axian_replacement.json", type, convert_HTML = TRUE)
+		if("West Kazengun accent")
+			return strings("cultivator_replacement.json", type, convert_HTML = TRUE)
 
 /datum/species/proc/get_accent(mob/living/carbon/human/H)
 	return get_accent_list(H,"full")

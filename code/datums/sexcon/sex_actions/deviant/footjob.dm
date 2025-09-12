@@ -1,6 +1,7 @@
 /datum/sex_action/footjob
 	name = "Jerk them off with feet"
 	check_same_tile = FALSE
+	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/footjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -31,7 +32,7 @@
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 
-	target.sexcon.handle_passive_ejaculation()
+	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/footjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [user.p_their()] feet off [target]'s cock..."))

@@ -138,9 +138,12 @@
 		full += BODY_ZONE_L_LEG
 	else
 		full += BODY_ZONE_LAMIAN_TAIL
-	for(var/zone in full)
-		if(get_bodypart(zone))
-			full -= zone
+
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		full -= bodypart.body_zone
+		for(var/subzone in bodypart.subtargets)
+			full -= subzone
+
 	return full
 
 /mob/living/proc/get_disabled_limbs()
@@ -273,6 +276,9 @@
 	set_resting(FALSE)
 
 /mob/living/carbon/proc/Lamiaze(taur_type = /obj/item/bodypart/lamian_tail, color = "#ffffff")
+	if(client?.prefs)
+		if((LAMIAN_TAIL in client.prefs.pref_species.species_traits))//if we call lamia-ize on an existing lamia (just fully_heal, basically)
+			color = "#"+client.prefs.tail_color
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = X
 		// drop taur tails too
@@ -284,9 +290,19 @@
 	T.tail_color = color
 	T.attach_limb(src)
 
-	if(shoes)
-		dropItemToGround(shoes)
-
 	// make sure we apply our clipmasks
+	regenerate_icons()
+	set_resting(FALSE)
+
+/mob/living/carbon/proc/de_Lamia()//gives you your legs back, only used when changing species
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		if(O.body_zone == BODY_ZONE_LAMIAN_TAIL)
+			O.drop_limb(1)
+			qdel(O)
+	var/obj/item/bodypart/r_leg/R = new()
+	var/obj/item/bodypart/l_leg/L = new()
+	L.attach_limb(src)
+	R.attach_limb(src)
 	regenerate_icons()
 	set_resting(FALSE)

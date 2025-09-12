@@ -156,7 +156,6 @@
 	name = "otavan leather trousers"
 	desc = "padded leather armor made by Otavan tailors, its quality is remarkable."
 	icon_state = "fencerpants"
-	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	name = "fencing breeches"
@@ -166,6 +165,7 @@
 	detail_tag = "_detail"
 	color = "#FFFFFF"
 	detail_color = "#3b2b29"
+	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/update_icon()
 	cut_overlays()
@@ -578,7 +578,7 @@
 	icon_state = "eastpants1"
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
-/obj/item/clothing/under/roguetown/trou/eastpants1
+/obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
 	name = "cut-throat's pants"
 	desc = "Foreign pants, with leather insewns."
 	icon_state = "eastpants1"
@@ -589,7 +589,7 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	flags_inv = HIDECROTCH
 
-/obj/item/clothing/under/roguetown/trou/eastpants2
+/obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
 	name = "strange ripped pants"
 	desc = "Weird pants typically worn by the destitute in Kazengun. Or, those looking to make a fashion statement."
 	icon_state = "eastpants2"
@@ -599,3 +599,35 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	flags_inv = HIDECROTCH
+
+// new knight captain drip
+/obj/item/clothing/under/roguetown/platelegs/captain
+	name = "captain's chausses"
+	desc = "Cuisses made of plated steel, offering additional protection against blunt force. These are specially fitted for the captain."
+	icon_state = "capplateleg"
+	item_state = "capplateleg"
+	icon = 'icons/roguetown/clothing/special/captain.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
+
+/obj/item/clothing/under/roguetown/carapacelegs
+	name = "carapace chausses"
+	desc = "Aquatic plated armor to protect the legs."
+	gender = PLURAL
+	icon_state = "carapace_legs"
+	item_state = "carapace_legs"
+	smeltresult = /obj/item/ash
+	sewrepair = TRUE
+	anvilrepair = null
+	armor = list("blunt" = 70, "slash" = 60, "stab" = 50, "piercing" = 30, "fire" = 30, "acid" = 0) //Around Hardened leather
+	max_integrity = 225
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	blocksound = PLATEHIT
+	var/do_sound = FALSE
+	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
+	r_sleeve_status = SLEEVE_NOMOD
+	l_sleeve_status = SLEEVE_NOMOD
+
+/obj/item/clothing/under/roguetown/carapacelegs/skirt
+	name = "carapace plated skirt"
+	icon_state = "carapace_skirt"
+	item_state = "carapace_skirt"

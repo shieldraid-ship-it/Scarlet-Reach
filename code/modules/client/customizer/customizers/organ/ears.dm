@@ -17,7 +17,16 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/vulp,
-		/datum/sprite_accessory/ears/big/sandfox_large
+		/datum/sprite_accessory/ears/big/sandfox_large,
+		/datum/sprite_accessory/ears/bigwolf,
+		/datum/sprite_accessory/ears/bigwolf_inner,
+		/datum/sprite_accessory/ears/husky,
+		/datum/sprite_accessory/ears/otie,
+		/datum/sprite_accessory/ears/wolf,
+		/datum/sprite_accessory/ears/lab,
+		/datum/sprite_accessory/ears/cat_big,
+		/datum/sprite_accessory/ears/cat_normal,
+		/datum/sprite_accessory/ears/miqote,
 		)
 
 /datum/customizer/organ/ears/lupian
@@ -125,6 +134,7 @@
 		/datum/sprite_accessory/ears/rabbit,
 		/datum/sprite_accessory/ears/bunny,
 		/datum/sprite_accessory/ears/bunny_perky,
+		/datum/sprite_accessory/ears/bunny_long,
 		/datum/sprite_accessory/ears/big/rabbit_large,
 		/datum/sprite_accessory/ears/cat_big,
 		/datum/sprite_accessory/ears/cat_normal,
@@ -186,6 +196,7 @@
 		/datum/sprite_accessory/ears/bunny,
 		/datum/sprite_accessory/ears/big/rabbit_large,
 		/datum/sprite_accessory/ears/bunny_perky,
+		/datum/sprite_accessory/ears/bunny_long,
 		/datum/sprite_accessory/ears/cat_big,
 		/datum/sprite_accessory/ears/cat_normal,
 		/datum/sprite_accessory/ears/cow,
@@ -279,6 +290,7 @@
 		/datum/sprite_accessory/ears/rabbit,
 		/datum/sprite_accessory/ears/bunny,
 		/datum/sprite_accessory/ears/bunny_perky,
+		/datum/sprite_accessory/ears/bunny_long,
 		/datum/sprite_accessory/ears/big/rabbit_large,
 		/datum/sprite_accessory/ears/cat_big,
 		/datum/sprite_accessory/ears/cat_normal,

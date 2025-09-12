@@ -21,6 +21,7 @@
 #define STATS_ALIVE_VULPS "alive_vulps"
 #define STATS_ALIVE_LUPIANS "alive_lupians"
 #define STATS_ALIVE_MOTHS "alive_moths"
+#define STATS_ALIVE_LAMIA "alive_lamia"
 
 #define STATS_VAMPIRES "vampires"
 
@@ -58,6 +59,7 @@
 #define STATS_HUMEN_DEATHS "humen_deaths"
 #define STATS_PSYCROSS_USERS "people_wearing_psycross"
 #define STATS_LUX_HARVESTED "lux_harvested"
+#define STATS_MARQUES_MADE "marques_made"
 
 //Astratan
 #define STATS_LAWS_AND_DECREES_MADE "laws_and_decrees_made"
@@ -138,6 +140,8 @@
 #define STATS_ALCOHOL_CONSUMED "alcohol_consumed"
 #define STATS_ALCOHOLICS "alcoholics"
 #define STATS_JUNKIES "junkies"
+#define STATS_KNOTTED "knottings"
+#define STATS_KNOTTED_NOT_LUPIANS "knottings_by_non_lupians"
 
 //Matthios
 #define STATS_ITEMS_PICKPOCKETED "items_pickpocketed"
@@ -224,6 +228,7 @@ GLOBAL_LIST_INIT(scarlet_round_stats, list(
 	STATS_ALIVE_VULPS = 0,
 	STATS_ALIVE_LUPIANS = 0,
 	STATS_ALIVE_MOTHS = 0,
+	STATS_ALIVE_LAMIA = 0,
 	STATS_PEOPLE_DROWNED = 0,
 	STATS_WATER_CONSUMED  = 0,
 	STATS_LIMBS_BITTEN = 0,
@@ -251,6 +256,8 @@ GLOBAL_LIST_INIT(scarlet_round_stats, list(
 	STATS_ALIVE_TRADESMEN = 0,
 	STATS_LUX_REVIVALS = 0,
 	STATS_PLEASURES = 0,
+	STATS_KNOTTED = 0,
+	STATS_KNOTTED_NOT_LUPIANS = 0,
 	STATS_SKILLS_DREAMED = 0,
 ))
 

@@ -118,8 +118,9 @@
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(user.mind)
 					if(!HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
-						caused_wound?.werewolf_infect_attempt()
-						
+						if(istype(caused_wound))
+							caused_wound.werewolf_infect_attempt()
+
 				if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
 					to_chat(user, span_warning("BLEH! [bite_victim] tastes of SILVER! My gift cannot take hold."))
 				else
@@ -252,14 +253,14 @@
 	if(C.apply_damage(damage, BRUTE, limb_grabbed, armor_block))
 		playsound(C.loc, "smallslash", 100, FALSE, -1)
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
-		if(user.mind && caused_wound)
+		if(user.mind && istype(caused_wound))
 			/*
 				WEREWOLF CHEW.
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(user.mind)
 					if(!HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
-						caused_wound?.werewolf_infect_attempt()
+						caused_wound.werewolf_infect_attempt()
 				if(prob(30))
 					user.werewolf_feed(C)
 
@@ -269,7 +270,7 @@
 			var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
 			if(zombie_antag && zombie_antag.has_turned)
 				var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
-				if(!existing_zombie && caused_wound?.zombie_infect_attempt())   // infect_attempt on wound
+				if(!existing_zombie && caused_wound.zombie_infect_attempt())   // infect_attempt on wound
 					to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
 /*
 	Code below is for a zombie smashing the brains of unit. The code expects the brain to be part of the head which is not the case with AP. Kept for posterity in case it's used in an overhaul.
@@ -323,11 +324,17 @@
 		to_chat(user, span_warning("Sigh. It's not bleeding."))
 		return
 	var/mob/living/carbon/C = grabbed
+	if(!C.mind)
+		to_chat(user, span_warning("It has no mind. Its blood is unfit for me."))
+		return
 	if(C.dna?.species && (NOBLOOD in C.dna.species.species_traits))
 		to_chat(user, span_warning("Sigh. No blood."))
 		return
 	if(C.blood_volume <= 0)
 		to_chat(user, span_warning("Sigh. No blood."))
+		return
+	if(C.mob_biotypes & MOB_UNDEAD)
+		to_chat(user, span_warning("Corrupt blood. I gain nothing from it."))
 		return
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -343,7 +350,7 @@
 		var/zomwerewolf = C.mind?.has_antag_datum(/datum/antagonist/werewolf)
 		if(!zomwerewolf && C.stat != DEAD)
 			zomwerewolf = C.mind?.has_antag_datum(/datum/antagonist/zombie)
-		
+
 		if(VDrinker)
 			// Regular vampire lords
 			if(zomwerewolf)
@@ -397,7 +404,7 @@
 			to_chat(user, span_notice("I gain 400 vitae from drinking blood. Current vitae: [VDrinker.vitae]"))
 		else if(VDrinker && !C.mind)
 			to_chat(user, span_warning("This blood is not pure enough to nourish me properly!"))
-		
+
 
 	if(C.mind && user.mind.has_antag_datum(/datum/antagonist/vampirelord))
 		var/datum/antagonist/vampirelord/VDrinker = user.mind.has_antag_datum(/datum/antagonist/vampirelord)
@@ -407,6 +414,7 @@
 					if("Yes")
 						user.visible_message("[user] begins to infuse dark magic into [C]")
 						if(do_after(user, 30))
+							C.grab_ghost(force = FALSE)
 							C.visible_message("[C] rises as a new spawn!")
 							var/datum/antagonist/vampirelord/lesser/new_antag = new /datum/antagonist/vampirelord/lesser()
 							new_antag.sired = TRUE

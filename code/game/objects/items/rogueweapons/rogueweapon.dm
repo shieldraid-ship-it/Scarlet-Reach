@@ -30,14 +30,15 @@
 	wdefense_wbonus = 3 //Default is 3.
 	experimental_onhip = TRUE
 	experimental_onback = TRUE
+	resistance_flags = FIRE_PROOF
 	embedding = list(
 		"embed_chance" = 20,
 		"embedded_pain_multiplier" = 1,
 		"embedded_fall_chance" = 0,
 	)
-	var/initial_sl
-	var/list/possible_enhancements
-	resistance_flags = FIRE_PROOF
+
+	/// Icon for sheathing. Only null for weapons that are unsheathable.
+	var/sheathe_icon = null
 
 /obj/item/rogueweapon/Initialize()
 	. = ..()
@@ -106,7 +107,7 @@
 		force /= 5
 	if(force_wielded)
 		force_wielded /= 5
-	force_dynamic = (wielded ? force_wielded : force)
+	update_force_dynamic()
 	if(armor_penetration)
 		armor_penetration /= 5
 	if(wdefense)
@@ -120,18 +121,16 @@
 		can_parry = FALSE
 
 /obj/item/rogueweapon/obj_fix()
-	..()
-
 	force = initial(force)
 	force_wielded = initial(force_wielded)
-	force_dynamic = force
+	update_force_dynamic()
 	armor_penetration = initial(armor_penetration)
 	wdefense = initial(wdefense)
 	wdefense_wbonus = initial(wdefense_wbonus)
 	wdefense_dynamic = wdefense
 	sharpness = initial(sharpness)
 	can_parry = initial(can_parry)
-	SEND_SIGNAL(src, COMSIG_ROGUEWEAPON_OBJFIX)
+	..()
 
 /obj/item/rogueweapon/rmb_self(mob/user)
 	if(length(alt_intents))

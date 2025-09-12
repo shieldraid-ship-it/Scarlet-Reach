@@ -65,7 +65,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix)
 	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
 	owner.current.verbs |= /mob/living/carbon/human/proc/vampire_telepathy
-	owner.current.verbs |= /mob/living/carbon/human/proc/disguise_button
 	vamp_look()
 	if(isspawn)
 		owner.current.verbs |= /mob/living/carbon/human/proc/disguise_button
@@ -363,7 +362,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 									if(N.get_lumcount() > 0.15)
 										H.fire_act(3)
 										handle_vitae(-300)
-								to_chat(H, span_warning("That was too close. I must avoid the sun."))
+								to_chat(H, span_warning("THE SUN DESTROYS MY VERY ESSENCE!"))
 						else if (isspawn && !disguised)
 							H.fire_act(1,5)
 							handle_vitae(-10)
@@ -423,8 +422,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			owner.current.AddSpell(batform)
 			for(var/obj/structure/vampire/portalmaker/S in GLOB.vampire_objects)
 				S.unlocked = TRUE
-			for(var/S in MOBSTATS)
-				owner.current.change_stat(S, 2)
 			for(var/obj/structure/vampire/bloodpool/B in GLOB.vampire_objects)
 				B.nextlevel = VAMP_LEVEL_TWO
 			to_chat(owner, "<font color='red'>I am refreshed and have grown stronger. The visage of the bat is once again available to me. I can also once again access my portals.</font>")
@@ -434,10 +431,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			owner.current.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/bloodsteal)
 			owner.current.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/bloodlightning)
 			owner.current.adjust_skillrank(/datum/skill/magic/blood, 3, TRUE)
-			gas = new
-			owner.current.AddSpell(gas)
-			for(var/S in MOBSTATS)
-				owner.current.change_stat(S, 2)
+			/*gas = new //removed for balance reasons
+			owner.current.AddSpell(gas)*/
 			for(var/obj/structure/vampire/bloodpool/B in GLOB.vampire_objects)
 				B.nextlevel = VAMP_LEVEL_THREE
 			to_chat(owner, "<font color='red'>My power is returning. I can once again access my spells. I have also regained usage of my mist form.</font>")
@@ -450,7 +445,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			owner.current.RemoveSpell(/obj/effect/proc_holder/spell/targeted/transfix)
 			owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix/master)
 			for(var/S in MOBSTATS)
-				owner.current.change_stat(S, 2)
+				owner.current.change_stat(S, 1)
 			for(var/obj/structure/vampire/bloodpool/B in GLOB.vampire_objects)
 				B.nextlevel = VAMP_LEVEL_FOUR
 			to_chat(owner, "<font color='red'>My dominion over others minds and my own body returns to me. I am nearing perfection. The armies of the dead shall now answer my call.</font>")
@@ -460,13 +455,13 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			ascended = TRUE
 			SSmapping.retainer.ascended = TRUE
 			ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_GENERIC)
+			for(var/S in MOBSTATS)
+				owner.current.change_stat(S, 1)
 			for(var/datum/mind/thrall in SSmapping.retainer.vampires)
 				if(thrall.special_role == "Vampire Spawn")
 					thrall.current.verbs |= /mob/living/carbon/human/proc/blood_strength
 					thrall.current.verbs |= /mob/living/carbon/human/proc/blood_celerity
 					thrall.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
-					for(var/S in MOBSTATS)
-						thrall.current.change_stat(S, 2)
 	return
 
 // SPAWN
@@ -925,7 +920,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	triumph_count = 5
 
 /datum/objective/vampirelord/infiltrate/one/check_completion()
-	var/list/churchjobs = list("Bishop", "Cleric", "Acolyte", "Templar", "Churchling", "Crusader", "Inquisitor", "Martyr")
+	var/list/churchjobs = list("Priest", "Cleric", "Acolyte", "Templar", "Churchling", "Crusader", "Inquisitor", "Martyr")
 	for(var/datum/mind/V in SSmapping.retainer.vampires)
 		if(V.current.job in churchjobs)
 			return TRUE

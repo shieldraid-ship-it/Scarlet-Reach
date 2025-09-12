@@ -30,6 +30,14 @@
 	var/last_moan = 0
 	var/last_pain = 0
 	var/aphrodisiac = 1 //1 by default, acts as a multiplier on arousal gain. If this is different than 1, set/freeze arousal is disabled.
+	var/knotted_status = KNOTTED_NULL // knotted state and used to prevent multiple knottings when we do not handle that case
+	var/knotted_part = SEX_PART_NULL // which orifice was knotted (bitflag)
+	var/knotted_part_partner = SEX_PART_NULL // which orifice was knotted on partner (bitflag)
+	var/tugging_knot = FALSE
+	var/tugging_knot_check = 0
+	var/tugging_knot_blocked = FALSE
+	var/mob/living/carbon/knotted_owner = null // whom has the knot
+	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 	/// Which zones we are using in the current action.
 	var/using_zones = list()
 
@@ -40,6 +48,8 @@
 	//remove_from_target_receiving()
 	user = null
 	target = null
+	if(knotted_status)
+		knot_exit()
 	//receiving = list()
 	. = ..()
 
@@ -158,23 +168,71 @@
 	set_target(new_target)
 	show_ui()
 
-/datum/sex_controller/proc/cum_onto()
+/datum/sex_controller/proc/cum_onto(var/mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came onto the target")
 	playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
+	if(splashed_user)
+		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+		if(!facial)
+			splashed_user.apply_status_effect(/datum/status_effect/facial)
+		else
+			facial.refresh_cum()
 	after_ejaculation()
 
-/datum/sex_controller/proc/cum_into(oral = FALSE)
+/datum/sex_controller/proc/cum_into(oral = FALSE, var/mob/living/carbon/human/splashed_user = null)
 	log_combat(user, target, "Came inside the target")
 	if(oral)
 		playsound(target, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(target, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(user != target)
+		knot_try()
+	if(splashed_user && !splashed_user.sexcon.knotted_status)
+		var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
+		var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
+		if(!splashed_type)
+			splashed_user.apply_status_effect(status_type)
+		else
+			splashed_type.refresh_cum()
 	after_ejaculation()
 	if(!oral)
 		after_intimate_climax()
-	
 
+/datum/status_effect/facial
+	id = "facial"
+	alert_type = null // don't show an alert on screen
+	tick_interval = 12 MINUTES // use this time as our dry count down
+	var/has_dried_up = FALSE // used as our dry status
+
+/datum/status_effect/facial/internal
+	id = "creampie"
+	alert_type = null // don't show an alert on screen
+	tick_interval = 7 MINUTES // use this time as our dry count down
+
+/datum/status_effect/facial/on_apply()
+	RegisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT),PROC_REF(clean_up))
+	has_dried_up = FALSE
+	return ..()
+
+/datum/status_effect/facial/on_remove()
+	UnregisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT))
+	return ..()
+
+/datum/status_effect/facial/tick()
+	has_dried_up = TRUE
+
+/datum/status_effect/facial/proc/refresh_cum()
+	has_dried_up = FALSE
+	tick_interval = world.time + initial(tick_interval)
+
+///Callback to remove pearl necklace
+/datum/status_effect/facial/proc/clean_up(datum/source, strength)
+	if(strength >= CLEAN_WEAK && !QDELETED(owner))
+		if(!owner.has_stress_event(/datum/stressevent/bathcleaned))
+			to_chat(owner, span_notice("I feel much cleaner now!"))
+			owner.add_stress(/datum/stressevent/bathcleaned)
+		owner.remove_status_effect(src)
 
 /datum/sex_controller/proc/ejaculate()
 	log_combat(user, user, "Ejaculated")
@@ -381,7 +439,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_controller/proc/handle_passive_ejaculation()
+/datum/sex_controller/proc/handle_passive_ejaculation(var/mob/living/carbon/human/splashed_user = null)
 	var/mob/living/carbon/human/M = user
 	if(aphrodisiac > 1.5)
 		if(M.check_handholding())
@@ -403,6 +461,12 @@
 			else
 				if(prob(3))
 					ejaculate()
+					if(splashed_user)
+						var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+						if(!facial)
+							splashed_user.apply_status_effect(/datum/status_effect/facial)
+						else
+							facial.refresh_cum()
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -410,6 +474,12 @@
 	if(!can_ejaculate())
 		return FALSE
 	ejaculate()
+	if(splashed_user)
+		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+		if(!facial)
+			splashed_user.apply_status_effect(/datum/status_effect/facial)
+		else
+			facial.refresh_cum()
 
 /datum/sex_controller/proc/can_use_penis()
 	if(HAS_TRAIT(user, TRAIT_LIMPDICK))
@@ -521,9 +591,9 @@
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
-				set_arousal(arousal + (amount * aphrodisiac))
+				set_arousal(amount * aphrodisiac)
 			else
-				set_arousal(arousal + amount)
+				set_arousal(amount)
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen
@@ -539,7 +609,8 @@
 	if(!current_action)
 		return
 	var/datum/sex_action/action = SEX_ACTION(current_action)
-	action.on_finish(user, target)
+	if (!user.sexcon.knotted_status) // never show the remove message, unless unknotted
+		action.on_finish(user, target)
 	desire_stop = FALSE
 	user.doing = FALSE
 	current_action = null
@@ -556,6 +627,7 @@
 		return
 	if(!can_perform_action(action_type))
 		return
+	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
 	current_action = action_type

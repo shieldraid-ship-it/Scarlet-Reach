@@ -1,88 +1,87 @@
 /datum/advclass/confessor
 	name = "Confessor"
-	tutorial = "Church of the Ten holy hunters, unmatched in the fields of subterfuge and investigation. \
-	There is no suspect too powerful to investigate, no room too guarded to infiltrate, and no weakness too hidden to exploit."
+	tutorial = "Psydonite hunters, unmatched in the fields of subterfuge and investigation. There is no suspect too powerful to investigate, no room too guarded to infiltrate, and no weakness too hidden to exploit."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/confessor
 	category_tags = list(CTAG_INQUISITION)
-	cmode_music = 'sound/music/inquisitorcombat.ogg'
+	cmode_music = 'sound/music/combat_deadlyshadows.ogg'
+
+	subclass_languages = list(/datum/language/otavan)
+
+	traits_applied = list(
+		TRAIT_STEELHEARTED,
+		TRAIT_DODGEEXPERT,
+		TRAIT_BLACKBAGGER,
+		TRAIT_INQUISITION,
+		TRAIT_PERFECT_TRACKER,
+		TRAIT_PSYDONITE,
+		TRAIT_OUTLANDER
+	)
+	subclass_stats = list(
+		STATKEY_SPD = 3,
+		STATKEY_END = 3,
+		STATKEY_PER = 2,
+		STATKEY_STR = -1//weazel
+	)
+
+	subclass_skills = list(
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT, // Quick
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, // Stitch up your prey
+		/datum/skill/misc/sneaking = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/stealing = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
+	)
 
 /datum/outfit/job/roguetown/confessor
 	job_bitflag = BITFLAG_CHURCH
 
 /datum/outfit/job/roguetown/confessor/pre_equip(mob/living/carbon/human/H)
 	..()
-	switch(H.patron?.type)
-		if(/datum/patron/divine/astrata)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
-		if(/datum/patron/divine/abyssor)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/abyssor
-		if(/datum/patron/divine/xylix)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/silver
-		if(/datum/patron/divine/dendor)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
-		if(/datum/patron/divine/necra)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/necra
-		if(/datum/patron/divine/pestra)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
-		if(/datum/patron/divine/eora)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/eora
-		if(/datum/patron/divine/noc)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
-		if(/datum/patron/divine/ravox)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox
-		if(/datum/patron/divine/malum)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/malum
-	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE) // Cudgellin - Nonlethals
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE) // Stabbin - Lethals
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE) // Quick
-	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE) // Stitch up your prey
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/stealing, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/lockpicking, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/tracking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 4, TRUE)
-	// Weapon choice system
-	H.adjust_blindness(-3)
-	var/weapons = list("Crossbow & Bolts", "Recurve Bow & Arrows")
-	var/weapon_choice = input("Choose your ranged weapon.", "TAKE UP ARMS") as anything in weapons
-	switch(weapon_choice)
-		if("Crossbow & Bolts")
-			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
-			beltr = /obj/item/quiver/bolts
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-		if("Recurve Bow & Arrows")
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, 5, TRUE)
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			beltr = /obj/item/quiver/arrows
-	H.set_blindness(0)
-	cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	beltl = /obj/item/rogueweapon/mace/cudgel
-	backr = /obj/item/storage/backpack/rogue/satchel/black
+	has_loadout = TRUE
+	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
+	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
+	beltr = /obj/item/quiver/bolts
+	neck = /obj/item/clothing/neck/roguetown/gorget
+	backr = /obj/item/storage/backpack/rogue/satchel/otavan
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon
-	pants = /obj/item/clothing/under/roguetown/trou/leather
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt/random
-	shoes = /obj/item/clothing/shoes/roguetown/boots
-	mask = /obj/item/clothing/mask/rogue/facemask/psydonmask
-	head = /obj/item/clothing/head/roguetown/roguehood/psydon
-	backpack_contents = list(/obj/item/storage/keyring/orthodoxist = 1, /obj/item/lockpickring/mundane = 1, /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger/preblessed, /obj/item/grapplinghook = 1)
-	H.change_stat("strength", -1) // weasel
-	H.change_stat("endurance", 3)
-	H.change_stat("perception", 2)
-	H.change_stat("speed", 3)
-	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_INQUISITION, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_PERFECT_TRACKER, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_OUTLANDER, TRAIT_GENERIC)		//You're a foreigner, a guest of the realm.
-	ADD_TRAIT(H, TRAIT_SILVER_BLESSED, TRAIT_GENERIC)//Given they don't have the psyblessed silver cross. Puts them in line with the Inquisitor.
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = FALSE, devotion_limit = CLERIC_REQ_1)
-	H.grant_language(/datum/language/otavan)
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
+	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/confessor
+	head = /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
+	id = /obj/item/clothing/ring/signet/silver
+	backpack_contents = list(
+		/obj/item/roguekey/inquisition = 1,
+		/obj/item/rope/inqarticles/inquirycord = 1,
+		/obj/item/lockpickring/mundane = 1,
+		/obj/item/clothing/head/inqarticles/blackbag = 1,
+		/obj/item/inqarticles/garrote = 1,
+		/obj/item/grapplinghook = 1,
+		/obj/item/paper/inqslip/arrival/ortho = 1
+		)
+
+/datum/outfit/job/roguetown/confessor/choose_loadout(mob/living/carbon/human/H)
+	. = ..()
+	var/weapons = list("Shortsword", "Handmace", "Dagger")
+	var/weapon_choice = input(H,"Choose your PSYDONIAN weapon.", "TAKE UP PSYDON'S ARMS") as anything in weapons
+	switch(weapon_choice)
+		if("Shortsword")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy/preblessed(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
+		if("Handmace")
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/mace/cudgel/psy/preblessed, SLOT_BELT_L, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)	
+		if("Dagger")
+			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_L, TRUE)

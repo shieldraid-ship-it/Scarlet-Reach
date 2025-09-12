@@ -203,6 +203,54 @@
 		playsound(user, 'sound/magic/bless.ogg', 100, FALSE)
 		return
 
+/obj/item/book/rogue/bibble/psy
+	name = "Of Psydon"
+	desc = "And HE WEEPS. Not for you, not for me, but for it all."
+	icon_state = "psyble_0"
+	base_icon_state = "psyble"
+	title = "psyble"
+	dat = "gott.json"
+	var/sect = "sect1"
+
+/obj/item/book/rogue/bibble/psy/attack(mob/living/M, mob/user)
+	return
+
+/obj/item/book/rogue/bibble/psy/read(mob/living/carbon/human/user)
+	if(!open)
+		to_chat(user, span_info("Open it first."))
+		return FALSE
+	if(!user.client || !user.hud_used)
+		return
+	if(!user.hud_used.reads)
+		return
+	if(!user.can_read(src))
+		return
+	if(in_range(user, src) || isobserver(user))
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/m
+		if(sect)
+			var/list/verses = world.file2list("strings/psy[sect].txt")
+			m = pick(verses)
+			if(m)
+				if(prob(1) && sect == "sect1")
+					user.playsound_local(user, 'sound/misc/psydong.ogg', 100, FALSE)
+					user.say("PSY 23:4... And so, ZEZUS wept; for he had been struck down by the silvered javelin of JVDAS, PSYDON's most devout.")
+					user.psydo_nyte()
+				else
+					user.say(m)	
+
+/obj/item/book/rogue/bibble/psy/MiddleClick(mob/user, params)
+	. = ..()
+	var/sects = list("Sect 1 - PSALMS", "Sect 2 - OF LYFE", "Sect 3 - CHANTS")
+	var/sect_choice = input(user, "Select a Sect", "OF PSYDONIA") as anything in sects
+	switch(sect_choice)
+		if("Sect 1 - PSALMS")
+			sect = "sect1"
+		if("Sect 2 - OF LYFE")
+			sect = "sect2"
+		if("Sect 3 - CHANTS")
+			sect = "sect3"
+
 /datum/status_effect/buff/blessed
 	id = "blessed"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/blessed
@@ -217,10 +265,12 @@
 
 /obj/item/book/rogue/law
 	name = "Tome of Justice"
-	desc = "The Tome of Laws, as passed from the Holy See to its many Ten-worshipping communities."
+	desc = "The Tome of Laws, as passed from the Holy See to its many Ten-worshipping communities. Its heft physicalizes a compelling maxim: the application of law should not be taken lightly."
 	icon_state ="lawtome_0"
 	base_icon_state = "lawtome"
 	bookfile = "law_2.json"
+	possible_item_intents = list(/datum/intent/mace/smash/wood)
+	force = 15
 
 /obj/item/book/rogue/cooking
 	name = "Tastes Fit For The Lord"
@@ -549,9 +599,8 @@
 		for(var/I in page_texts)
 			dat += "<p>[I]</p>"
 		dat += "<br>"
-		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
 		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=1000x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=0")
+		user << browse(dat, "window=reading;size=1000x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
 		onclose(user, "reading", src)
 	else
 		return span_warning("I'm too far away to read it.")

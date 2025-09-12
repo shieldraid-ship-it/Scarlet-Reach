@@ -224,6 +224,13 @@
 	max_integrity = 180
 	blade_dulling = DULLING_SHAFT_CONJURED
 
+/obj/item/rogueweapon/stoneaxe/battle/abyssoraxe
+	name = "Tidecleaver"
+	desc = "An axe made in image and inspiration of the rumored Tidecleaver, an axe capable of parting the ocean itself. The steel hums the crash of waves."
+	icon_state = "abyssoraxe"
+	icon = 'icons/roguetown/weapons/32.dmi'
+	max_integrity = 400 // higher int than usual
+
 //Pickaxe-axe ; Technically both a tool and a weapon, but it goes here due to weapon function. Subtype of woodcutter axe, mostly a weapon.
 /obj/item/rogueweapon/stoneaxe/woodcut/pick
 	name = "Pulaski axe"
@@ -387,6 +394,16 @@
 	. = ..()								//Pre-blessed, +3 force, +50 blade int, +50 int, +1 def, make silver
 	AddComponent(/datum/component/psyblessed, TRUE, 3, 50, 50, 1, TRUE)
 
+/obj/item/rogueweapon/stoneaxe/battle/steppesman
+	name = "aavnic valaška"
+	desc = "A steel axe of Aavnic make that combines a deadly weapon with a walking stick - hence its pointed end. It has a flat head that fits the hand comfortably, and it's usable for chopping and smashing. You could probably stab someone if you tried really hard."
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash/flataxe, /datum/intent/sword/peel)
+	gripped_intents = list(/datum/intent/axe/cut/battle ,/datum/intent/axe/chop/battle, /datum/intent/stab, /datum/intent/sword/peel)
+	force_wielded = 25	//No damage changes for wielded/unwielded
+	icon_state = "valaska"
+	demolition_mod = 2
+	walking_stick = TRUE
+
 /datum/intent/axe/cut/battle/greataxe
 	reach = 2
 
@@ -410,6 +427,9 @@
 	gripsprite = TRUE
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	equip_delay_self = 2.5 SECONDS
+	unequip_delay_self = 2.5 SECONDS
 	minstr = 11
 	max_blade_int = 200
 	anvilrepair = /datum/skill/craft/weaponsmithing

@@ -62,6 +62,19 @@
 		else
 			to_chat(user, span_warning("[H] cannot be repaired."))
 			revert_cast()
+	else if(istype(targets[1], /mob/living/simple_animal/hostile/retaliate/rogue/elemental))
+		var/mob/living/simple_animal/hostile/retaliate/rogue/elemental/T = targets[1]
+		if(T.health < T.maxHealth)
+			var/heal_amount = 20
+			if(user.mind)
+				heal_amount += (user.get_skill_level(/datum/skill/magic/arcane) * 20)//base 40 (assuming you have novice arcyne) plus 20 per rank after that, meaning you heal 140 at legendary skill
+			T.adjustBruteLoss(-heal_amount)
+			T.visible_message(span_info("[T] glows in a faint mending light."), span_notice("I feel my body being repaired by arcyne energy."))
+			var/obj/effect/temp_visual/heal/E = new /obj/effect/temp_visual/heal_rogue(get_turf(T))
+			E.color = "#C527F5"
+		else
+			to_chat(user, span_info("[T] appears to be in perfect condition."))
+			revert_cast()
 	else
 		to_chat(user, span_warning("There is no item here!"))
 		revert_cast()
