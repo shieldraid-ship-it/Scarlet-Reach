@@ -196,6 +196,7 @@
 #define TRAIT_DYES "Dyemaster"
 #define TRAIT_GOODWRITER "Great Writer"
 #define TRAIT_ADRENALINE_RUSH "Adrenaline Rush"
+#define TRAIT_DEADITE "Deadite"
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
 
@@ -229,7 +230,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STRONGBITE = span_info("Stronger bites, critical bite attacks."),
 	TRAIT_NOBLE = span_blue("I'm of noble blood."),
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),
-	TRAIT_EMPATH = span_info("I can notice when people are in pain."),
+	TRAIT_EMPATH = span_info("I can notice when people are in pain, and I feel peace when they're happy."),
 	TRAIT_BREADY = span_info("Defensive stance does not passively fatigue me."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
@@ -361,7 +362,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CURSE_ZIZO = span_warning("I am forsaken by the Architect. Her grasp reaches for my heart."),
 	TRAIT_CURSE_GRAGGAR = span_warning("I am forsaken by the Warlord. Bloodlust is only thing I know for real."),
 	TRAIT_CURSE_MATTHIOS = span_warning("I am forsaken by the Dragon. Greed will be my only salvation."),
-	TRAIT_CURSE_BAOTHA = span_warning("I am forsaken by the Heartbreaker. I am drowning in her promises.")
+	TRAIT_CURSE_BAOTHA = span_warning("I am forsaken by the Heartbreaker. I am drowning in her promises."),
+	TRAIT_DEADITE = span_danger("The Rot has overtaken me.")
 ))
 
 // trait accessor defines
