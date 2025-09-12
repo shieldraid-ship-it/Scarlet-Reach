@@ -219,7 +219,7 @@
 			to_chat(user, span_notice("Success!"))
 		return
 	if(do_double_hit && HAS_TRAIT(user, TRAIT_DUALWIELDER)) // do a second follow up attack if we successfully hit our target
-		if(prob(50))
+		if(prob(75)) // 25% chance of doing a second hit
 			return
 		var/obj/item/offh = user.get_inactive_held_item()
 		if(!offh)
