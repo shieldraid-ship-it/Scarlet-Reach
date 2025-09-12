@@ -26,7 +26,6 @@
 //	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
-	var/t_do = p_do()
 	var/obscure_name = FALSE
 	var/race_name = dna.species.name
 	var/datum/antagonist/maniac/maniac = user.mind?.has_antag_datum(/datum/antagonist/maniac)
@@ -39,12 +38,10 @@
 	var/m1 = "[t_He] [t_is]"
 	var/m2 = "[t_his]"
 	var/m3 = "[t_He] [t_has]"
-	var/m4 = "[t_He] [t_do]"
 	if(user == src)
 		m1 = "I am"
 		m2 = "my"
 		m3 = "I have"
-		m4 = "I do"
 
 	if(isliving(user))
 		var/mob/living/L = user
