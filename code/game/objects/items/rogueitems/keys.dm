@@ -124,12 +124,6 @@
 			H.Paralyze(10)
 			H.adjustFireLoss(25)
 			H.fire_act(1,10)
-		if(HAS_TRAIT(H, TRAIT_DEATHLESS))
-			to_chat(H, span_userdanger("I can't pick up the silver, for I am one of the damned!"))
-			H.Knockdown(10)
-			H.Paralyze(10)
-			H.adjustFireLoss(15)
-			H.fire_act(1,10)
 
 /obj/item/roguekey/lord
 	name = "master key"

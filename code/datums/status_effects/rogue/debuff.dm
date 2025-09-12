@@ -52,7 +52,7 @@
 /datum/status_effect/debuff/silver_curse_weaker
 	id = "silver_curse_weaker"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/silver_curse_weaker
-	effectedstats = list("strength" = -1,"perception" = -1,"intelligence" = -1, "constitution" = -1, "endurance" = -1, "speed" = -1)
+	effectedstats = list("strength" = -1,"perception" = -1,"intelligence" = -1, "speed" = -1)
 	duration = 20 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/silver_curse_weaker

@@ -238,14 +238,6 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_redtext("[m1] repulsive!")
 
-		if (HAS_TRAIT(src, TRAIT_DEATHLESS))
-			switch (pronouns)
-				if (HE_HIM, SHE_HER_M)
-					. += span_dead("[m4] not seem to be...  particularly alive.")
-				if (SHE_HER, HE_HIM_F)
-					. += span_dead("[m4] not seem to be... particularly alive.")
-				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					. += span_dead("[m4] not seem to be... particularly alive.")
 	
 	if (HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS) && (!HAS_TRAIT(src, TRAIT_VAMP_DREAMS)))
 		if(isliving(user))

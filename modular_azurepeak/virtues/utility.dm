@@ -174,8 +174,6 @@
 
 /datum/virtue/utility/deathless/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.mob_biotypes |= MOB_UNDEAD
-	recipient.dna.species.soundpack_m = new /datum/voicepack/deathless()
-	recipient.dna.species.soundpack_f = new /datum/voicepack/deathlessfem()
 
 /datum/virtue/utility/blacksmith
 	name = "Blacksmith's Apprentice"
