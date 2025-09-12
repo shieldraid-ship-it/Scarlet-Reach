@@ -24,6 +24,9 @@
 	icon_state = "insmash"
 	item_d_type = "blunt"
 
+/datum/intent/mace/smash/flataxe
+	damfactor = 1.2
+	clickcd = 10
 
 /datum/intent/mace/rangedthrust
 	name = "thrust"
@@ -32,7 +35,7 @@
 	animname = "stab"
 	icon_state = "instab"
 	reach = 2
-	chargetime = 1
+	clickcd = CLICK_CD_CHARGED
 	recovery = 30
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')

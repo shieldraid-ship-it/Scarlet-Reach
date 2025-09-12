@@ -33,7 +33,7 @@
 	icon_state = "inpick"
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 80
+	penfactor = 75
 	clickcd = 14
 	swingdelay = 12
 	damfactor = 1.1
@@ -80,6 +80,7 @@
 	name = "hunting knife"
 	desc = "A hunter's prized possession. Keep it sharp, and it might last you through the wild."
 	icon_state = "huntingknife"
+	sheathe_icon = "huntingknife"
 	icon = 'icons/roguetown/weapons/32.dmi'
 	item_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -108,11 +109,17 @@
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_dagger.ogg'
 	sheathe_sound = 'modular_helmsguard/sound/sheath_sounds/put_back_dagger.ogg'
 
+	equip_delay_self = 1 SECONDS
+	unequip_delay_self = 1 SECONDS
+	inv_storage_delay = 1 SECONDS
+	edelay_type = 1
+
 	//flipping knives has a cooldown on to_chat to reduce chatspam
 	COOLDOWN_DECLARE(flip_cooldown)
 
 /obj/item/rogueweapon/huntingknife/Initialize()
-	. = ..()
+	..()
+	AddElement(/datum/element/tipped_item)
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/peasantry/maciejowski_knife,
 		)
@@ -244,6 +251,7 @@
 	tool of daily life and as a capable fighting knife."
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/dagger/sucker_punch,)
 	icon_state = "combatknife"
+	sheathe_icon = "combatknife"
 	icon = 'icons/roguetown/weapons/32.dmi'
 	parrysound = list('sound/combat/parry/bladed/bladedmedium (1).ogg','sound/combat/parry/bladed/bladedmedium (2).ogg','sound/combat/parry/bladed/bladedmedium (3).ogg')
 	swingsound = list('sound/combat/wooshes/bladed/wooshmed (1).ogg','sound/combat/wooshes/bladed/wooshmed (2).ogg','sound/combat/wooshes/bladed/wooshmed (3).ogg')
@@ -269,6 +277,7 @@
 	name = "iron dagger"
 	desc = "This is a common dagger of iron."
 	icon_state = "idagger"
+	sheathe_icon = "idagger"
 	smeltresult = /obj/item/ingot/iron
 	blade_dulling = DULLING_SHAFT_REINFORCED
 
@@ -280,6 +289,7 @@
 	force = 12
 	max_integrity = 75
 	icon_state = "adagger"
+	sheathe_icon = "adagger"
 	smeltresult = /obj/item/ingot/aalloy
 	blade_dulling = DULLING_SHAFT_CONJURED
 
@@ -297,6 +307,7 @@
 	name = "steel dagger"
 	desc = "This is a dagger made of solid steel, more durable."
 	icon_state = "sdagger"
+	sheathe_icon = "sdagger"
 	force = 20
 	max_integrity = 150
 	smeltresult = /obj/item/ingot/steel
@@ -309,6 +320,8 @@
 	force = 25
 	max_integrity = 200
 	icon_state = "gsdagger"
+	sheathe_icon = "gsdagger"
+	is_silver = TRUE
 
 	picklvl = 1.2
 
@@ -330,6 +343,7 @@
 	name = "'De Tace'"
 	desc = "The right hand of the right hand, this narrow length of steel serves as a quick solution to petty greviences."
 	icon_state = "stiletto"
+	sheathe_icon = "stiletto"
 	force = 25
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
@@ -342,6 +356,7 @@
 	force = 15
 	throwforce = 15
 	icon_state = "spdagger"
+	sheathe_icon = "spdagger"
 	wdefense = 6
 
 	picklvl = 1.1
@@ -358,6 +373,7 @@
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	icon_state = "sdaggeralt"
+	sheathe_icon = "sdaggeralt"
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	name = "steel tanto"
@@ -371,6 +387,7 @@
 	name = "silver dagger"
 	desc = "This silver dagger can be the banishment of vampires and werewolves."
 	icon_state = "sildagger"
+	sheathe_icon = "sildagger"
 	sellprice = 50
 	smeltresult = /obj/item/ingot/silver
 	last_used = 0
@@ -383,6 +400,7 @@
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of those cursed, in the hands of a faithful hunter. \
 	It is said that on induction into the Inquisitorial order, a new member of the martial arm is handed such a blade. A token, for their service."
 	icon_state = "psydagger"
+	sheathe_icon = "psydagger"
 	sellprice = 70
 
 	picklvl = 1.175
@@ -445,7 +463,7 @@
 			H.Paralyze(10)
 			H.adjustFireLoss(25)
 			H.fire_act(1,10)
-			
+
 /obj/item/weapon/knife/dagger/silver/arcyne
 	name = "glowing purple silver dagger"
 	desc = "This dagger glows a faint purple. Quicksilver runs across its blade."
@@ -625,6 +643,10 @@
 	desc = "A four pointed throwing knife ground and sharpened from a single piece of metal. The design is intended to solve one of weaknesses of basic tossblades; \
 	more points means these are more likely to land point-first."
 	icon_state = "easttossblade"
+	throwforce = 30
+	max_integrity = 100
+	armor_penetration = 40
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 60, "embedded_fall_chance" = 5)
 
 /obj/item/rogueweapon/huntingknife/throwingknife/aalloy
 	name = "decrepit tossblade"
@@ -669,6 +691,7 @@
 	name = "iron scissors"
 	desc = "Scissors made of iron that may be used to salvage usable materials from clothing."
 	icon_state = "iscissors"
+	inv_storage_delay = null
 
 	picklvl = 0.85
 
@@ -912,3 +935,33 @@
 			qdel(item)
 			user.mind.add_sleep_experience(/datum/skill/misc/sewing, (user.STAINT))
 	return ..()
+
+/obj/item/rogueweapon/huntingknife/attack(mob/living/M, mob/living/user)
+	if(user == M && user.used_intent && user.used_intent.blade_class == BCLASS_STAB && istype(user.rmb_intent, /datum/rmb_intent/weak))
+		if(user.zone_selected == BODY_ZONE_PRECISE_STOMACH || user.zone_selected == BODY_ZONE_CHEST)
+			if(user.doing)
+				to_chat(user, span_warning("You're already in the process of disemboweling yourself!"))
+				return
+			user.visible_message(span_danger("[user] presses [src] to their stomach, preparing to disembowel themselves!"), span_notice("You press the blade to your stomach and begin to push..."))
+			if(!do_after(user, 40, 1, user, 1)) // 4 seconds, hand required, target self, show progress
+				to_chat(user, span_warning("You stop before you can disembowel yourself!"))
+				return
+			// Disembowelment success: drop organs
+			var/list/spilled_organs = list()
+			var/obj/item/organ/stomach/stomach = user.getorganslot(ORGAN_SLOT_STOMACH)
+			if(stomach)
+				spilled_organs += stomach
+			var/obj/item/organ/liver/liver = user.getorganslot(ORGAN_SLOT_LIVER)
+			if(liver)
+				spilled_organs += liver
+			var/obj/item/organ/heart/heart = user.getorganslot(ORGAN_SLOT_HEART)
+			if(heart)
+				spilled_organs += heart
+			for(var/obj/item/organ/spilled as anything in spilled_organs)
+				spilled.Remove(user)
+				spilled.forceMove(user.drop_location())
+			user.visible_message(span_danger("[user] disembowels themselves, their organs spilling out!"), span_notice("You feel a horrible pain as your organs spill out!"))
+			user.emote("scream", null, null, TRUE, TRUE) // forced scream
+			user.overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+			return
+	..()

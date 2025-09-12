@@ -37,11 +37,17 @@
 	valid_outputs = list(/obj/item/alch/airdust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/airdust = 33)
 
-/datum/alch_grind_recipe/bone
-	name = "Bone"
+/datum/alch_grind_recipe/tailbone
+	name = "Tail Bone"
 	valid_input = /obj/item/alch/bone
 	valid_outputs = list( /obj/item/alch/bonemeal = 2)
 	bonus_chance_outputs = list(/obj/item/alch/bonemeal = 50)
+
+/datum/alch_grind_recipe/bone
+	name = "Bone"
+	valid_input = /obj/item/natural/bone
+	valid_outputs = list( /obj/item/alch/bonemeal = 1)
+	bonus_chance_outputs = list(/obj/item/alch/bonemeal = 25)
 
 /datum/alch_grind_recipe/horn
 
@@ -130,6 +136,12 @@
 	valid_outputs = list(/obj/item/alch/irondust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/irondust = 33, /obj/item/alch/runedust = 25)
 
+/datum/alch_grind_recipe/tin_ore
+	name = "Tin Ore"
+	valid_input = /obj/item/rogueore/tin
+	valid_outputs = list(/obj/item/alch/tindust = 1)
+	bonus_chance_outputs = list(/obj/item/alch/tindust = 33)
+
 /datum/alch_grind_recipe/coal_ore
 	name = "Coal Ore"
 	valid_input = /obj/item/rogueore/coal
@@ -153,6 +165,12 @@
 	valid_input = /obj/item/ingot/iron
 	valid_outputs = list(/obj/item/alch/irondust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/irondust = 33, /obj/item/alch/runedust = 25, /obj/item/alch/firedust = 25)
+
+/datum/alch_grind_recipe/tin_bar
+	name = "Tin Bar"
+	valid_input = /obj/item/ingot/tin
+	valid_outputs = list(/obj/item/alch/tindust = 1)
+	bonus_chance_outputs = list(/obj/item/alch/tindust = 33,/obj/item/alch/firedust = 25)
 
 /datum/alch_grind_recipe/puresalt
 	name = "Pure Salt"
