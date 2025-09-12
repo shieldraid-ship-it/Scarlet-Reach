@@ -380,6 +380,7 @@
 	desc = "A steel dagger imported from the Kazengunese archipelago. A sturdy blade bears a subtle curve, set into a decorated circular crossguard. A waxed \
 	wrapping of twisted cordage provides a secure grip."
 	icon_state = "eastdagger"
+	sheathe_icon = "tanto"
 
 	picklvl = 1.1
 
