@@ -1536,9 +1536,9 @@
 	flags_inv = HIDEBOOB|HIDECROTCH
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/light
-	name = "ronin dobo robe"
+	name = "fragile dobo robe"
 	desc = "A dirty tattered dobo robe with white lapels, robes primarily worn by the nomadic or disgraced ronin traveling from their homeland."
-	armor = ARMOR_PADDED
+	armor = ARMOR_PADDED_BAD
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 //less integrity than a leather cuirass, incredibly weak to blunt damage - great against slash - standard leather value against stab
@@ -1555,7 +1555,7 @@
 /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/light
 	name = "formal dobo robe"
 	desc = "A dobo robe with a red tassel, used primarily for general use by the populace for formal occasions."
-	armor = ARMOR_PADDED
+	armor = ARMOR_PADDED_BAD
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 //craftable variation of eastsuit, essentially requiring the presence of a tailor with relevant materials
@@ -1573,7 +1573,7 @@
 /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/light
 	name = "worn dobo robe"
 	desc = "A tattered robe belonging to a warrior scarred from a battle long forgotten."
-	armor = ARMOR_PADDED
+	armor = ARMOR_PADDED_BAD
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
@@ -1588,7 +1588,7 @@
 /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/
 	name = "floral robes"
 	desc = "Flower-styled robes, the Merchant Guild says that this is from the southern Kazengite region."
-	armor = ARMOR_PADDED
+	armor = ARMOR_PADDED_BAD
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 // this robe spawns on a role that offers no leg protection nor further upgrades to the loadout, in exchange for better roundstart gear
