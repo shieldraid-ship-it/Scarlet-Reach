@@ -466,6 +466,11 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	armor = ARMOR_BOOTS
 
+/obj/item/clothing/shoes/roguetown/armor/rumaclan/light
+	name = "raised sandals"
+	desc = "A pair of wooden sandals worn by those from Kazengun region."
+	armor = ARMOR_BOOTS
+
 /obj/item/clothing/shoes/roguetown/boots/carapace
 	name = "carapace boots"
 	desc = "Boots made from carapace for added protection."
