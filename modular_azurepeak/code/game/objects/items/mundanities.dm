@@ -127,14 +127,16 @@
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
 			to_chat(user, span_notice("As I pop open \the [src], I feel a tingling wave run from my head to my feet. A piece of an azure crystal tumbles out. When I grab it, it's gone- and I suddenly feel invigorated."))
-			user.STAINT += rand(1,5)
-			user.STASTR += rand(1,5)
-			user.STASPD += rand(1,5)
-			user.STACON += rand(1,5)
-			user.STAEND += rand(1,5)
+			if(!HAS_TRAIT(user, TRAIT_PUZZLEMASTER))//you can do more if you want but no bonus stats
+				user.STAINT += rand(1,5)
+				user.STASTR += rand(1,5)
+				user.STASPD += rand(1,5)
+				user.STACON += rand(1,5)
+				user.STAEND += rand(1,5)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 			playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
+			ADD_TRAIT(user, TRAIT_PUZZLEMASTER, INNATE_TRAIT)
 		else
 			to_chat(user, span_warning("I can't even start to solve [src]. Feeling like an absolute fool, I put it aside."))
 			user.add_stress(/datum/stressevent/puzzle_fail)
