@@ -2,6 +2,8 @@
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis)
 		return FALSE
+	if(!penis.functional)
+		return FALSE
 	switch(penis.penis_type)
 		if(PENIS_TYPE_KNOTTED,PENIS_TYPE_TAPERED_KNOTTED,PENIS_TYPE_TAPERED_DOUBLE_KNOTTED,PENIS_TYPE_BARBED_KNOTTED)
 			return TRUE
@@ -21,8 +23,6 @@
 		return
 	var/datum/sex_action/action = SEX_ACTION(user.sexcon.current_action)
 	if(!action.knot_on_finish) // the current action does not support knot climaxing, abort
-		return
-	if(!user.sexcon.can_use_penis())
 		return
 	if(!user.sexcon.knot_penis_type()) // don't have that dog in 'em
 		return
