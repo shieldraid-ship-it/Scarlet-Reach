@@ -14,7 +14,8 @@
 		return
 	var/datum/sex_action/action = SEX_ACTION(action_path)
 	if(action.user_sex_part & user.sexcon.knotted_part) // check if the knot is not blocking these actions, and thus requires a forceful removal
-		user.sexcon.knot_remove()
+		var/forced_insertion = force >= SEX_FORCE_EXTREME && speed >= SEX_SPEED_EXTREME
+		user.sexcon.knot_remove(forceful_removal = forced_insertion)
 	if(action.target_sex_part & target.sexcon.knotted_part)
 		target.sexcon.knot_remove()
 
