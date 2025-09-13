@@ -148,7 +148,7 @@
 			to_chat(top, span_love("I feel [btm] tightening over my knot."))
 			to_chat(btm, span_love("I feel [top] rubbing inside."))
 		return
-	if(btm.pulling == top || top.pulling == btm)
+	if(top.pulling == btm || btm.pulling == top)
 		return
 	if(top.sexcon.considered_limp())
 		knot_remove()
