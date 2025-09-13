@@ -96,6 +96,14 @@
 	if(soundloop)
 		QDEL_NULL(soundloop)
 	src.visible_message(span_cult("A great deluge of souls escapes the shattered box!"))
+	for (var/mob/living/carbon/human/H in hearers(7, src))
+		if (!H.client)
+			continue
+		if(!HAS_TRAIT(H, TRAIT_INQUISITION))
+			if(H?.patron?.type == /datum/patron/old_god)
+				H.add_stress(/datum/stressevent/soulchurnerdestroyed_psydon)
+			else
+				H.add_stress(/datum/stressevent/soulchurnerdestroyed)
 	return ..()
 
 /obj/item/psydonmusicbox/update_icon()
