@@ -539,13 +539,14 @@
 		dat += "<br>"
 	dat += "<table width='100%'><td width='50%'></td><td width='50%'></td><tr>"
 	var/i = 0
+	var/user_is_incapacitated = user.incapacitated()
 	for(var/action_type in GLOB.sex_actions)
 		var/datum/sex_action/action = SEX_ACTION(action_type)
 		if(!action.shows_on_menu(user, target))
 			continue
 		dat += "<td>"
 		var/link = ""
-		if(!can_perform_action(action_type))
+		if(!can_perform_action(action_type, user_is_incapacitated))
 			link = "linkOff"
 		if(current_action == action_type)
 			link = "linkOn"
@@ -625,7 +626,7 @@
 		return
 	if(!action_type)
 		return
-	if(!can_perform_action(action_type))
+	if(!can_perform_action(action_type, user.incapacitated()))
 		return
 	knot_check_remove(action_type)
 	// Set vars
@@ -649,7 +650,7 @@
 			break
 		if(current_action == null || performed_action_type != current_action)
 			break
-		if(!can_perform_action(current_action))
+		if(!can_perform_action(current_action, user.incapacitated()))
 			break
 		if(action.is_finished(user, target))
 			break
@@ -663,23 +664,23 @@
 			break
 	stop_current_action()
 
-/datum/sex_controller/proc/can_perform_action(action_type)
+/datum/sex_controller/proc/can_perform_action(action_type, incapacitated)
 	if(!action_type)
 		return FALSE
 	var/datum/sex_action/action = SEX_ACTION(action_type)
-	if(!inherent_perform_check(action_type))
+	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
 	if(!action.can_perform(user, target))
 		return FALSE
 	return TRUE
 
-/datum/sex_controller/proc/inherent_perform_check(action_type)
+/datum/sex_controller/proc/inherent_perform_check(action_type, incapacitated)
 	var/datum/sex_action/action = SEX_ACTION(action_type)
 	if(!target)
 		return FALSE
 	if(user.stat != CONSCIOUS)
 		return FALSE
-	if(action.check_incapacitated && user.incapacitated())
+	if(action.check_incapacitated && incapacitated)
 		return FALSE
 	return TRUE
 
