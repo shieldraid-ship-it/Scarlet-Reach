@@ -469,7 +469,7 @@
 			to_chat(user, span_warning("The tree has been fully pruned already!"))
 			return TRUE
 		var/skill = get_farming_skill(user)
-		var/prune_time = 25 SECONDS - (skill * 3.5 SECONDS)
+		var/prune_time = 12 SECONDS - (skill SECONDS)
 
 		to_chat(user, span_notice("You begin pruning the tree..."))
 
@@ -480,7 +480,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				add_sleep_experience(user, /datum/skill/labor/farming, C.STAINT * 0.5)
-			
+
 			to_chat(user, span_notice("You prune some branches."))
 			update_icon()
 			return TRUE
@@ -861,10 +861,10 @@
 				/obj/item/reagent_containers/food/snacks/eoran_aril/pearlescent = 10,
 				/obj/item/reagent_containers/food/snacks/eoran_aril/cerulean = 15,
 				/obj/item/reagent_containers/food/snacks/eoran_aril/fractal = 5,
-				/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 4,
-				/obj/item/reagent_containers/food/snacks/eoran_aril/ashen = 1,
+				/obj/item/reagent_containers/food/snacks/eoran_aril/auric = 10,
+				/obj/item/reagent_containers/food/snacks/eoran_aril/ashen = 10,
 				/obj/item/reagent_containers/food/snacks/eoran_aril/ochre = 5,
-				/obj/item/reagent_containers/lux/eoran_aril = 1
+				/obj/item/reagent_containers/lux/eoran_aril = 10
 			)
 
     // Generate 4 arils +1 per tier.
@@ -1107,7 +1107,7 @@
 	name = "ochre aril"
 	desc = "A blood-red seed that seems to pulse menacingly."
 	icon_state = "ochre"
-	effect_desc = "Produce golden arils at the cost of your own life."
+	effect_desc = "Produce life-giving arils at the cost of your own life."
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/ochre/apply_effects(mob/living/carbon/eater)
 	if(ishuman(eater))
@@ -1116,6 +1116,7 @@
 			to_chat(H, span_notice("Golden seeds sprout from your skin and fall upon the floor."))
 			for(var/i in 1 to 2)
 				new /obj/item/reagent_containers/food/snacks/eoran_aril/auric(H.loc)
+				new /obj/item/reagent_containers/lux/eoran_aril(H.loc)
 			H.apply_status_effect(/datum/status_effect/debuff/eoran_wilting)
 
 //For now this is just artifical lux. But this may make the user/receiver indebted to eora eventually.
