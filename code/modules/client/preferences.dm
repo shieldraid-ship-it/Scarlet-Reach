@@ -451,10 +451,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Update feature colors with change:</b> <a href='?_src_=prefs;preference=update_mutant_colors;task=input'>[update_mutant_colors ? "Yes" : "No"]</a><BR>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones && !(LAMIAN_TAIL in pref_species.species_traits))
-
-				var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
-
-				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=skin_color_ref_list;task=input'>(?)</a> <a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
+				if(pref_species.id != "lupian")
+					dat += "<b>[pref_species.skin_tone_wording]: </b><a href='?_src_=prefs;preference=skin_color_ref_list;task=input'>(?)</a> <a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
+				else
+					dat += "<b>[pref_species.skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
 				dat += "<br>"
 
 			if((MUTCOLORS in pref_species.species_traits) && !(LAMIAN_TAIL in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits) && !(LAMIAN_TAIL in pref_species.species_traits))
