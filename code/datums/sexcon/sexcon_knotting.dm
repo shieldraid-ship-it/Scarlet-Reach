@@ -341,6 +341,7 @@
 	if(istype(btm) && btm.sexcon.knotted_status)
 		if(!keep_btm_status) // only keep the status if we're reapplying the knot
 			btm.remove_status_effect(/datum/status_effect/knot_tied)
+			btm.reset_pull_offsets(btm, GRAB_AGGRESSIVE)
 		UnregisterSignal(btm.sexcon.user, COMSIG_MOVABLE_MOVED)
 		btm.sexcon.knotted_owner = null
 		btm.sexcon.knotted_recipient = null
