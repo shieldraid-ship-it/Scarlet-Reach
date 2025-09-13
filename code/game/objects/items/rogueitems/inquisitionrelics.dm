@@ -108,6 +108,7 @@
 				H.add_stress(/datum/stressevent/soulchurnerdestroyed_psydon)
 			else
 				H.add_stress(/datum/stressevent/soulchurnerdestroyed)
+				to_chat(H, (span_hypnophrase("\"Thank you.\"")))
 	return ..()
 
 /obj/item/psydonmusicbox/update_icon()
