@@ -10,7 +10,7 @@ on:
 
 env:
   BYOND_MAJOR: 516
-  BYOND_MINOR: 1636
+  BYOND_MINOR: 1667
   SPACEMAN_DMM_VERSION: suite-1.11
 
 concurrency:
