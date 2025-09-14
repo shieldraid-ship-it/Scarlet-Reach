@@ -214,6 +214,9 @@
 	/datum/species/golem/metal,\
 	/datum/species/golem/porcelain,\
 
+#define RACES_WILDKIN \
+	/datum/species/anthromorph,\
+
 #define RACES_SECOND_CLASS \
     /datum/species/vulpkanin,\
     /datum/species/lupian,\
@@ -240,6 +243,8 @@
 #define RACES_NOBILITY_ELIGIBLE_UP list(RACES_NOBILITY_ELIGIBLE)
 
 #define RACES_CHURCH_FAVORED_UP list(RACES_NOBILITY_ELIGIBLE, RACES_CHURCH_FAVORED)
+
+#define RACES_CHURCH_FAVORED_UP_PLUS_WILDKIN list(RACES_NOBILITY_ELIGIBLE, RACES_CHURCH_FAVORED, RACES_WILDKIN)
 
 #define RACES_APPOINTED_OUTCASTS_UP list(RACES_NOBILITY_ELIGIBLE, RACES_CHURCH_FAVORED, RACES_APPOINTED_OUTCASTS)
 
