@@ -1,3 +1,12 @@
+#define SEX_ZONE_NULL				0
+#define SEX_ZONE_GROIN				(1<<0)
+#define SEX_ZONE_GROIN_GRAB			(1<<1)
+#define SEX_ZONE_L_FOOT				(1<<2)
+#define SEX_ZONE_R_FOOT				(1<<3)
+#define SEX_ZONE_MOUTH				(1<<4)
+#define SEX_ZONE_CHEST				(1<<5)
+#define SEX_ZONE_CHEST_GRAB			(1<<6)
+
 /datum/sex_controller
 	/// The user and the owner of the controller
 	var/mob/living/carbon/human/user
@@ -30,6 +39,8 @@
 	var/last_moan = 0
 	var/last_pain = 0
 	var/aphrodisiac = 1 //1 by default, acts as a multiplier on arousal gain. If this is different than 1, set/freeze arousal is disabled.
+	/// Cache body parts used for accessibility check
+	var/access_zone_bitfield = SEX_ZONE_NULL
 	var/knotted_status = KNOTTED_NULL // knotted state and used to prevent multiple knottings when we do not handle that case
 	var/knotted_part = SEX_PART_NULL // which orifice was knotted (bitflag)
 	var/knotted_part_partner = SEX_PART_NULL // which orifice was knotted on partner (bitflag)
@@ -79,6 +90,41 @@
 		return TRUE
 	return FALSE
 
+/datum/sex_controller/proc/update_accessible_body_zones()
+	access_zone_bitfield = SEX_ZONE_NULL
+	if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, FALSE, TRUE))
+		access_zone_bitfield |= SEX_ZONE_GROIN
+		if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, TRUE, TRUE))
+			access_zone_bitfield |= SEX_ZONE_GROIN_GRAB
+	if(get_location_accessible(user, BODY_ZONE_PRECISE_L_FOOT, FALSE, TRUE))
+		access_zone_bitfield |= SEX_ZONE_L_FOOT
+	if(get_location_accessible(user, BODY_ZONE_PRECISE_R_FOOT, FALSE, TRUE))
+		access_zone_bitfield |= SEX_ZONE_R_FOOT
+	if(get_location_accessible(user, BODY_ZONE_PRECISE_MOUTH, FALSE, TRUE))
+		access_zone_bitfield |= SEX_ZONE_MOUTH
+	if(get_location_accessible(user, BODY_ZONE_CHEST, FALSE, TRUE))
+		access_zone_bitfield |= SEX_ZONE_CHEST
+		if(get_location_accessible(user, BODY_ZONE_CHEST, TRUE, TRUE))
+			access_zone_bitfield |= SEX_ZONE_CHEST_GRAB
+
+/datum/sex_controller/proc/get_accessible_body_zone(body_zone_bitfield, body_zone, grabs)
+	switch(body_zone)
+		if(BODY_ZONE_PRECISE_GROIN)
+			if(grabs)
+				return body_zone_bitfield&SEX_ZONE_GROIN_GRAB ? TRUE : FALSE
+			return body_zone_bitfield&SEX_ZONE_GROIN ? TRUE : FALSE
+		if(BODY_ZONE_PRECISE_L_FOOT)
+			return body_zone_bitfield&SEX_ZONE_L_FOOT ? TRUE : FALSE
+		if(BODY_ZONE_PRECISE_R_FOOT)
+			return body_zone_bitfield&SEX_ZONE_R_FOOT ? TRUE : FALSE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			return body_zone_bitfield&SEX_ZONE_MOUTH ? TRUE : FALSE
+		if(BODY_ZONE_CHEST)
+			if(grabs)
+				return body_zone_bitfield&SEX_ZONE_CHEST_GRAB ? TRUE : FALSE
+			return body_zone_bitfield&SEX_ZONE_CHEST ? TRUE : FALSE
+	return FALSE
+
 /datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE, skipundies = TRUE)
 	var/obj/item/bodypart/bodypart = target.get_bodypart(location)
 
@@ -96,10 +142,10 @@
 	if(sigbitflags & SIG_CHECK_FAIL)
 		return FALSE
 
-	if(!user.Adjacent(target) && !(sigbitflags & SKIP_ADJACENCY_CHECK))
+	if(!bodypart)
 		return FALSE
 
-	if(!bodypart)
+	if(!(sigbitflags & SKIP_ADJACENCY_CHECK) && !user.Adjacent(target))
 		return FALSE
 
 	if(src.check_same_tile && (user != target || self_target) && !(sigbitflags & SKIP_TILE_CHECK))
@@ -113,7 +159,7 @@
 		if((grabstate == null || grabstate < src.required_grab_state))
 			return FALSE
 
-	var/result = get_location_accessible(target, location = location, grabs = grabs, skipundies = skipundies)
+	var/result = user_controller.get_accessible_body_zone(target.sexcon.access_zone_bitfield, location, grabs)
 	if(result && user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))
 		user_controller.using_zones += location
 	
@@ -540,6 +586,9 @@
 	dat += "<table width='100%'><td width='50%'></td><td width='50%'></td><tr>"
 	var/i = 0
 	var/user_is_incapacitated = user.incapacitated()
+	user.sexcon.update_accessible_body_zones()
+	if(target != user)
+		target.sexcon.update_accessible_body_zones()
 	for(var/action_type in GLOB.sex_actions)
 		var/datum/sex_action/action = SEX_ACTION(action_type)
 		if(!action.shows_on_menu(user, target))
@@ -819,3 +868,12 @@
 			return "<span class='love_high'>[string]</span>"
 		if(SEX_FORCE_EXTREME)
 			return "<span class='love_extreme'>[string]</span>"
+
+#undef SEX_ZONE_NULL
+#undef SEX_ZONE_GROIN
+#undef SEX_ZONE_GROIN_GRAB
+#undef SEX_ZONE_L_FOOT
+#undef SEX_ZONE_R_FOOT
+#undef SEX_ZONE_MOUTH
+#undef SEX_ZONE_CHEST
+#undef SEX_ZONE_CHEST_GRAB
