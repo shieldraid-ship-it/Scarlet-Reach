@@ -138,11 +138,11 @@
 		/datum/descriptor_choice/prominent_four_wild,
 	)
 
-//	allowed_tail_types = list(
-//		/obj/item/bodypart/lamian_tail/lamian_tail,
-//		/obj/item/bodypart/lamian_tail/mermaid_tail,
-//	)
-//
+	allowed_tail_types = list(
+		/obj/item/bodypart/lamian_tail/lamian_tail,
+		/obj/item/bodypart/lamian_tail/mermaid_tail,
+	)
+
 /datum/species/lamia/check_roundstart_eligible()
 	return TRUE
 
