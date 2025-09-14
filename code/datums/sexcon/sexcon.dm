@@ -91,6 +91,7 @@
 		return TRUE
 	return FALSE
 
+// any new sex commands that target new locations, will need to be added here, and given a unique bitflag define
 /datum/sex_controller/proc/update_accessible_body_zones()
 	access_zone_bitfield = SEX_ZONE_NULL
 	if(get_location_accessible(user, BODY_ZONE_PRECISE_GROIN, FALSE, TRUE))
@@ -112,21 +113,21 @@
 	switch(body_zone)
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(grabs)
-				return body_zone_bitfield&SEX_ZONE_GROIN_GRAB ? TRUE : FALSE
-			return body_zone_bitfield&SEX_ZONE_GROIN ? TRUE : FALSE
+				return body_zone_bitfield&SEX_ZONE_GROIN_GRAB
+			return body_zone_bitfield&SEX_ZONE_GROIN
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return body_zone_bitfield&SEX_ZONE_L_FOOT ? TRUE : FALSE
+			return body_zone_bitfield&SEX_ZONE_L_FOOT
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return body_zone_bitfield&SEX_ZONE_R_FOOT ? TRUE : FALSE
+			return body_zone_bitfield&SEX_ZONE_R_FOOT
 		if(BODY_ZONE_PRECISE_MOUTH)
-			return body_zone_bitfield&SEX_ZONE_MOUTH ? TRUE : FALSE
+			return body_zone_bitfield&SEX_ZONE_MOUTH
 		if(BODY_ZONE_CHEST)
 			if(grabs)
-				return body_zone_bitfield&SEX_ZONE_CHEST_GRAB ? TRUE : FALSE
-			return body_zone_bitfield&SEX_ZONE_CHEST ? TRUE : FALSE
-	return FALSE
+				return body_zone_bitfield&SEX_ZONE_CHEST_GRAB
+			return body_zone_bitfield&SEX_ZONE_CHEST
+	return SEX_ZONE_NULL
 
-/datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE, skipundies = TRUE)
+/datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE)
 	var/obj/item/bodypart/bodypart = target.get_bodypart(location)
 
 	var/self_target = FALSE
@@ -160,7 +161,7 @@
 		if((grabstate == null || grabstate < src.required_grab_state))
 			return FALSE
 
-	var/result = user_controller.get_accessible_body_zone(target.sexcon.access_zone_bitfield, location, grabs)
+	var/result = user_controller.get_accessible_body_zone(target.sexcon.access_zone_bitfield, location, grabs) != SEX_ZONE_NULL
 	if(result && user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))
 		user_controller.using_zones += location
 	
