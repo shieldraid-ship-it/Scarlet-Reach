@@ -63,24 +63,35 @@ jobs:
           tools/bootstrap/python -m mapmerge2.dmm_test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       
       - name: Restore BYOND cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-BYOND-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       
       - name: Install BYOND
+        if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
+        shell: bash
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y make gcc unzip
           bash tools/ci/install_byond.sh
+        
+      - name: Save BYOND cache
+        if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/BYOND
+          key: ${{ steps.restore_byond_cache.outputs.cache-primary-key }}
+
 
       - name: Compile BYOND project
+        shell: bash
         run: |
           ls -h $HOME/
           source $HOME/BYOND/byond/bin/byondsetup
