@@ -194,6 +194,11 @@
 	icon_state = "heavyhood"
 	hidesnoutADJ = FALSE
 
+/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
+	name = "shadowed hood"
+	desc = "It sits just so, obscuring the face just enough to spoil recognition."
+	color = CLOTHING_BLACK
+
 /obj/item/clothing/neck/roguetown/roguehood/shalal/heavyhood/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))
 
@@ -849,6 +854,13 @@
 	block2add = FOV_BEHIND
 	smelt_bar_num = 2
 	armor = ARMOR_HEAD_HELMET_VISOR
+
+/obj/item/clothing/head/roguetown/helmet/sallet/shishak
+	name = "steel shishak"
+	desc = "A flat decorated steel helmet of Aavnic make with a spike at the top end. A hanging layer of chainmail protects the sides of the head and even the neck."
+	body_parts_covered = HEAD|EARS|HAIR|NECK
+	max_integrity = ARMOR_INT_HELMET_STEEL + 50
+	icon_state = "shishak"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), HIDEHAIR, null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Sallet. Does not hide anything when opened.
@@ -2250,6 +2262,13 @@
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_bear"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/rat
+	name = "warden's rouskull helm"
+	desc = "The large, intimidating skull of the rare giant rous, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long sewer dwellers and their descendants."
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	icon_state = "skullmet_rat"
 
 /obj/item/clothing/head/roguetown/roguehood/warden
 	name = "warden's hood"

@@ -19,8 +19,8 @@
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi' //lips
 	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
 	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
-	clothes_id = "lamia"
-	custom_clothes = TRUE
+//	clothes_id = "lamia"
+//	custom_clothes = TRUE
 	soundpack_m = /datum/voicepack/male
 	soundpack_f = /datum/voicepack/female
 	offset_features = list(
@@ -152,10 +152,12 @@
 /datum/species/lamia/on_species_gain(mob/living/carbon/C, datum/species/old_species) // one of those auto-appends a dot at the end of player speech
 	..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	C.Lamiaze()
 
 /datum/species/lamia/on_species_loss(mob/living/carbon/C) // one of those auto-appends a dot at the end of player speech
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+	C.de_Lamia()
 
 /datum/species/lamia/get_random_features()
 	var/list/returned = MANDATORY_FEATURE_LIST
@@ -264,3 +266,6 @@
 	if(gender == FEMALE)
 		randname = pick(world.file2list("strings/names/roguetown/lamiafemale.txt"))
 	return randname
+
+/datum/species/lamia/spec_fully_heal(mob/living/carbon/human/H)
+	H.Lamiaze()
