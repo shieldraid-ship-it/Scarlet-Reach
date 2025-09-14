@@ -1,4 +1,4 @@
-name: BYOND Build
+name: Build Checks
 
 on:
   push:
@@ -11,9 +11,20 @@ on:
 env:
   BYOND_MAJOR: 515
   BYOND_MINOR: 1636
-  SPACEMAN_DMM_VERSION: suite-1.9
+  SPACEMAN_DMM_VERSION: suite-1.11
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
+  start_gate:
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
+    name: Start Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mandatory Empty Step
+        run: exit 0
   run-linters:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Run Linters
@@ -46,16 +57,11 @@ jobs:
           bash tools/ci/check_filedirs.sh roguetown.dme
           bash tools/ci/check_changelogs.sh
           find . -name "*.php" -print0 | xargs -0 -n1 php -l
-          # bash tools/ci/check_grep.sh # TODO: fix indentation etc
-          # tools/bootstrap/python tools/ci/validate_dme.py < roguetown.dme # TODO: fix unincluded files
+          bash tools/ci/check_grep.sh # TODO: fix indentation etc
+          tools/bootstrap/python tools/ci/validate_dme.py < roguetown.dme # TODO: fix unincluded files
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
-      - name: Annotate Lints
-        uses: yogstation13/DreamAnnotate@v2
-        if: always()
-        with:
-          outputFile: output-annotations.txt
   build:
     runs-on: ubuntu-latest
     steps:
