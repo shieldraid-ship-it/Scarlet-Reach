@@ -109,9 +109,9 @@
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_dagger.ogg'
 	sheathe_sound = 'modular_helmsguard/sound/sheath_sounds/put_back_dagger.ogg'
 
-	equip_delay_self = 1 SECONDS
-	unequip_delay_self = 1 SECONDS
-	inv_storage_delay = 1 SECONDS
+	equip_delay_self = 2
+	unequip_delay_self = 2
+	inv_storage_delay = 2
 	edelay_type = 1
 
 	//flipping knives has a cooldown on to_chat to reduce chatspam

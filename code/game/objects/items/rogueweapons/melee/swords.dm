@@ -145,9 +145,9 @@
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_sword.ogg'
 	sheathe_sound = 'modular_helmsguard/sound/sheath_sounds/put_back_sword.ogg'
 
-	equip_delay_self = 5
-	unequip_delay_self = 5
-	inv_storage_delay = 5
+	equip_delay_self = 2
+	unequip_delay_self = 2
+	inv_storage_delay = 2
 	edelay_type = 1
 
 /obj/item/rogueweapon/sword/Initialize()
