@@ -39,8 +39,11 @@
 	var/last_moan = 0
 	var/last_pain = 0
 	var/aphrodisiac = 1 //1 by default, acts as a multiplier on arousal gain. If this is different than 1, set/freeze arousal is disabled.
+	/// Which zones we are using in the current action.
+	var/using_zones = list()
 	/// Cache body parts used for accessibility check
 	var/access_zone_bitfield = SEX_ZONE_NULL
+	/// Knot based variables
 	var/knotted_status = KNOTTED_NULL // knotted state and used to prevent multiple knottings when we do not handle that case
 	var/knotted_part = SEX_PART_NULL // which orifice was knotted (bitflag)
 	var/knotted_part_partner = SEX_PART_NULL // which orifice was knotted on partner (bitflag)
@@ -49,8 +52,6 @@
 	var/tugging_knot_blocked = FALSE
 	var/mob/living/carbon/knotted_owner = null // whom has the knot
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
-	/// Which zones we are using in the current action.
-	var/using_zones = list()
 
 /datum/sex_controller/New(mob/living/carbon/human/owner)
 	user = owner
@@ -659,7 +660,7 @@
 	if(!current_action)
 		return
 	var/datum/sex_action/action = SEX_ACTION(current_action)
-	if (!user.sexcon.knotted_status) // never show the remove message, unless unknotted
+	if(!user.sexcon.knotted_status) // never show the remove message, unless unknotted
 		action.on_finish(user, target)
 	desire_stop = FALSE
 	user.doing = FALSE
