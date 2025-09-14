@@ -79,7 +79,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y make gcc unzip
+          sudo apt-get install -y make gcc unzip curl
           bash tools/ci/install_byond.sh
         
       - name: Save BYOND cache
@@ -94,6 +94,7 @@ jobs:
         shell: bash
         run: |
           ls -h $HOME/
+          sudo apt-get install -y curl
           source $HOME/BYOND/byond/bin/byondsetup
           DreamMaker roguetown.dme
 
