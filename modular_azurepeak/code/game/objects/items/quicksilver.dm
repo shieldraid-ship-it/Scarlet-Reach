@@ -200,12 +200,6 @@
 			H.Paralyze(10)
 			H.adjustFireLoss(25)
 			H.fire_act(1,10)
-		if(HAS_TRAIT(H, TRAIT_DEATHLESS))
-			to_chat(H, span_userdanger("I can't pick up the silver, for I am one of the damned!"))
-			H.Knockdown(20)
-			H.adjustFireLoss(25)
-			H.Paralyze(20)
-			H.fire_act(1,5)
 
 //A letter to give info on how to make this thing.
 /obj/item/paper/inquisition_poultice_info

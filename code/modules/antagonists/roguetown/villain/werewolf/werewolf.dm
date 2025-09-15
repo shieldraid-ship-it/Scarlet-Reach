@@ -83,8 +83,6 @@
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_DEATHLESS))
-		return FALSE
 	return TRUE
 
 /mob/living/carbon/human/proc/werewolf_check(werewolf_type = /datum/antagonist/werewolf/lesser)
