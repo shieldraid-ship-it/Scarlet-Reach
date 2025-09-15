@@ -1,62 +1,60 @@
-/datum/voicepack/deathless/get_sound(soundin, modifiers)
+/datum/voicepack/hollow_fem/get_sound(soundin, modifiers)
 	var/used
 	switch(modifiers)
 		if("old")
-			used = getmold(soundin)
+			used = getfold(soundin)
 		if("young")
-			used = getmyoung(soundin)
+			used = getfyoung(soundin)
 		if("silenced")
-			used = getmsilenced(soundin)
+			used = getfsilenced(soundin)
 	if(!used)
 		switch(soundin)
 			if("deathgurgle")
 				used = pick('sound/vo/mobs/skel/skeleton_scream (1).ogg','sound/vo/mobs/skel/skeleton_scream (2).ogg','sound/vo/mobs/skel/skeleton_scream (3).ogg','sound/vo/mobs/skel/skeleton_scream (4).ogg','sound/vo/mobs/skel/skeleton_scream (5).ogg')
 			if("agony")
-				used = list('sound/vo/male/gen/agony (1).ogg','sound/vo/male/gen/agony (2).ogg','sound/vo/male/gen/agony (4).ogg','sound/vo/male/gen/agony (5).ogg','sound/vo/male/gen/agony (6).ogg','sound/vo/male/gen/agony (7).ogg','sound/vo/male/gen/agony (8).ogg','sound/vo/male/gen/agony (9).ogg','sound/vo/male/gen/agony (10).ogg','sound/vo/male/gen/agony (3).ogg','sound/vo/male/gen/agony (11).ogg','sound/vo/male/gen/agony (12).ogg','sound/vo/male/gen/agony (13).ogg')
+				used = list('sound/vo/female/gen/agony (1).ogg','sound/vo/female/gen/agony (2).ogg','sound/vo/female/gen/agony (3).ogg')
 			if("breathgasp")
-				used = list('sound/vo/male/gen/breathgasp (1).ogg','sound/vo/male/gen/breathgasp (2).ogg','sound/vo/male/gen/breathgasp (3).ogg')
+				used = 'sound/vo/female/gen/breathgasp.ogg'
 			if("burp")
-				used = 'sound/vo/male/gen/burp.ogg'
+				used = 'sound/vo/female/gen/burp.ogg'
 			if("choke")
-				used = 'sound/vo/male/gen/choke.ogg'
+				used = list('sound/vo/female/gen/choke (1).ogg','sound/vo/female/gen/choke (2).ogg','sound/vo/female/gen/choke (3).ogg')
 			if("chuckle")
-				used = 'sound/vo/male/gen/chuckle.ogg'
+				used = list('sound/vo/female/gen/chuckle (1).ogg','sound/vo/female/gen/chuckle (2).ogg','sound/vo/female/gen/chuckle (3).ogg')
 			if("clearthroat")
-				used = list('sound/vo/male/gen/clearthroat (1).ogg','sound/vo/male/gen/clearthroat (2).ogg','sound/vo/male/gen/clearthroat (3).ogg')
+				used = 'sound/vo/female/gen/clearthroat.ogg'
 			if("cough")
-				used = list('sound/vo/male/gen/cough (1).ogg','sound/vo/male/gen/cough (2).ogg')
+				used = list('sound/vo/female/gen/cough (1).ogg','sound/vo/female/gen/cough (2).ogg')
 			if("cry")
-				used = list('sound/vo/male/gen/cry (1).ogg','sound/vo/male/gen/cry (2).ogg','sound/vo/male/gen/cry (3).ogg','sound/vo/male/gen/cry (4).ogg')
+				used = list('sound/vo/female/gen/cry (1).ogg','sound/vo/female/gen/cry (2).ogg','sound/vo/female/gen/cry (3).ogg','sound/vo/female/gen/cry (4).ogg','sound/vo/female/gen/cry (5).ogg','sound/vo/female/gen/cry (6).ogg','sound/vo/female/gen/cry (7).ogg')
 			if("drown")
-				used = list('sound/vo/male/gen/drown (1).ogg','sound/vo/male/gen/drown (2).ogg','sound/vo/male/gen/drown (3).ogg')
+				used = list('sound/vo/female/gen/drown (1).ogg','sound/vo/female/gen/drown (2).ogg','sound/vo/female/gen/drown (3).ogg')
 			if("embed")
-				used = list('sound/vo/male/gen/embed (1).ogg','sound/vo/male/gen/embed (2).ogg','sound/vo/male/gen/embed (3).ogg')
+				used = list('sound/vo/female/gen/embed (1).ogg','sound/vo/female/gen/embed (2).ogg','sound/vo/female/gen/embed (3).ogg','sound/vo/female/gen/embed (4).ogg')
 //			if("fatigue")
-//				used = 'sound/vo/male/gen/fatigue.ogg'
+//				used = list('sound/vo/female/gen/fatigue (1).ogg','sound/vo/female/gen/fatigue (2).ogg','sound/vo/female/gen/fatigue (3).ogg')
 			if("firescream")
 				used = pick('sound/vo/mobs/skel/skeleton_scream (1).ogg','sound/vo/mobs/skel/skeleton_scream (2).ogg','sound/vo/mobs/skel/skeleton_scream (3).ogg','sound/vo/mobs/skel/skeleton_scream (4).ogg','sound/vo/mobs/skel/skeleton_scream (5).ogg')
 			if("gag")
-				used = list('sound/vo/male/gen/gag (1).ogg','sound/vo/male/gen/gag (2).ogg','sound/vo/male/gen/gag (3).ogg')
+				used = list('sound/vo/female/gen/gag (1).ogg','sound/vo/female/gen/gag (2).ogg','sound/vo/female/gen/gag (3).ogg')
 			if("gasp")
-				used = 'sound/vo/male/gen/gasp.ogg'
-			if("groin")
-				used = list('sound/vo/male/gen/groin (1).ogg','sound/vo/male/gen/groin (2).ogg')
+				used = list('sound/vo/female/gen/gasp (1).ogg','sound/vo/female/gen/gasp (2).ogg','sound/vo/female/gen/gasp (3).ogg')
+			if("giggle")
+				used = list('sound/vo/female/gen/giggle (1).ogg','sound/vo/female/gen/giggle (2).ogg')
 			if("groan")
-				used = list('sound/vo/male/gen/groan (1).ogg','sound/vo/male/gen/groan (2).ogg','sound/vo/male/gen/groan (3).ogg','sound/vo/male/gen/groan (4).ogg','sound/vo/male/gen/groan (5).ogg','sound/vo/male/gen/groan (6).ogg')
+				used = list('sound/vo/female/gen/groan (1).ogg','sound/vo/female/gen/groan (2).ogg','sound/vo/female/gen/groan (3).ogg','sound/vo/female/gen/groan (4).ogg','sound/vo/female/gen/groan (5).ogg')
 			if("grumble")
-				used = 'sound/vo/male/gen/grumble.ogg'
+				used = 'sound/vo/female/gen/grumble.ogg'
 			if("haltyell")
-				used = list('sound/vo/male/gen/haltyell (1).ogg','sound/vo/male/gen/haltyell (2).ogg')
-				if(prob(3))
-					used = 'sound/vo/male/gen/HEY.ogg'
+				used = list('sound/vo/female/gen/haltyell (1).ogg','sound/vo/female/gen/haltyell (2).ogg')
 			if("hmm")
-				used = 'sound/vo/male/gen/hmm.ogg'
+				used = 'sound/vo/female/gen/hmm.ogg'
 			if("huh")
-				used = list('sound/vo/male/gen/huh (1).ogg','sound/vo/male/gen/huh (2).ogg','sound/vo/male/gen/huh (3).ogg')
+				used = list('sound/vo/female/gen/huh (1).ogg','sound/vo/female/gen/huh (2).ogg','sound/vo/female/gen/huh (3).ogg')
 			if("hum")
-				used = list('sound/vo/male/gen/hum (1).ogg','sound/vo/male/gen/hum (2).ogg','sound/vo/male/gen/hum (3).ogg')
+				used = list('sound/vo/female/gen/hum (1).ogg','sound/vo/female/gen/hum (2).ogg','sound/vo/female/gen/hum (3).ogg')
 			if("laugh")
-				used = list('sound/vo/male/gen/laugh (2).ogg','sound/vo/male/gen/laugh (3).ogg','sound/vo/male/gen/laugh (4).ogg','sound/vo/male/gen/laugh (5).ogg','sound/vo/male/gen/laugh (6).ogg')
+				used = list('sound/vo/female/gen/laugh (1).ogg','sound/vo/female/gen/laugh (2).ogg','sound/vo/female/gen/laugh (3).ogg')
 			if("pain")
 				used = pick('sound/vo/mobs/skel/skeleton_pain (1).ogg','sound/vo/mobs/skel/skeleton_pain (2).ogg','sound/vo/mobs/skel/skeleton_pain (3).ogg','sound/vo/mobs/skel/skeleton_pain (4).ogg','sound/vo/mobs/skel/skeleton_pain (5).ogg')
 			if("paincrit")
@@ -66,29 +64,31 @@
 			if("painscream")
 				used = pick('sound/vo/mobs/skel/skeleton_scream (1).ogg','sound/vo/mobs/skel/skeleton_scream (2).ogg','sound/vo/mobs/skel/skeleton_scream (3).ogg','sound/vo/mobs/skel/skeleton_scream (4).ogg','sound/vo/mobs/skel/skeleton_scream (5).ogg')
 			if("rage")
-				used = list('sound/vo/male/gen/rage (1).ogg','sound/vo/male/gen/rage (2).ogg')
+				used = list('sound/vo/female/gen/rage (1).ogg','sound/vo/female/gen/rage (2).ogg','sound/vo/female/gen/rage (3).ogg')
 			if("scream")
 				used = pick('sound/vo/mobs/skel/skeleton_scream (1).ogg','sound/vo/mobs/skel/skeleton_scream (2).ogg','sound/vo/mobs/skel/skeleton_scream (3).ogg','sound/vo/mobs/skel/skeleton_scream (4).ogg','sound/vo/mobs/skel/skeleton_scream (5).ogg')
-				if(prob(1))
-					used = 'sound/vo/male/wilhelm_scream.ogg'
 			if("shh")
-				used = 'sound/vo/male/gen/shh.ogg'
+				used = list('sound/vo/female/gen/shh.ogg','sound/vo/female/gen/shh (2).ogg')
 			if("sigh")
-				used = 'sound/vo/male/gen/sigh.ogg'
+				used = list('sound/vo/female/gen/sigh (1).ogg','sound/vo/female/gen/sigh (2).ogg','sound/vo/female/gen/sigh (3).ogg')
 			if ("warcry")
-				used = list('sound/vo/male/gen/warcry_male1.ogg','sound/vo/male/gen/warcry_male2.ogg','sound/vo/male/gen/warcry_male3.ogg')
+				used = list('sound/vo/female/gen/warcry_female1.ogg','sound/vo/female/gen/warcry_female2.ogg','sound/vo/female/gen/warcry_female3.ogg')
 			if("whimper")
-				used = list('sound/vo/male/gen/whimper (1).ogg','sound/vo/male/gen/whimper (2).ogg','sound/vo/male/gen/whimper (3).ogg')
+				used = list('sound/vo/female/gen/whimper (1).ogg','sound/vo/female/gen/whimper (2).ogg','sound/vo/female/gen/whimper (3).ogg')
 			if("whistle")
-				used = list('sound/vo/male/gen/whistle (1).ogg','sound/vo/male/gen/whistle (2).ogg','sound/vo/male/gen/whistle (3).ogg')
+				used = list('sound/vo/female/gen/whistle (1).ogg','sound/vo/female/gen/whistle (2).ogg','sound/vo/female/gen/whistle (3).ogg','sound/vo/female/gen/whistle (4).ogg','sound/vo/female/gen/whistle (5).ogg')
 			if("yawn")
-				used = list('sound/vo/male/gen/yawn (1).ogg','sound/vo/male/gen/yawn (2).ogg')
+				used = list('sound/vo/female/gen/yawn (1).ogg','sound/vo/female/gen/yawn (2).ogg','sound/vo/female/gen/yawn (3).ogg')
 			if("attnwhistle")
 				used = 'sound/vo/attn.ogg'
-			if("clap")
-				used = list('sound/body/clap (1).ogg','sound/body/clap (2).ogg','sound/body/clap (3).ogg','sound/body/clap (4).ogg')
 			if("psst")
 				used = 'sound/vo/psst.ogg'
+			if("clap")
+				used = list('sound/body/clap (1).ogg','sound/body/clap (2).ogg','sound/body/clap (3).ogg','sound/body/clap (4).ogg')
+			if("sexmoanlight")
+				used = list('sound/vo/female/gen/se/sexlight (1).ogg','sound/vo/female/gen/se/sexlight (2).ogg','sound/vo/female/gen/se/sexlight (3).ogg','sound/vo/female/gen/se/sexlight (4).ogg','sound/vo/female/gen/se/sexlight (5).ogg','sound/vo/female/gen/se/sexlight (6).ogg','sound/vo/female/gen/se/sexlight (7).ogg')
+			if("sexmoanhvy")
+				used = list('sound/vo/female/gen/se/sex (1).ogg','sound/vo/female/gen/se/sex (2).ogg','sound/vo/female/gen/se/sex (3).ogg','sound/vo/female/gen/se/sex (4).ogg','sound/vo/female/gen/se/sex (5).ogg','sound/vo/female/gen/se/sex (6).ogg','sound/vo/female/gen/se/sex (7).ogg','sound/vo/female/gen/se/sex (8).ogg')
 			if("meow")
 				used = list('sound/vo/mobs/cat/cat_meow1.ogg', 'sound/vo/mobs/cat/cat_meow2.ogg', 'sound/vo/mobs/cat/cat_meow3.ogg', 'sound/vo/mobs/cat/cat_meow4.ogg')
 			if("caw")
@@ -133,7 +133,9 @@
 				used = list('sound/vo/mobs/goat/idle (1).ogg', 'sound/vo/mobs/goat/idle (2).ogg', 'sound/vo/mobs/goat/idle (3).ogg')
 			if("chitter")
 				used = 'sound/vo/moth/mothchitter.ogg'
+			if("flutter")
+				used = 'sound/vo/moth/moth_flutter.ogg'
 			if("strain")
-				used = 'sound/vo/male/gen/strain.ogg'
+				used = 'sound/vo/female/gen/strain.ogg'
 
 	return used

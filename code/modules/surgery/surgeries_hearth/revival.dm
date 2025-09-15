@@ -54,7 +54,7 @@
 		target.visible_message(span_danger("[target]'s body convulses violently, rejecting the light!"), span_warning("Something is terribly wrong..."))
 		return FALSE
 	var/revive_pq = PQ_GAIN_REVIVE
-	if(target.mob_biotypes & MOB_UNDEAD)
+	if((target.mob_biotypes & MOB_UNDEAD) && !HAS_TRAIT(target, TRAIT_HOLLOW_LIFE))
 		display_results(user, target, span_notice("You cannot infuse life into the undead! The rot must be cured first."),
 			"[user] works the lux into [target]'s innards.",
 			"[user] works the lux into [target]'s innards.")
