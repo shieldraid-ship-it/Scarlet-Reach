@@ -13,8 +13,7 @@
 		STATKEY_CON = 3,
 		STATKEY_END = 2,
 		STATKEY_INT = -2,
-		STATKEY_PER = -1,
-		STATKEY_FOR = -1
+		STATKEY_FOR = -2
 	)
 
 	subclass_skills = list(
@@ -81,7 +80,7 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,	
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,	
 	)
 
 /datum/outfit/job/roguetown/wretch/swordhunter/pre_equip(mob/living/carbon/human/H)
@@ -187,7 +186,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 
-	var/weapons = list("Naginata", "Quarterstaff")
+	var/weapons = list("Naginata", "Quarterstaff", "Jumonji yari")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice) //A large selection of exotic starter options, as per the class gimmick.
@@ -195,7 +194,6 @@
 			l_hand = /obj/item/rogueweapon/spear/naginata
 		if("Quarterstaff")
 			l_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/steel
-		//if("Jumonji yari")
-		//	l_hand = /obj/item/rogueweapon/spear/boar/kazengun
-		// Kazengunese boar spear variant is planned, but I know it'll conflict with another PR at the moment so I am not pushing it yet.
+		if("Jumonji yari")
+			l_hand = /obj/item/rogueweapon/spear/boar/kazengun
 	wretch_select_bounty(H)

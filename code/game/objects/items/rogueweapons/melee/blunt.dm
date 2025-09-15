@@ -12,6 +12,9 @@
 	icon_state = "instrike"
 	item_d_type = "blunt"
 
+/datum/intent/mace/strike/reach
+	reach = 2
+
 /datum/intent/mace/smash
 	name = "smash"
 	blade_class = BCLASS_SMASH
@@ -24,7 +27,7 @@
 	icon_state = "insmash"
 	item_d_type = "blunt"
 
-/datum/intent/mace/smash/tetsubo
+/datum/intent/mace/smash/reach
 	reach = 2
 
 /datum/intent/mace/smash/flataxe
@@ -39,11 +42,10 @@
 	icon_state = "instab"
 	reach = 2
 	clickcd = CLICK_CD_CHARGED
-	recovery = 30
+	recovery = 10
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 25
-	damfactor = 0.9
+	penfactor = 40 //Same as a dagger.
 	item_d_type = "stab"
 
 //blunt objs ฅ^•ﻌ•^ฅ
@@ -390,6 +392,7 @@
 	icon_state = "polemace"
 	force = 15
 	force_wielded = 35
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
@@ -407,6 +410,7 @@
 	icon_state = "pufferprod"
 	force = 15
 	force_wielded = 35
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash/reach, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	minstr = 11
 	max_integrity = 900
 	smeltresult = /obj/item/ingot/steelholy
@@ -416,7 +420,7 @@
 	name = "duel settler"
 	desc = "The tenets of ravoxian duels are enscribed upon the head of this maul."
 	icon_state = "ravoxhammer"
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/effect/daze)
 
 /obj/item/rogueweapon/mace/goden/steel/tetsubo
 	name = "tetsubo"
@@ -424,8 +428,8 @@
 	icon_state = "tetsubo"
 	force = 20
 	force_wielded = 40 //Minotaur greataxe, but for blunt weapons
-	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash/tetsubo)
+	possible_item_intents = list(/datum/intent/mace/strike/reach)
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/effect/daze)
 	sharpness = IS_SHARP
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 15

@@ -1171,6 +1171,12 @@
 	wdefense = 6 // A little bit extra
 	max_blade_int = 200 // 50% more sharpness but it barely matter lol
 
+/obj/item/rogueweapon/spear/boar/kazengun
+	name = "jūmonji yari"
+	icon_state = "jumonjiyari"
+	desc = "A spear with a long, straight head and a pair of curved blades pointing upward. A Lingyunese design, the side-blades parallel an Aavnic partizan. Its function is certainly similar, tearing the flesh of any unfortunate enough to be pierced by it."
+	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/naginata, PARTIZAN_REND) //Gets rend and an usable cut, but no peel.
+
 /obj/item/rogueweapon/spear/boar/frei
 	name = "Aavnic lándzsa"
 	desc = "A regional earspoon lance with a carved handle, adorned with the colours of the Freifechters. These are smithed by the legendary armourers of Vyšvou and given to distinguished lancers upon their graduation."
@@ -1197,9 +1203,10 @@
 	force = 16
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/cut/naginata, SPEAR_BASH) // no stab for you little chuddy, it's a slashing weapon
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/cut/naginata, /datum/intent/rend/reach, PARTIZAN_PEEL, SPEAR_BASH)
 	icon_state = "naginata"
 	icon = 'icons/roguetown/weapons/64.dmi'
+	wbalance = WBALANCE_SWIFT
 	minstr = 7
 	max_blade_int = 150 //Nippon suteeru (passable)
 	wdefense = 5
