@@ -155,7 +155,7 @@
 			to_chat(user, span_warning("Let there be light."))
 		for(var/obj/structure/fluff/psycross/S in oview(5, user))
 			S.AOE_flash(user, range = 8)
-		if((target.mob_biotypes & MOB_UNDEAD)) //positive energy harms the undead
+		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			target.visible_message(span_danger("[target] is unmade by holy light!"), span_userdanger("I'm unmade by holy light!"))
 			target.gib()
 			return TRUE
