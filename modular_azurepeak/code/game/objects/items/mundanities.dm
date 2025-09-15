@@ -133,13 +133,18 @@
 				user.STASPD += rand(1,5)
 				user.STACON += rand(1,5)
 				user.STAEND += rand(1,5)
+				ADD_TRAIT(user, TRAIT_PUZZLEMASTER, INNATE_TRAIT)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mundane/puzzlebox/impossible, vanish), TRUE), 1.5 SECONDS)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 			playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
-			ADD_TRAIT(user, TRAIT_PUZZLEMASTER, INNATE_TRAIT)
 		else
 			to_chat(user, span_warning("I can't even start to solve [src]. Feeling like an absolute fool, I put it aside."))
 			user.add_stress(/datum/stressevent/puzzle_fail)
 			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
 
+/obj/item/mundane/puzzlebox/impossible/proc/vanish()
+	visible_message(span_warning("[src] vanishes in a puff of smoke!"))
+	playsound(loc, 'sound/magic/decoylaugh.ogg', 50)
+	qdel(src)
