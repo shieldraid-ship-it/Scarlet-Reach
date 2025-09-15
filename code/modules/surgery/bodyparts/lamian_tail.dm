@@ -14,7 +14,7 @@
 	max_stamina_damage = 50
 	subtargets = list(BODY_ZONE_L_LEG, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_LAMIAN_TAIL)
 	grabtargets = list(BODY_ZONE_LAMIAN_TAIL)
-	dismember_wound = /datum/wound/dismemberment/lamian_tail
+	dismemberable = FALSE //if you lose your tail, it's fucking GG bruh. you can't get the donor anywhere, so no. you can't dismember it brah
 
 	// Taur stuff!
 	// offset_x forces the limb_icon to be shifted on x relative to the human (since these are >32x32)
@@ -84,7 +84,7 @@
 GLOBAL_LIST_INIT(tail_types, subtypesof(/obj/item/bodypart/lamian_tail))
 
 /obj/item/bodypart/lamian_tail/lamian_tail
-	name = "lamian tail"
+	name = "lamia tail"
 
 	offset_x = -16
 	tail_icon_state = "lamia_tail"
@@ -100,7 +100,18 @@ GLOBAL_LIST_INIT(tail_types, subtypesof(/obj/item/bodypart/lamian_tail))
 	offset_x = -16
 	tail_icon_state = "mermaid_tail"
 	tail_tip_icon_state = "mermaid_tail_tip"
-	tail_markings_icon_state = "mermaid_tail_markings"
-	tail_markings_tip_icon_state = "mermaid_tail_markings_tip"
+//	tail_markings_icon_state = "mermaid_tail_markings"
+//	tail_markings_tip_icon_state = "mermaid_tail_markings_tip"
+
+	has_tail_color = TRUE
+
+/obj/item/bodypart/lamian_tail/mermaid_tail_alt
+	name = "mermaid tail, alt"
+
+	offset_x = -16
+	tail_icon_state = "mermaid_tail_alt"
+	tail_tip_icon_state = "mermaid_tail_alt_tip"
+//	tail_markings_icon_state = "mermaid_tail_alt_markings"
+//	tail_markings_tip_icon_state = "mermaid_tail_alt_markings_tip"
 
 	has_tail_color = TRUE
