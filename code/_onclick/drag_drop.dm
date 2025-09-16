@@ -263,7 +263,7 @@
 		lastplayed = 0
 		doneset = 0
 		chargedprog = 0
-		mouse_pointer_icon = 'icons/effects/mousemice/swang/acharging.dmi'
+		mouse_pointer_icon = SSmousecharge.access(chargedprog)
 		START_PROCESSING(SSmousecharge, src)
 
 /client/Destroy()
@@ -285,6 +285,7 @@
 		if(progress < goal)
 			progress += 1 * seconds_per_tick //Tickspeed independent. Should always be 1, isn't always 1 when under strain.
 			chargedprog = ((progress / goal) * 100)
+			mouse_pointer_icon = SSmousecharge.access(chargedprog)
 		else //Fully charged spell
 			if(!doneset)
 				doneset = 1
