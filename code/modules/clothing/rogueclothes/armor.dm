@@ -1553,7 +1553,7 @@
 	max_integrity = 200
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/outlaw
-	color = "#ff0000"
+	color = "#bbbbbb"
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper
 	name = "eastern ceremonial robe"

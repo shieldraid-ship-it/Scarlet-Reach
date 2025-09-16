@@ -80,7 +80,8 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,	
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN //For if they want to use the scabbard to block, though I am not sure why you would do this.
 	)
 
 /datum/outfit/job/roguetown/wretch/swordhunter/pre_equip(mob/living/carbon/human/H)
@@ -92,12 +93,12 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/outlaw
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	belt = /obj/item/storage/belt/rogue/leather/cloth/bandit
+	belt = /obj/item/storage/belt/rogue/leather/plaquesilver/outlaw
 	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
 	shoes = /obj/item/clothing/shoes/roguetown/armor/rumaclan
 	neck = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full/kitsune
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -106,7 +107,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 
-	var/weapons = list("Rapier","Shashka", "Liuyedao", "Shamshir", "Fechtfeders", "Kriegsmesser", "Zweihander", "Dual Gladius")
+	var/weapons = list("Rapier","Shashka", "Liuyedao", "Miaodao", "Shamshir", "Fechtfeders", "Kriegsmesser", "Zweihander", "Dual Gladius")
 	var/weapon_choice = input("Pick your stolen steel.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice) //A large selection of exotic starter options, as per the class gimmick.
@@ -119,6 +120,8 @@
 		if ("Liuyedao")
 			beltl = /obj/item/rogueweapon/scabbard/sword/kazengun
 			l_hand = /obj/item/rogueweapon/sword/sabre/mulyeog
+		if ("Miaodao")
+			l_hand = /obj/item/rogueweapon/greatsword/miaodao
 		if ("Shamshir")
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
@@ -179,17 +182,17 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
-	backpack_contents = list(
+	backpack_contents = list(	
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,
 		)
 
 	var/weapons = list("Naginata", "Quarterstaff", "Jumonji yari")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
-	switch(weapon_choice) //A large selection of exotic starter options, as per the class gimmick.
+	switch(weapon_choice)
 		if("Naginata")
 			l_hand = /obj/item/rogueweapon/spear/naginata
 		if("Quarterstaff")
