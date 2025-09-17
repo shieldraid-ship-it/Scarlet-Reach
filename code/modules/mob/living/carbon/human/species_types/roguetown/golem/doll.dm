@@ -27,7 +27,7 @@
 	disliked_food = NONE
 	liked_food = NONE
 	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_BLOODLOSS_IMMUNE, TRAIT_NOBREATH, TRAIT_NOSLEEP, TRAIT_CRITICAL_WEAKNESS,
-	TRAIT_BEAUTIFUL, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOMETABOLISM, TRAIT_NOPAIN)
+	TRAIT_BEAUTIFUL, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOMETABOLISM, TRAIT_NOPAIN, TRAIT_ZOMBIE_IMMUNE)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mcom.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fcom.dmi'
@@ -89,8 +89,13 @@
 /datum/species/golem/porcelain/get_skin_list()
 	return list(
 		"Porcelain" = DOLL_PORCELAIN,
-		"Sienna" = DOLL_SIENNA,
+		"Sienna" = DOLL_SIENNA
+	)
 
+/datum/species/golem/porcelain/get_skin_list_tooltip()
+	return list(
+		"Porcelain <span style='border: 1px solid #161616; background-color: #[DOLL_PORCELAIN];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>" = DOLL_PORCELAIN,
+		"Sienna <span style='border: 1px solid #161616; background-color: #[DOLL_SIENNA];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>" = DOLL_SIENNA,
 	)
 
 /datum/species/golem/porcelain/get_hairc_list()
