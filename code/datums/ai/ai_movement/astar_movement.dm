@@ -5,6 +5,21 @@
 	max_pathing_attempts = 4
 	max_path_distance = 30
 
+///If a tree falls in a forest and no one is around to hear it, does it make a sound?
+///No, said the BYOND coder, for it will take up too many ticks
+/datum/ai_movement/proc/active_player_range(pawn_x, pawn_y, pawn_z)
+	for(var/i = GLOB.player_list.len; i > 0; i--)
+		var/mob/living/M = GLOB.player_list[i]
+		if(!istype(M))
+			continue
+		if(M.z != pawn_z) // not the same z sector
+			if(abs(M.y-pawn_y) > 6 || abs(M.x-pawn_x) > 6)
+				continue
+		else if(abs(M.y-pawn_y) > 14 || abs(M.x-pawn_x) > 14)
+			continue
+		return TRUE
+	return FALSE
+
 ///Put your movement behavior in here!
 /datum/ai_movement/astar/process(delta_time)
 	for(var/datum/ai_controller/controller as anything in moving_controllers)
@@ -28,6 +43,10 @@
 				minimum_distance = iter_behavior.required_distance
 
 		if(get_dist(movable_pawn, controller.current_movement_target) <= minimum_distance)
+			continue
+
+		// if there is no active player around, do not attempt to generate a path
+		if(!active_player_range(movable_pawn.x, movable_pawn.y, movable_pawn.z))
 			continue
 
 		var/generate_path = FALSE // set to TRUE when we either have no path, or we failed a step
