@@ -151,11 +151,17 @@
 			to_chat(user, span_warning("Nothing happens."))
 			revert_cast()
 			return FALSE
+		if(HAS_TRAIT(target, TRAIT_HOLLOW_LIFE))
+			to_chat(user, span_bloody("Astrata scorns this one, for reasons unknown. Lux infusal is the only option."))
+			target.adjustFireLoss(30)
+			target.fire_act(1,5)
+			revert_cast()
+			return FALSE
 		if(GLOB.tod == "night")
 			to_chat(user, span_warning("Let there be light."))
 		for(var/obj/structure/fluff/psycross/S in oview(5, user))
 			S.AOE_flash(user, range = 8)
-		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+		if((target.mob_biotypes & MOB_UNDEAD) && !HAS_TRAIT(target, TRAIT_HOLLOW_LIFE)) //positive energy harms the undead
 			target.visible_message(span_danger("[target] is unmade by holy light!"), span_userdanger("I'm unmade by holy light!"))
 			target.gib()
 			return TRUE

@@ -32,7 +32,10 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	round_contrib_points = 3
 
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	virtue_restrictions = list(
+		/datum/virtue/utility/noble,
+		/datum/virtue/combat/hollow_life,
+	)
 
 	job_traits = list(TRAIT_CHOSEN, TRAIT_RITUALIST, TRAIT_GRAVEROBBER)
 	advclass_cat_rolls = list(CTAG_BISHOP = 2)
