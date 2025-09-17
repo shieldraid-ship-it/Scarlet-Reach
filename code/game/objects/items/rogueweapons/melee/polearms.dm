@@ -959,8 +959,9 @@
 	wdefense_wbonus = 1 //Only +1 defense from wielding
 	max_blade_int = 150 //Thin blade
 	wbalance = WBALANCE_SWIFT
-	possible_item_intents = list(/datum/intent/sword/cut/miaodao/fast, /datum/intent/sword/peel/miaodao, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/miaodao/fast, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut/miaodao, /datum/intent/rend/reach, /datum/intent/sword/thrust/zwei)
+	alt_intents = null
 
 /obj/item/rogueweapon/greatsword/miaodao/getonmobprop(tag)
 	. = ..()
