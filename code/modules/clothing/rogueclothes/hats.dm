@@ -347,6 +347,15 @@
 	color = pick("#4756d8", "#759259", "#bf6f39", "#c1b144", "#b8252c")
 	..()
 
+
+/obj/item/clothing/head/roguetown/dungeoneer
+	name = "sack hood"
+	desc = "A hood commonly worn by executioners to hide their face; The stigma of such a role, and all the grisly work it entails, makes many executioners outcasts in their own right."
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT	
+	dynamic_hair_suffix = ""
+	icon_state = "dungeoneer"
+	sewrepair = TRUE
+
 /obj/item/clothing/head/roguetown/menacing
 	name = "sack hood"
 	desc = "A hood commonly worn by executioners to hide their face; The stigma of such a role, and all the grisly work it entails, makes many executioners outcasts in their own right."
