@@ -127,10 +127,3 @@
 					/obj/item/net,
 					/obj/item/net
 				)
-
-/datum/supply_pack/rogue/ranged_weapons/smokebelt
-	name = "Smokebomb belt"
-	cost = 90 // smokebombs are pretty expensive, this is justified
-	contains = list(
-					/obj/item/storage/belt/rogue/leather/smokebelt
-				)
