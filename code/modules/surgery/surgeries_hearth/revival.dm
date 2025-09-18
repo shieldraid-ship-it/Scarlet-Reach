@@ -46,7 +46,7 @@
 	return TRUE
 
 /datum/surgery_step/infuse_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	if (HAS_TRAIT(target, TRAIT_NECRA_CURSE))
+	if (HAS_TRAIT(target, TRAIT_CURSE_NECRA))
 		display_results(user, target,
 			span_warning("The lux recoils! [target]'s soul belongs to Necra."),
 			"[user] tries to infuse [target] with lux, but it refuses to take.",
