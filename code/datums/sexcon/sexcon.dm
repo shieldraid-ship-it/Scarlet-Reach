@@ -190,7 +190,7 @@
 		if((grabstate == null || grabstate < src.required_grab_state))
 			return FALSE
 
-	if(!isnull(target.sexcon.current_action) && target.sexcon.current_action == src.type) // action is active, update the currently accessible body zones
+	if(!isnull(user_controller.current_action) && user_controller.current_action == src.type) // action is active, update the currently accessible body zones
 		target.sexcon.update_current_accessible_body_zones(location, grabs)
 	var/result = user_controller.get_accessible_body_zone(target.sexcon.access_zone_bitfield, location, grabs)
 	if(result && user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))
