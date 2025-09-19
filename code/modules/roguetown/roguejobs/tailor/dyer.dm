@@ -152,7 +152,8 @@ var/global/list/colorlist = list(
 	menu.open()
 
 /obj/machinery/gear_painter/Topic(href, href_list)
-	if(!(. = ..()))
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(usr)
