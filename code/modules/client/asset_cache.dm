@@ -281,11 +281,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
 
-	var/res_name = "test.css"
+	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
-	register_asset(res_name, fcopy_rsc(fname))
+	register_asset("spritesheet_[name].css", fcopy_rsc(fname))
 	fdel(fname)
 
 	for(var/size_id in sizes)
@@ -299,6 +299,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/size_id in sizes)
 		all += "[name]_[size_id].png"
 	send_asset_list(C, all, verify)
+
+/datum/asset/spritesheet/get_url_mappings()
+	if (!name)
+		return
+
+	. = list("spritesheet_[name].css" = "spritesheet_[name].css")
+	for(var/size_id in sizes)
+		.["[name]_[size_id].png"] = "[name]_[size_id].png"
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
@@ -445,30 +453,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-// If you use a file(...) object, instead of caching the asset it will be loaded from disk every time it's requested.
-// This is useful for development, but not recommended for production.
-// And if TGS is defined, we're being run in a production environment.
-
-#ifdef TGS
-/datum/asset/simple/tgui
-	assets = list(
-		"tgui.bundle.js" = "tgui/public/tgui.bundle.js",
-		"tgui.bundle.css" = "tgui/public/tgui.bundle.css",
-	)
-
-/datum/asset/simple/tgui_panel
-	assets = list(
-		"tgui-panel.bundle.js" = "tgui/public/tgui-panel.bundle.js",
-		"tgui-panel.bundle.css" = "tgui/public/tgui-panel.bundle.css",
-	)
-
-/datum/asset/simple/tgfont
-	assets = list(
-		"tgfont.eot" = "tgui/packages/tgfont/static/tgfont.eot",
-		"tgfont.woff2" = "tgui/packages/tgfont/static/tgfont.woff2",
-		"tgfont.css" = "tgui/packages/tgfont/static/tgfont.css",
-	)
-#else
 /datum/asset/simple/tgui
 	assets = list(
 		"tgui.bundle.js" = file("tgui/public/tgui.bundle.js"),
@@ -487,7 +471,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"tgfont.woff2" = file("tgui/packages/tgfont/static/tgfont.woff2"),
 		"tgfont.css" = file("tgui/packages/tgfont/static/tgfont.css"),
 	)
-#endif
 
 /datum/asset/group/goonchat
 	children = list(
@@ -801,3 +784,18 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			break;
 
 	return data
+
+/datum/asset/spritesheet/anvil_recipes
+	name = "anvil_recipes"
+
+/datum/asset/spritesheet/anvil_recipes/register()
+	for(var/datum/anvil_recipe/recipe as anything in GLOB.anvil_recipes)
+		var/icon = recipe.created_item::icon
+		var/icon_state = recipe.created_item::icon_state
+
+		if(!icon || !icon_state)
+			continue
+
+		Insert("[sanitize_css_class_name("recipe_[REF(recipe)]")]", icon, icon_state)
+
+	..()
