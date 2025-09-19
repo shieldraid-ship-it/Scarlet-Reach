@@ -100,8 +100,8 @@ GLOBAL_LIST_INIT(tail_types, subtypesof(/obj/item/bodypart/lamian_tail))
 	offset_x = -16
 	tail_icon_state = "mermaid_tail"
 	tail_tip_icon_state = "mermaid_tail_tip"
-//	tail_markings_icon_state = "mermaid_tail_markings"
-//	tail_markings_tip_icon_state = "mermaid_tail_markings_tip"
+	tail_markings_icon_state = "mermaid_tail_markings" // done by ooooooog/ShadowDeath6
+	tail_markings_tip_icon_state = "mermaid_tail_markings_tip" // done by ooooooog/ShadowDeath6
 
 	has_tail_color = TRUE
 
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(tail_types, subtypesof(/obj/item/bodypart/lamian_tail))
 	offset_x = -16
 	tail_icon_state = "mermaid_tail_alt"
 	tail_tip_icon_state = "mermaid_tail_alt_tip"
-//	tail_markings_icon_state = "mermaid_tail_alt_markings"
-//	tail_markings_tip_icon_state = "mermaid_tail_alt_markings_tip"
+	tail_markings_icon_state = "mermaid_tail_alt_markings" // done by ooooooog/ShadowDeath6
+	tail_markings_tip_icon_state = "mermaid_tail_alt_markings_tip" // done by ooooooog/ShadowDeath6
 
 	has_tail_color = TRUE
