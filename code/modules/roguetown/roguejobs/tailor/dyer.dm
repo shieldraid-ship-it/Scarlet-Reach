@@ -92,7 +92,7 @@ var/global/list/colorlist = list(
 			activecolor = "[S.swatchbookcolor]"
 			activecolor_detail = "[S.swatchbookcolor]"
 			activecolor_altdetail = "[S.swatchbookcolor]"
-			ui_interact(user)
+			interact(user)
 			return ..()
 	if(inserted)
 		to_chat(user, span_warning("Something is already inside!"))
@@ -107,15 +107,15 @@ var/global/list/colorlist = list(
 	user.visible_message(span_notice("[user] inserts [I] into [src]'s receptable."))
 
 	inserted = I
-	ui_interact(user)
+	interact(user)
 
 /obj/machinery/gear_painter/AllowDrop()
 	return FALSE
 
 /obj/machinery/gear_painter/attack_hand(mob/living/user)
-	ui_interact(user)
+	interact(user)
 
-/obj/machinery/gear_painter/ui_interact(mob/user)
+/obj/machinery/gear_painter/interact(mob/user)
 	if(!is_operational())
 		return ..()
 	user.set_machine(src)
