@@ -145,6 +145,8 @@
 	set_holdable(list(
 		/obj/item/reagent_containers/food/snacks/grown/manabloom,
 		/obj/item/ash,
+		/obj/item/natural/stone,
+		/obj/item/reagent_containers/food/snacks/grown/berries/rogue,
 		/obj/item/magic
 		))
 
