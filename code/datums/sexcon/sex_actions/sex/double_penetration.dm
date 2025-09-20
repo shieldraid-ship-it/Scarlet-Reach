@@ -66,12 +66,12 @@
 	knot_on_finish = TRUE
 
 /datum/sex_action/double_penetration_sex/knot/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!user.sexcon.knot_penis_type(TRUE))
+	if(!user.sexcon.knot_penis_type())
 		return FALSE
 	return ..()
 
 /datum/sex_action/double_penetration_sex/knot/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!user.sexcon.knot_penis_type(TRUE))
+	if(!user.sexcon.knot_penis_type())
 		return FALSE
 	return ..()
 

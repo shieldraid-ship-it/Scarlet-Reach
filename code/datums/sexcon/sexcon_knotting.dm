@@ -9,6 +9,17 @@
 			return TRUE
 	return FALSE
 
+/datum/sex_controller/proc/double_penis_type()
+	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis)
+		return FALSE
+	if(!penis.functional)
+		return FALSE
+	switch(penis.penis_type)
+		if(PENIS_TYPE_TAPERED_DOUBLE,PENIS_TYPE_TAPERED_DOUBLE_KNOTTED,PENIS_TYPE_TAPER_DOUBLE_KNOTTED_MAMMAL)
+			return TRUE
+	return FALSE
+
 /datum/sex_controller/proc/knot_check_remove(var/action_path)
 	if(!user.sexcon.knotted_status && !target.sexcon.knotted_status)
 		return
