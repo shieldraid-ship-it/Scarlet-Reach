@@ -607,17 +607,19 @@
 	if(user.getorganslot(ORGAN_SLOT_PENIS))
 		dat += " ~|~ <a href='?src=[REF(src)];task=manual_arousal_down'>\<</a> [manual_arousal_name] <a href='?src=[REF(src)];task=manual_arousal_up'>\></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=toggle_finished'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
-	if(knot_penis_type())
-		if(do_knot_action)
-			dat += "| <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>USING KNOT</font></a>"
-		else
-			dat += "| <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>NOT USING KNOT</font></a>"
+	if(current_action && !desire_stop)
+		var/datum/sex_action/action = SEX_ACTION(current_action)
+		if(action.knot_on_finish && knot_penis_type())
+			if(do_knot_action)
+				dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#d146f5'>USING KNOT</font></a>"
+			else
+				dat += " | <a href='?src=[REF(src)];task=toggle_knot'><font color='#eac8de'>NOT USING KNOT</font></a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
 	else
 		dat += "<center>Doing unto [target]'s</center>"
-	if(current_action)
+	if(current_action && !desire_stop)
 		dat += "<center><a href='?src=[REF(src)];task=stop'>Stop</a></center>"
 	else
 		dat += "<br>"
