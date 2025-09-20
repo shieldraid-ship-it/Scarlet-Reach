@@ -123,7 +123,7 @@ window "outputwindow"
 		is-default = true
 		border = sunken
 		saved-params = ""
-		command = "say"
+		command = ""
 
 window "output_legacy"
 	elem "output_legacy"
