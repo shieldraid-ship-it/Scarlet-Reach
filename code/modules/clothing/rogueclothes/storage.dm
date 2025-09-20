@@ -65,6 +65,10 @@
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 
+/obj/item/storage/belt/rogue/leather/plaquesilver/outlaw
+	color = "#404040"
+
+
 /obj/item/storage/belt/rogue/leather/battleskirt
 	name = "cloth military skirt"
 	icon_state = "battleskirt"
