@@ -907,7 +907,7 @@
 	var/obj/item/organ/vagina/vag = user.getorganslot(ORGAN_SLOT_VAGINA)
 	if(vag && vag.monohole)
 		return FALSE
-	if(user.construct && !user.getorganslot(ORGAN_SLOT_VAGINA) && user.getorganslot(ORGAN_SLOT_PENIS))
+	if(user.construct && !user.getorganslot(ORGAN_SLOT_VAGINA) && !user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
 	return TRUE
 
