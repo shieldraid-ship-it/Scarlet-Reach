@@ -58,7 +58,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
-	var/prefer_old_chat = FALSE
 
 	var/uses_glasses_colour = 0
 
@@ -451,10 +450,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Update feature colors with change:</b> <a href='?_src_=prefs;preference=update_mutant_colors;task=input'>[update_mutant_colors ? "Yes" : "No"]</a><BR>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones && !(LAMIAN_TAIL in pref_species.species_traits))
-
-				var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
-
-				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a>"
+				if(pref_species.id != "lupian")
+					dat += "<b>[pref_species.skin_tone_wording]: </b><a href='?_src_=prefs;preference=skin_color_ref_list;task=input'>(?)</a> <a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
+				else
+					dat += "<b>[pref_species.skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change</a>"
 				dat += "<br>"
 
 			if((MUTCOLORS in pref_species.species_traits) && !(LAMIAN_TAIL in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits) && !(LAMIAN_TAIL in pref_species.species_traits))
@@ -522,7 +521,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 //			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
-//			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
+			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 //			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 //			dat += "<b>Show Runechat Chat Bubbles:</b> <a href='?_src_=prefs;preference=chat_on_map'>[chat_on_map ? "Enabled" : "Disabled"]</a><br>"
 //			dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
@@ -1743,7 +1742,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					dat += "<br>"
 					for(var/tone in pref_species.get_skin_list_tooltip()) 
 						dat += "[tone]<br>"
-					var/datum/browser/popup = new(user, "Formatting Help", nwidth = 400, nheight = 450)
+					var/datum/browser/popup = new(user, "Formatting Help", nwidth = 300, nheight = 500)
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
 				if("flavortext")

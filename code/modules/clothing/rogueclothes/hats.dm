@@ -58,6 +58,12 @@
 	worn_y_dimension = 64
 	sewrepair = TRUE
 
+/obj/item/clothing/head/roguetown/spellcasterhat/light
+	name = "tattered spellsinger hat"	//meant to be a weaker version you can spawn with in the loadout menu
+	desc = "Despite most universities toilings, you cannot eat magic. This well-worn hat's sorry state is a silent reminder that all schools of the arcyne yet still bow their head to the power of cold, hard mammon."
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	armor = ARMOR_HEAD_BAD //good head armour is harder to procure than body protection
+
 /obj/item/clothing/head/roguetown/roguehood/MiddleClick(mob/user)
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
@@ -340,6 +346,15 @@
 /obj/item/clothing/head/roguetown/roguehood/mage/Initialize()
 	color = pick("#4756d8", "#759259", "#bf6f39", "#c1b144", "#b8252c")
 	..()
+
+
+/obj/item/clothing/head/roguetown/dungeoneer
+	name = "sack hood"
+	desc = "A hood commonly worn by executioners to hide their face; The stigma of such a role, and all the grisly work it entails, makes many executioners outcasts in their own right."
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT	
+	dynamic_hair_suffix = ""
+	icon_state = "dungeoneer"
+	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/menacing
 	name = "sack hood"
@@ -2361,6 +2376,8 @@
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	icon_state = "capbarbute"
+	block2add = FOV_BEHIND
+	max_integrity = 350
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 
 /obj/item/clothing/head/roguetown/helmet/visored/captain/ComponentInitialize()
