@@ -902,6 +902,15 @@
 		if(SEX_FORCE_EXTREME)
 			return "<span class='love_extreme'>[string]</span>"
 
+/datum/sex_controller/proc/can_zodomize()
+	//Only thing we're currently checking for.
+	var/obj/item/organ/vagina/vag = user.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vag && vag.monohole)
+		return FALSE
+	if(user.construct && !user.getorganslot(ORGAN_SLOT_VAGINA) && !user.getorganslot(ORGAN_SLOT_PENIS))
+		return FALSE
+	return TRUE
+
 #undef SEX_ZONE_NULL
 #undef SEX_ZONE_GROIN
 #undef SEX_ZONE_GROIN_GRAB

@@ -7,7 +7,7 @@
 /datum/sex_action/anal_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
+	if(!user.getorganslot(ORGAN_SLOT_PENIS) || !target.sexcon.can_zodomize())
 		return FALSE
 	return TRUE
 

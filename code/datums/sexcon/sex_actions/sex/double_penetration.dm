@@ -7,7 +7,7 @@
 /datum/sex_action/double_penetration_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
+	if(!target.getorganslot(ORGAN_SLOT_VAGINA) || !target.sexcon.can_zodomize())
 		return FALSE
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis || penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE && penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE_KNOTTED)
