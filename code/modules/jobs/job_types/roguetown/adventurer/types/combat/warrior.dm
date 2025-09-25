@@ -158,7 +158,7 @@
 
 	cmode_music = 'sound/music/inquisitorcombat.ogg'
 
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_ARCYNE_T2)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_END = 1,
@@ -177,6 +177,8 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
+
 	)
 
 /datum/outfit/job/roguetown/adventurer/mhunter/pre_equip(mob/living/carbon/human/H, visualsOnly)
