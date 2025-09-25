@@ -166,7 +166,7 @@
 		STATKEY_INT = 1,
 	)
 
-	subclass_spellpoints = 12
+	subclass_spellpoints = 3
 
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
@@ -179,7 +179,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/mhunter/pre_equip(mob/living/carbon/human/H, visualsOnly)
@@ -237,7 +237,10 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/malum_flame_rogue)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall)
+	
 /datum/advclass/sfighter/barbarian
 	name = "Barbarian"
 	tutorial = "You are a brutal warrior who foregoes armor in order to showcase your raw strength. You specialize in unarmed combat and wrestling."
