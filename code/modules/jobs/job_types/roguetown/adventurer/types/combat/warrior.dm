@@ -235,6 +235,11 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/lucpot,
 		)
 
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
+
 /datum/advclass/sfighter/barbarian
 	name = "Barbarian"
 	tutorial = "You are a brutal warrior who foregoes armor in order to showcase your raw strength. You specialize in unarmed combat and wrestling."
