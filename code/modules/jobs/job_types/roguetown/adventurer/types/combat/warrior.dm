@@ -158,7 +158,7 @@
 
 	cmode_music = 'sound/music/inquisitorcombat.ogg'
 
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_ARCYNE_T2)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_ARCYNE_T1)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_END = 1,
@@ -236,9 +236,7 @@
 		)
 
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 
 /datum/advclass/sfighter/barbarian
 	name = "Barbarian"
