@@ -166,6 +166,8 @@
 		STATKEY_INT = 1,
 	)
 
+	subclass_spellpoints = 12
+
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
